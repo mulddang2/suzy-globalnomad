@@ -1,36 +1,16 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GlobalNomad
 
-## Getting Started
+> <br>
 
-First, run the development server:
+## 기간
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2024.12.17 ~ 2024.01.25
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<br>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 팀원
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+|                                  김수영                                  |                                  김태훈                                   |                                  이수지                                  |                               정성현(팀장)                               |
+| :----------------------------------------------------------------------: | :-----------------------------------------------------------------------: | :----------------------------------------------------------------------: | :----------------------------------------------------------------------: |
+| <img src="https://avatars.githubusercontent.com/u/81215099" width="180"> | <img src="https://avatars.githubusercontent.com/u/176605973" width="180"> | <img src="https://avatars.githubusercontent.com/u/96711699" width="180"> | <img src="https://avatars.githubusercontent.com/u/81379968" width="180"> |
+|                 [@swim-kim](https://github.com/swim-kim)                 |              [@SHAKALOHANA](https://github.com/SHAKALOHANA)               |                [@mulddang2](https://github.com/mulddang2)                |                  [@jsh1147](https://github.com/jsh1147)                  |

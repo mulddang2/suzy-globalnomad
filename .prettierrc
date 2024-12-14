@@ -1,0 +1,10 @@
+{
+  "organizeImports": true,
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "printWidth": 120,
+  "endOfLine": "auto",
+  "jsxSingleQuote": true
+}

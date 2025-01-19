@@ -24,15 +24,15 @@ export const header = style({
   fontWeight: '700',
 });
 
-// export const dropdownContainer = style({
-//   width: '800px',
+export const dropdownContainer = style({
+  width: '800px',
 
-//   '@media': {
-//     'screen and (min-width: 768px) and (max-width: 1199px)': {
-//       width: '429px',
-//     },
-//     'screen and (min-width: 320px) and (max-width: 767px)': {
-//       width: '342px',
-//     },
-//   },
-// });
+  '@media': {
+    'screen and (min-width: 768px) and (max-width: 1199px)': {
+      width: '429px',
+    },
+    'screen and (min-width: 320px) and (max-width: 767px)': {
+      width: '342px',
+    },
+  },
+});

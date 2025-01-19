@@ -57,7 +57,7 @@ export default function StatusPage() {
   const [isExist, setIsExist] = useState<boolean>(true);
   const [selected, setSelected] = useState<string>('');
   // const [dropdownWidth, setDropdownWidth] = useState<string>('800px');
-  const dropdownWidth = '800px';
+  // const dropdownWidth = '800px';
 
   useEffect(() => {
     fetchMyActivityList().then((res) => setActivityList(res));
@@ -143,7 +143,7 @@ export default function StatusPage() {
             options={activityList.activities.map((item) => item.title)}
             placeholder='체험을 선택해 주세요'
             onSelect={handleActivitySelect}
-            width={dropdownWidth}
+            width='100%'
           />
           <MyActivityCalendar
             eventList={eventList}

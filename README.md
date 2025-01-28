@@ -98,8 +98,10 @@
 
 
 <br>
+전체 시연 영상: https://youtu.be/Coqk3phuGlo?si=XpVh-IEul34dmNRg
 
 ---
+
 ## 아키텍쳐
 
 ### 디렉토리 구조

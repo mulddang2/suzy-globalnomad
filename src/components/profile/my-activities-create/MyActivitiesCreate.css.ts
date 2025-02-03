@@ -450,6 +450,7 @@ export const TimeButton = style({
 
 export const datePickerContainer = style({
   gridColumn: 1,
+  marginBottom: '21px',
 });
 
 export const startTimePickerContainer = style({

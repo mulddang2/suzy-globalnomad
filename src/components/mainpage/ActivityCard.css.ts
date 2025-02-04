@@ -45,7 +45,6 @@ export const activityCardDetails = style({
   gap: '10px',
   padding: '8px',
   borderRadius: '16px',
-  backgroundColor: '#fff',
   selectors: {
     '&:hover': {
       backgroundColor: '#F5F5F5',

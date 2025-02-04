@@ -5,6 +5,7 @@ import Pagination from '@/components/pagination/Pagination';
 import ActivityCardSkeleton from '@/components/skeletonui/mainpage/ActivityCardSkeleton';
 import { ActivityResponse } from '@/types/mainpage';
 import { useQuery } from '@tanstack/react-query';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { MouseEvent, useEffect, useState } from 'react';
 import * as styles from './ActivityCardList.css';
 import CategoryFilter from './CategoryFilter';
@@ -19,6 +20,10 @@ const usePageActivity = (pageNum: number, size: number, category: string, sort: 
 };
 
 const ActivityCardList = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [currentPageNum, setCurrentPageNum] = useState(0);
   const [currentCategory, setCurrentCategory] = useState('');
   const [currentSort, setCurrentSort] = useState('');
@@ -32,44 +37,51 @@ const ActivityCardList = () => {
   } = usePageActivity(currentPageNum, offset, currentCategory, currentSort);
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(window.location.search);
-    const categoryParam = queryParams.get('category');
-    const sortParam = queryParams.get('sort');
-    const pageParam = queryParams.get('page');
+    const category = searchParams.get('category');
+    const sort = searchParams.get('sort');
+    const page = searchParams.get('page');
 
-    if (categoryParam) {
-      setCurrentCategory(categoryParam);
+    if (category) {
+      setCurrentCategory(category);
     }
-    if (sortParam) {
-      setCurrentSort(sortParam);
+    if (sort) {
+      setCurrentSort(sort);
     }
-    if (pageParam) {
-      setCurrentPageNum(Number(pageParam) - 1);
+    if (page) {
+      setCurrentPageNum(Number(page) - 1);
     }
-  }, []);
+  }, [searchParams]);
 
-  useEffect(() => {
-    const queryParams = new URLSearchParams();
-    if (currentCategory) {
-      queryParams.set('category', currentCategory);
-    }
-    if (currentSort) {
-      queryParams.set('sort', currentSort);
-    }
-    queryParams.set('page', String(currentPageNum + 1));
-    window.history.pushState({}, '', '?' + queryParams.toString());
-  }, [currentCategory, currentSort, currentPageNum]);
+  const updateQueryParams = (params: Record<string, string | number | undefined>) => {
+    const newQuery = new URLSearchParams(searchParams);
+    Object.entries(params).forEach(([key, value]) => {
+      if (value === undefined) {
+        newQuery.delete(key);
+      } else {
+        newQuery.set(key, String(value));
+      }
+    });
+
+    router.push(`${pathname}?${newQuery.toString()}`, { scroll: false });
+  };
 
   const handlePageChange = (page: number) => setCurrentPageNum(page);
+
   const handleCategoryClick = (e: MouseEvent<HTMLButtonElement>) => {
     const button = e.target as HTMLButtonElement;
-    setCurrentCategory(currentCategory === button.value ? '' : button.value);
+    const newCategory = currentCategory === button.value ? '' : button.value;
+
+    setCurrentCategory(newCategory);
     setCurrentPageNum(0);
+
+    updateQueryParams({ category: newCategory || undefined, page: 1 });
   };
 
   const handleSortClick = (sortKey: string) => {
     setCurrentSort(sortKey);
     setCurrentPageNum(0);
+
+    updateQueryParams({ sort: sortKey, page: 1 });
   };
 
   if (isError) {

@@ -26,6 +26,7 @@ export const headerBox = style({
 export const logoContainer = style({
   display: 'flex',
   alignItems: 'center',
+  cursor: 'pointer',
 });
 
 export const logoImage = style({

@@ -1,4 +1,5 @@
 # GlobalNomad
+
 <div align="center">
   <br>
   
@@ -14,19 +15,21 @@
 <br>
 
 # GlobalNomad
+
 > **코드잇 프론트엔드 부트캠프 10기** <br/> **개발기간: 2024.12.17 ~ 2024.01.25**
 
-
 ## 배포 주소
-> **배포 URL**: https://codeit-globalnomad.vercel.app/main?page=1 <br/>
-> **테스트 ID**: player@gmail.com / PW: player1234
+
+> **배포 URL**: https://codeit-globalnomad.vercel.app/main?page=1 <br/> > **테스트 ID**: player@gmail.com / PW: player1234
 
 ## 팀 소개
+
 <div align="center">
 
-|<img src="https://avatars.githubusercontent.com/u/96711699?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/115972184?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/166021800?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/176660375?v=4" width="150" height="150"/>|
-|:-:|:-:|:-:|:-:|
-|이수지<br/>[@mulddang2](https://github.com/mulddang2)|박지민<br/>[@jiminp00](https://github.com/jiminp00)|나승엽<br/>[@naseungyeop](https://github.com/naseungyeop)|오혁재<br/>[@duckjae12](https://github.com/duckjae12)|
+| <img src="https://avatars.githubusercontent.com/u/96711699?v=4" width="150" height="150"/> | <img src="https://avatars.githubusercontent.com/u/115972184?v=4" width="150" height="150"/> | <img src="https://avatars.githubusercontent.com/u/166021800?v=4" width="150" height="150"/> | <img src="https://avatars.githubusercontent.com/u/176660375?v=4" width="150" height="150"/> |
+| :----------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: |
+|                   이수지<br/>[@mulddang2](https://github.com/mulddang2)                    |                     박지민<br/>[@jiminp00](https://github.com/jiminp00)                     |                  나승엽<br/>[@naseungyeop](https://github.com/naseungyeop)                  |                    오혁재<br/>[@duckjae12](https://github.com/duckjae12)                    |
+
 </div>
 
 ## 프로젝트 소개
@@ -36,14 +39,17 @@
 ## Stacks 🐈
 
 ### Environment
+
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?style=for-the-badge&logo=Visual%20Studio%20Code&logoColor=white)
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white)
-![Github](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)             
+![Github](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)
 
 ### Config
-![npm](https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white)        
+
+![npm](https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white)
 
 ### Development
+
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Vanilla Extract](https://img.shields.io/badge/Vanilla%20Extract-ccfbf1?style=for-the-badge&logo=vanilla-extract&logoColor=white)
@@ -55,47 +61,51 @@
 ![Material UI](https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=MUI&logoColor=white)
 
 ### Communication
+
 ![Discord](https://img.shields.io/badge/Discord-4A154B?style=for-the-badge&logo=Slack&logoColor=white)
 ![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white)
 
-
 ---
+
 ## 담당 개발 및 기능 📦
 
 ### ⭐️ 체험 등록, 수정, 삭제 기능
+
 - `react-daum-postcode`를 이용하여 실제 주소 추가 기능
 - `react hook form`을 적용하여 입력값 변경시 리렌더링을 최소화하여 성능 향상
 
-### ⭐️ 체험 관리 
+### ⭐️ 체험 관리
+
 - `Intersection Observer`를 이용하여 무한스크롤 구현
-- skeleton UI를 적용하여 사용자 경험 향상  
+- skeleton UI를 적용하여 사용자 경험 향상
 
 ### ⭐️ 공용컴포넌트 개발
+
 - Input 컴포넌트, profile 페이지 공통 사이드 메뉴 및 레이아웃 개발, 모바일 Drawer 컴포넌트 개발
-  
+
 ---
+
 ## 담당 개발 화면 구성 📺
+
 | 체험 등록 페이지 |
-| --- |
+| ---------------- |
+
 | ![체험등록](https://github.com/user-attachments/assets/f196e6fa-356d-4651-8a20-00e9313d870f)
 
 | 체험 관리 페이지 |
-| --- |
+| ---------------- |
+
 | ![gif-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/51e4c002-421f-480a-a12e-ca9f7ad6c9a9)
 
 | 체험 수정 페이지 |
-| --- |
+| ---------------- |
+
 | ![체험수정](https://github.com/user-attachments/assets/f57ab707-dd72-4614-a257-9200d0608961)
 
 | 반응형 (모바일 ~320px) |
-| --- |
+| ---------------------- |
+
 | ![모바일반응형](https://github.com/user-attachments/assets/f2fa514e-e628-4bd4-974a-482ce4bc1b34)
-
-
-
-
-
-
 
 <br>
 전체 시연 영상: https://youtu.be/Coqk3phuGlo?si=XpVh-IEul34dmNRg
@@ -105,8 +115,9 @@
 ## 아키텍쳐
 
 ### 디렉토리 구조
+
 ```
-📦 
+📦
 ├─ .eslintrc.js
 ├─ .gitattributes
 ├─ .github
@@ -166,7 +177,7 @@
 │  │  ├─ profile
 │  │  │  ├─ layout.css.ts
 │  │  │  ├─ layout.tsx : /profile/** 페이지에서 공통으로 포함됨.
-│  │  │  ├─ my-activities 
+│  │  │  ├─ my-activities
 │  │  │  │  ├─ create : 체험 등록 페이지
 │  │  │  │  │  ├─ page.css.ts
 │  │  │  │  │  └─ page.tsx
@@ -174,7 +185,7 @@
 │  │  │  │  │  └─ [id] : 체험 수정 페이지
 │  │  │  │  │     ├─ page.css.ts
 │  │  │  │  │     └─ page.tsx
-│  │  │  │  ├─ loading.css.ts 
+│  │  │  │  ├─ loading.css.ts
 │  │  │  │  ├─ loading.tsx : loading 스피너
 │  │  │  │  ├─ page.css.ts
 │  │  │  │  └─ page.tsx : 체험 관리 페이지

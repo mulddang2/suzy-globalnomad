@@ -1,24 +1,26 @@
 import { style } from '@vanilla-extract/css';
 import { global } from '@/styles/global.css';
 
-export const header = style({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
+export const headerContainer = style({
   width: '100%',
-  height: '70px',
-  padding: '20px 360px',
+  margin: '0 auto',
+
   borderBottom: `0.1rem solid ${global.color.gray[300]}`,
   backgroundColor: '#FFFFFF',
 
   '@media': {
-    'screen and (min-width: 768px) and (max-width: 1199px)': {
-      padding: '10px 40px',
-    },
-    'screen and (max-width: 767px)': {
-      padding: '0 20px',
-    },
+    'screen and (min-width: 768px) and (max-width: 1199px)': {},
+    'screen and (max-width: 767px)': {},
   },
+});
+
+export const headerBox = style({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  width: '62.5%',
+  height: '70px',
+  margin: '0 auto',
 });
 
 export const logoContainer = style({

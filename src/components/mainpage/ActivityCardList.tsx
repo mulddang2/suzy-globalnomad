@@ -1,6 +1,6 @@
 import getCurrentPageActivity from '@/apis/get-current-page-activity';
 import { queryKeys } from '@/apis/querykeys';
-import ActivityCard from '@/components/mainpage/ActivityCard';
+import ActivityCard from '@/components/mainPage/ActivityCard';
 import Pagination from '@/components/pagination/Pagination';
 import ActivityCardSkeleton from '@/components/skeletonui/mainpage/ActivityCardSkeleton';
 import { ActivityResponse } from '@/types/mainpage';

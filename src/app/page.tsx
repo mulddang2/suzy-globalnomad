@@ -1,10 +1,10 @@
 'use client';
 
-import ActivityCardList from '@/components/mainPage/ActivityCardList';
-import ActivitySearch from '@/components/mainPage/ActivitySearch';
-import MainBanner from '@/components/mainPage/MainBanner';
-import PopularActivityList from '@/components/mainPage/PopularActivityList';
-import SearchResultList from '@/components/mainPage/SearchResultList';
+import ActivityCardList from '@/components/main-page/ActivityCardList';
+import ActivitySearch from '@/components/main-page/ActivitySearch';
+import MainBanner from '@/components/main-page/MainBanner';
+import PopularActivityList from '@/components/main-page/PopularActivityList';
+import SearchResultList from '@/components/main-page/SearchResultList';
 import { Suspense, useEffect, useState } from 'react';
 import { wrapper } from './page.css';
 

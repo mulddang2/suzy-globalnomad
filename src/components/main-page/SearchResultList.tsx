@@ -1,5 +1,5 @@
 import getSearchResult from '@/apis/get-search-result';
-import ActivityCard from '@/components/mainPage/ActivityCard';
+import ActivityCard from '@/components/main-page/ActivityCard';
 import Pagination from '@/components/pagination/Pagination';
 import ActivityCardSkeleton from '@/components/skeletonui/mainpage/ActivityCardSkeleton';
 import { ActivityInfo, ActivityResponse } from '@/types/mainpage';

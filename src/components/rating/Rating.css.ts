@@ -4,15 +4,15 @@ import { global } from '@/styles/global.css';
 export const rating = style({
   display: 'flex',
   alignItems: 'center',
-  gap: '0.5rem',
+  gap: '5px',
 });
 
 export const defaultIcon = style({
-  height: '1.6rem',
+  height: '16px',
 });
 
 export const smallIcon = style({
-  height: '1.4rem',
+  height: '14px',
 });
 
 export const darkModeText = style({
@@ -24,9 +24,9 @@ export const defaultModeText = style({
 });
 
 export const smallSizeText = style({
-  fontSize: '1.4rem',
+  fontSize: '14px',
 });
 
 export const defaultSizeText = style({
-  fontSize: '1.6rem',
+  fontSize: '16px',
 });

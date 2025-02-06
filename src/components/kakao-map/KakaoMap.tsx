@@ -14,12 +14,11 @@ export default function KakaoMap({ address }: { address: string }) {
   const [placeName, setPlaceName] = useState('');
 
   useEffect(() => {
-    const getCoordinates = async () => {
-      if (!KAKAO_API_KEY) {
-        console.error('Kakao API Key가 설정되지 않았습니다.');
-        return;
-      }
+    if (!address || !KAKAO_API_KEY) {
+      return;
+    }
 
+    const fetchCoordinates = async (address: string) => {
       try {
         const response = await axios.get('https://dapi.kakao.com/v2/local/search/address.json', {
           params: { query: address },
@@ -28,31 +27,34 @@ export default function KakaoMap({ address }: { address: string }) {
 
         if (response.data.documents.length > 0) {
           const { x: lng, y: lat } = response.data.documents[0]; // x = 경도, y = 위도
-
-          // 좌표 기반 장소 검색 요청
-          const placeResponse = await axios.get('https://dapi.kakao.com/v2/local/search/keyword.json', {
-            params: { query: address, x: lng, y: coords.lat, radius: 100 }, // 반경 100m 내에서 검색
-            headers: { Authorization: `KakaoAK ${KAKAO_API_KEY}` },
-          });
-
-          if (placeResponse.data.documents.length > 0) {
-            const foundPlaceName = placeResponse.data.documents[0].place_name;
-            console.log('장소 이름:', foundPlaceName);
-            setPlaceName(foundPlaceName);
-          } else {
-            console.log('해당 주소에 대한 장소 검색 결과 없음');
-            setPlaceName('');
-          }
           setCoords({ lat: parseFloat(lat), lng: parseFloat(lng) });
+
+          // NOTE: 좌표를 기반으로 장소 검색 실행
+          fetchPlaceName(parseFloat(lat), parseFloat(lng));
         }
       } catch (error) {
-        console.error('카카오 API 요청 실패:', error);
+        console.error('좌표 변환 실패:', error);
       }
     };
 
-    if (address) {
-      getCoordinates();
-    }
+    const fetchPlaceName = async (lat: number, lng: number) => {
+      try {
+        const placeResponse = await axios.get('https://dapi.kakao.com/v2/local/search/keyword.json', {
+          params: { query: address, x: lng, y: lat, radius: 100 }, // 반경 100m 내에서 검색
+          headers: { Authorization: `KakaoAK ${KAKAO_API_KEY}` },
+        });
+
+        if (placeResponse.data.documents.length > 0) {
+          setPlaceName(placeResponse.data.documents[0].place_name);
+        } else {
+          setPlaceName('장소 정보 없음');
+        }
+      } catch (error) {
+        console.error('장소 검색 실패:', error);
+      }
+    };
+
+    fetchCoordinates(address);
   }, [address, KAKAO_API_KEY]);
 
   return (
@@ -60,7 +62,7 @@ export default function KakaoMap({ address }: { address: string }) {
       {coords.lat !== 0 && coords.lng !== 0 ? (
         <Map key={`${coords.lat}-${coords.lng}`} center={coords} style={{ width: '100%', height: '360px' }}>
           <MapMarker position={coords}>
-            <div style={{ color: '#000' }}>{placeName || '위치 정보 없음'}</div>
+            <div style={{ color: '#000' }}>{placeName}</div>
           </MapMarker>
         </Map>
       ) : (

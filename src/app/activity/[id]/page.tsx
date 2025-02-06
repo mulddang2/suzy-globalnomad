@@ -1,11 +1,11 @@
 'use client';
 
 import IconLocation from '@/assets/icons/location.svg';
+import KakaoMap from '@/components/kakao-map/KakaoMap';
 import Rating from '@/components/rating/Rating';
 import { useMyActivitiesDetails } from '@/hooks/use-my-activities-details';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import { Key, useEffect } from 'react';
 import * as styles from './page.css';
 
 export default function DetailPage() {
@@ -31,7 +31,12 @@ export default function DetailPage() {
             </div>
             <div className={styles.activityImageLayout}>
               <div className={styles.bannerImageBox}>
-                <Image fill src={activity.data.bannerImageUrl} alt={`${activity.data.title} 배너 이미지`} />
+                <Image
+                  fill
+                  sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                  src={activity.data.bannerImageUrl}
+                  alt={`${activity.data.title} 배너 이미지`}
+                />
               </div>
               {activity.data.subImages && (
                 <div className={styles.subImageBox}>
@@ -39,13 +44,20 @@ export default function DetailPage() {
                     (subImage: { imageUrl: string | undefined }, index: number | null | undefined) =>
                       subImage.imageUrl && (
                         <div key={index} className={styles.subImageWrapper}>
-                          <Image fill src={subImage.imageUrl} alt={`${activity.data.title} 서브 이미지`} />
+                          <Image
+                            fill
+                            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                            src={subImage.imageUrl}
+                            alt={`${activity.data.title} 서브 이미지`}
+                          />
                         </div>
                       ),
                   )}
                 </div>
               )}
             </div>
+
+            <KakaoMap address={activity.data.address} />
           </div>
         </div>
       ) : (

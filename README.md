@@ -20,7 +20,7 @@
 
 ## 배포 주소
 
-> **배포 URL**: https://codeit-globalnomad.vercel.app/main?page=1 <br/> > **테스트 ID**: player@gmail.com / PW: player1234
+> **배포 URL**: https://globalnomard.netlify.app/ <br/> > **테스트 ID**: player@gmail.com / PW: player1234
 
 ## 팀 소개
 

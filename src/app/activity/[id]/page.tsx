@@ -56,8 +56,26 @@ export default function DetailPage() {
                 </div>
               )}
             </div>
+            <div className={styles.horizontalLine}></div>
+            <div className={styles.descLayout}>
+              <h3 className={styles.subheading}>체험 설명</h3>
+              <p className={styles.paragraph}>{activity.data.description}</p>
+            </div>
 
-            <KakaoMap address={activity.data.address} />
+            <div className={styles.horizontalLine}></div>
+
+            <div className={styles.mapLocationLayout}>
+              <div className={styles.mapContainer}>
+                <KakaoMap address={activity.data.address} />
+              </div>
+              <div className={styles.locationLayout}>
+                <div className={styles.locationBox}>
+                  <IconLocation />
+                </div>
+                <span>{activity.data.address}</span>
+              </div>
+            </div>
+            <div className={styles.horizontalLine}></div>
           </div>
         </div>
       ) : (

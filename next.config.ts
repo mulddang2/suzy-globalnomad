@@ -23,12 +23,6 @@ const nextConfig: NextConfig = {
 
     return config;
   },
-
-  env: {
-    NEXT_PUBLIC_KAKAOJSKEY: process.env.NEXT_PUBLIC_KAKAOJSKEY,
-    NEXT_PUBLIC_KAKAORESTKEY: process.env.NEXT_PUBLIC_KAKAORESTKEY,
-  },
-
   transpilePackages: ['@company/design-system'],
 };
 

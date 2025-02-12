@@ -68,10 +68,39 @@ export const horizontalLine = style({
   borderTop: `1px solid ${global.color.nomadBlack}`,
 });
 
+export const reviewLayout = style({
+  marginTop: '40px',
+  marginBottom: '24px',
+});
+
 export const subheading = style({
   fontSize: '20px',
   color: global.color.nomadBlack,
   fontWeight: 'bold',
+});
+
+export const ratingLayout = style({
+  display: 'flex',
+  gap: '16px',
+  marginTop: '24px',
+});
+
+export const averageRating = style({
+  fontSize: '50px',
+  fontWeight: 'semiBold',
+  color: global.color.nomadBlack,
+});
+
+export const averageRatingLayout = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '8px',
+});
+
+export const ratingReviewLayout = style({
+  display: 'flex',
+  gap: '6px',
+  alignItems: 'center',
 });
 
 export const paragraph = style([

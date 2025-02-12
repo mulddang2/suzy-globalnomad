@@ -68,7 +68,7 @@ export const horizontalLine = style({
   borderTop: `1px solid ${global.color.nomadBlack}`,
 });
 
-export const reviewLayout = style({
+export const reviewCountLayout = style({
   marginTop: '40px',
   marginBottom: '24px',
 });

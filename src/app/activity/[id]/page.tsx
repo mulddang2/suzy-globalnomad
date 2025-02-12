@@ -2,6 +2,7 @@
 
 import IconLocation from '@/assets/icons/location.svg';
 import StarFill from '@/assets/icons/star-fill.svg';
+import ReviewCardList from '@/components/detail-page/ReviewCardList';
 import KakaoMap from '@/components/kakao-map/KakaoMap';
 import Rating from '@/components/rating/Rating';
 import { useActivitiesReviews } from '@/hooks/use-activities-reviews';
@@ -104,20 +105,23 @@ export default function DetailPage() {
             <div>로딩 중...</div>
           )}
           {reviews?.data && (
-            <div className={styles.reviewLayout}>
-              <h3 className={styles.subheading}>후기</h3>
-              <div className={styles.ratingLayout}>
-                <p className={styles.averageRating}>{reviews.data.averageRating.toFixed(1)}</p>
-                <div className={styles.averageRatingLayout}>
-                  <p>{reviewSummery(reviews.data.averageRating)}</p>
+            <>
+              <div className={styles.reviewCountLayout}>
+                <h3 className={styles.subheading}>후기</h3>
+                <div className={styles.ratingLayout}>
+                  <p className={styles.averageRating}>{reviews.data.averageRating.toFixed(1)}</p>
+                  <div className={styles.averageRatingLayout}>
+                    <p>{reviewSummery(reviews.data.averageRating)}</p>
 
-                  <div className={styles.ratingReviewLayout}>
-                    <StarFill width={16} height={16} />
-                    <p>{reviews.data.totalCount.toLocaleString()}개 후기</p>
+                    <div className={styles.ratingReviewLayout}>
+                      <StarFill width={16} height={16} />
+                      <p>{reviews.data.totalCount.toLocaleString()}개 후기</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+              <ReviewCardList reviewsData={reviews.data} />
+            </>
           )}
         </div>
       </div>

@@ -7,16 +7,18 @@ import KakaoMap from '@/components/kakao-map/KakaoMap';
 import Rating from '@/components/rating/Rating';
 import { useActivitiesReviews } from '@/hooks/use-activities-reviews';
 import { useMyActivitiesDetails } from '@/hooks/use-my-activities-details';
+import Pagination from '@mui/material/Pagination';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
+import { useState } from 'react';
 import * as styles from './page.css';
 
 export default function DetailPage() {
   const { id } = useParams();
-
+  const [page, setPage] = useState(1);
   const { data: activity, isLoading } = useMyActivitiesDetails(id ? Number(id) : null);
 
-  const { data: reviews } = useActivitiesReviews(id ? Number(id) : null);
+  const { data: reviews } = useActivitiesReviews(id ? Number(id) : null, page);
 
   const reviewSummery = (averageRating: number) => {
     if (averageRating >= 4) {
@@ -104,23 +106,31 @@ export default function DetailPage() {
           ) : (
             <div>로딩 중...</div>
           )}
-          {reviews?.data && (
+          {reviews && (
             <>
               <div className={styles.reviewCountLayout}>
                 <h3 className={styles.subheading}>후기</h3>
                 <div className={styles.ratingLayout}>
-                  <p className={styles.averageRating}>{reviews.data.averageRating.toFixed(1)}</p>
+                  <p className={styles.averageRating}>{reviews.averageRating.toFixed(1)}</p>
                   <div className={styles.averageRatingLayout}>
-                    <p>{reviewSummery(reviews.data.averageRating)}</p>
+                    <p>{reviewSummery(reviews.averageRating)}</p>
 
                     <div className={styles.ratingReviewLayout}>
                       <StarFill width={16} height={16} />
-                      <p>{reviews.data.totalCount.toLocaleString()}개 후기</p>
+                      <p>{reviews.totalCount.toLocaleString()}개 후기</p>
                     </div>
                   </div>
                 </div>
               </div>
-              <ReviewCardList reviewsData={reviews.data} />
+              <ReviewCardList reviewsData={reviews} />
+
+              <Pagination
+                count={Math.ceil(reviews.totalCount / 3)} // 한 페이지당 3개 리뷰
+                page={page}
+                onChange={(_, value) => setPage(value)}
+                variant='outlined'
+                shape='rounded'
+              />
             </>
           )}
         </div>

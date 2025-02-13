@@ -1,11 +1,10 @@
 import defaultUserImage from '@/assets/images/default-user.png';
 import { ActivitiesReviews } from '@/types/activities-reviews';
+import dayjs from 'dayjs';
 import Image from 'next/image';
 import * as styles from './ReviewCardList.css';
-import dayjs from 'dayjs';
 
 export default function ReviewCardList({ reviewsData }: { reviewsData: ActivitiesReviews }) {
-
   if (!reviewsData) {
     return <div>리뷰가 없습니다.</div>;
   }

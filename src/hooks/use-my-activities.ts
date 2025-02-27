@@ -7,7 +7,7 @@ export const useMyActivities = () => {
     queryFn: ({ pageParam = null }) => fetchMyActivities(pageParam),
     initialPageParam: null,
     getNextPageParam: (lastPage) => {
-      return lastPage.cursorId;
+      return lastPage?.cursorId ?? null;
     },
     staleTime: 1000 * 60, // 1분
   });

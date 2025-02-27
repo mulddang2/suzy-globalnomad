@@ -29,8 +29,14 @@ export const Dropdown: React.FC = () => {
   }, []);
 
   const handleOptionClick = (option: string) => {
-    if (option === '마이페이지') {
+    if (option === '내 정보') {
       router.push('/profile/mypage');
+    } else if (option === '예약 내역') {
+      router.push('profile/my-reservations');
+    } else if (option === '내 체험 관리') {
+      router.push('/profile/my-activities');
+    } else if (option === '예약 현황') {
+      router.push('/profile/my-activity-board');
     } else if (option === '로그아웃') {
       localStorage.removeItem('accessToken');
       router.push('/login');
@@ -68,10 +74,19 @@ export const Dropdown: React.FC = () => {
           {userName && <span className={styles.userName}>{userName}</span>}
         </div>
       </div>
-      {isDropdownOpen && (
+      {userName && isDropdownOpen && (
         <div className={styles.dropdown}>
-          <button className={styles.dropdownItem} onClick={() => handleOptionClick('마이페이지')}>
-            마이페이지
+          <button className={styles.dropdownItem} onClick={() => handleOptionClick('내 정보')}>
+            내 정보
+          </button>
+          <button className={styles.dropdownItem} onClick={() => handleOptionClick('예약 내역')}>
+            예약 내역
+          </button>
+          <button className={styles.dropdownItem} onClick={() => handleOptionClick('내 체험 관리')}>
+            내 체험 관리
+          </button>
+          <button className={styles.dropdownItem} onClick={() => handleOptionClick('예약 현황')}>
+            예약 현황
           </button>
           <button className={styles.dropdownItem} onClick={() => handleOptionClick('로그아웃')}>
             로그아웃

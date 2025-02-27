@@ -40,7 +40,8 @@ export default function CardList() {
 
   useEffect(() => {
     const intersectionObserver = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
+      // 교차할 경우
+      if (entries[0].isIntersecting && !isFetchingNextPage) {
         fetchNextPage();
       }
     });
@@ -56,7 +57,7 @@ export default function CardList() {
         intersectionObserver.unobserve(currentTarget); // targetRef.current가 사라지면 IntersectionObserver를 해제
       }
     };
-  }, [fetchNextPage]);
+  }, [fetchNextPage, isFetchingNextPage]);
 
   return (
     <section>

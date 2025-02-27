@@ -8,7 +8,7 @@ export const fetchMyActivities = async (pageParam = null) => {
       throw new Error('No access token found');
     }
 
-    const url = pageParam === null ? `/my-activities?size=3` : `/my-activities?size=3&cursorId=${pageParam}`;
+    const url = pageParam ? `/my-activities?size=5&cursorId=${pageParam}`: `/my-activities?size=5` ;
 
     const response = await axiosInstance.get(url, {
       headers: {

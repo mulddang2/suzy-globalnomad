@@ -18,6 +18,14 @@ export const bannerWrapper = style({
   },
 });
 
+export const loadingContainer = style({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  height: '100%',
+});
+
 export const overlay = style({
   position: 'absolute',
   inset: 0,

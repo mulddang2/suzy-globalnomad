@@ -1,16 +1,7 @@
 import useGetActivities from '@/apis/get-activities';
+import loadingSpinner from '@/assets/images/loading-spinner.gif';
 import Image from 'next/image';
-import React from 'react';
-import {
-  bannerWrapper,
-  contentWrapper,
-  errorWrapper,
-  loadingWrapper,
-  overlay,
-  subtitle,
-  textWrapper,
-  title,
-} from './MainBanner.css';
+import * as styles from './MainBanner.css';
 
 const MainBanner = () => {
   const calendarNum = new Date().getMonth() + 1;
@@ -22,31 +13,30 @@ const MainBanner = () => {
   });
 
   return (
-    <div className={bannerWrapper}>
+    <div className={styles.bannerWrapper}>
       {isLoading ? (
-        <div className={loadingWrapper}>
-          <Image src='/icons/spinner.svg' width={150} height={150} alt='loading icon' />
+        <div className={styles.loadingContainer}>
+          <Image src={loadingSpinner} alt='로딩 중' width={80} height={80} />
         </div>
       ) : isError ? (
-        <div className={errorWrapper}>
+        <div className={styles.errorWrapper}>
           데이터를 불러오는데 실패하였습니다.
           <br />
           다시 시도해주세요.
         </div>
       ) : (
         <Image
-          src={data?.activities[0].bannerImageUrl || '/icons/default-banner.png'}
+          src={data?.activities[0].bannerImageUrl || loadingSpinner}
           alt={data?.activities[0].title || '배너 이미지'}
-          layout='fill'
-          objectFit='cover'
-          className='z-0'
+          fill
+          priority
         />
       )}
-      <div className={overlay} />
-      <div className={contentWrapper}>
-        <div className={textWrapper}>
-          <h1 className={title}>{isLoading ? '로딩 중입니다..' : data?.activities[0].title || '체험 제목'}</h1>
-          <p className={subtitle}>{`${calendarNum}월의 인기 체험🔥`}</p>
+      <div className={styles.overlay} />
+      <div className={styles.contentWrapper}>
+        <div className={styles.textWrapper}>
+          <h1 className={styles.title}>{isLoading ? '로딩 중입니다..' : data?.activities[0].title || '체험 제목'}</h1>
+          <p className={styles.subtitle}>{`${calendarNum}월의 인기 체험🔥`}</p>
         </div>
       </div>
     </div>

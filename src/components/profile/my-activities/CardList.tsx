@@ -41,21 +41,21 @@ export default function CardList() {
   useEffect(() => {
     const intersectionObserver = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
-    fetchNextPage();
-  }
+        fetchNextPage();
+      }
     });
 
     const currentTarget = targetRef.current;
 
     if (currentTarget) {
       intersectionObserver.observe(currentTarget); // targetRef.current가 보일 때까지 IntersectionObserver를 통해 감시
-  }
+    }
 
-  return () => {
+    return () => {
       if (currentTarget) {
         intersectionObserver.unobserve(currentTarget); // targetRef.current가 사라지면 IntersectionObserver를 해제
       }
-  };
+    };
   }, [fetchNextPage]);
   return (
     <section>

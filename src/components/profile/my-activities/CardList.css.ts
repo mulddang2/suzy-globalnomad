@@ -1,6 +1,17 @@
 import { fontSizes, fontWeights } from '@/styles/fontStyles.css';
-import { style } from '@vanilla-extract/css';
+import { keyframes, style } from '@vanilla-extract/css';
 import { global } from '@/styles/global.css';
+
+const shimmer = keyframes({
+  '0%': { backgroundPosition: '-200px 0' },
+  '100%': { backgroundPosition: '200px 0' },
+});
+
+export const skeleton = style({
+  background: 'linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%)',
+  backgroundSize: '200px 100%',
+  animation: `${shimmer} 1.5s infinite linear`,
+});
 
 export const cardSectionList = style({
   display: 'grid',

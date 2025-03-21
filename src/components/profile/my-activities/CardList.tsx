@@ -4,7 +4,7 @@ import { useDeleteActivity } from '@/hooks/use-delete-activity';
 import { useMyActivities } from '@/hooks/use-my-activities';
 import { MyActivitiesList } from '@/types/my-activities-list';
 import { formatToKor } from '@/utils/format-to-kor';
-import { CircularProgress, Skeleton } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import Image from 'next/image';
@@ -40,59 +40,44 @@ export default function CardList() {
 
   useEffect(() => {
     const intersectionObserver = new IntersectionObserver((entries) => {
-      // 교차할 경우
-      if (entries[0].isIntersecting && !isFetchingNextPage) {
-        fetchNextPage();
-      }
+      if (entries[0].isIntersecting) {
+    fetchNextPage();
+  }
     });
 
     const currentTarget = targetRef.current;
 
     if (currentTarget) {
       intersectionObserver.observe(currentTarget); // targetRef.current가 보일 때까지 IntersectionObserver를 통해 감시
-    }
+  }
 
-    return () => {
+  return () => {
       if (currentTarget) {
         intersectionObserver.unobserve(currentTarget); // targetRef.current가 사라지면 IntersectionObserver를 해제
       }
-    };
-  }, [fetchNextPage, isFetchingNextPage]);
-
+  };
+  }, [fetchNextPage]);
   return (
     <section>
-      {isLoading && (
+      {isLoading ? (
         <div className={styles.cardSectionList}>
           {new Array(3).fill('').map((_, index) => (
             <div className={styles.cardSection} key={`skeleton-${index}`}>
-              <div className={styles.cardImageContainer}>
-                <Skeleton variant='rectangular' width='100%' height={'100%'} animation='wave' />
-              </div>
-              <div className={styles.cardContentLayout}>
-                <div className={styles.cardTopLayout}>
-                  <Skeleton variant='text' width='60%' height={30} animation='wave' />
-                  <Skeleton variant='text' width='40%' height={20} animation='wave' />
-                </div>
-                <div className={styles.cardBottomLayout}>
-                  <Skeleton variant='text' width='50%' height={20} animation='wave' />
-                </div>
-              </div>
+              <div className={`${styles.cardImageContainer} ${styles.skeleton}`} />
             </div>
           ))}
         </div>
-      )}
-
-      {/* 데이터 렌더링 */}
-      {!isLoading &&
+      ) : (
         data?.pages.map((page) => (
           <div key={page.cursorId} className={styles.cardSectionList}>
-            {page.activities.map((activity: MyActivitiesList) => (
+            {page.activities.map((activity: MyActivitiesList, index: number) => (
               <div className={styles.cardSection} key={activity.id}>
                 <div className={styles.cardImageContainer}>
                   <Image
                     src={activity.bannerImageUrl}
-                    sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                     fill
+                    priority={index < 3}
+                    sizes='(max-width: 600px) 100vw, (max-width: 1200px) 40vw, 30vw'
                     loading='lazy'
                     alt={'체험 이미지'}
                     className={styles.responsiveImage}
@@ -117,7 +102,8 @@ export default function CardList() {
               </div>
             ))}
           </div>
-        ))}
+        ))
+      )}
 
       {/* 추가 데이터 로딩 중일 때 로딩바 */}
       {isFetchingNextPage && (

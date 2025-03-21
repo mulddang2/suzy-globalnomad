@@ -6,6 +6,7 @@ const withVanillaExtract = createVanillaExtractPlugin();
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
+    formats: ['image/webp'],
     remotePatterns: [
       {
         protocol: 'https',

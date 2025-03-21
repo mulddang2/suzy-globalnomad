@@ -1,5 +1,5 @@
 import useGetActivities from '@/apis/get-activities';
-import loadingSpinner from '@/assets/images/loading-spinner.gif';
+import loadingSpinner from '@/assets/images/loading-spinner.webp';
 import Image from 'next/image';
 import * as styles from './MainBanner.css';
 

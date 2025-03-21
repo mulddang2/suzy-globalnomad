@@ -105,7 +105,7 @@ export default function ProfileSideNavMenu(props: ProfileSideNavMenuProps) {
   };
 
   const handleImagePreview = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
+    if (e.target.files?.[0]) {
       const selectedFile = e.target.files[0];
       props.setImageFile(selectedFile);
       encodeFileToBase64(selectedFile);
@@ -143,9 +143,9 @@ export default function ProfileSideNavMenu(props: ProfileSideNavMenuProps) {
       </div>
       <nav className={styles.navContainer}>
         <ul className={styles.navListBox}>
-          {props.menuList.map((item, index) => {
+          {props.menuList.map((item) => {
             return (
-              <li key={index} className={styles.navTextBox}>
+              <li key={item.title} className={styles.navTextBox}>
                 <button onClick={item.onClick} className={styles.navText}>
                   {item.icon}
                   <span>{item.title}</span>

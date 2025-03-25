@@ -4,9 +4,8 @@ import CustomDrawer from '@/components/drawer/CustomDrawer';
 import CardList from '@/components/profile/my-activities/CardList';
 import { StyledEngineProvider } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import Loading from './loading';
 import * as styles from './page.css';
 
 export default function MyActivitiesPage() {
@@ -49,9 +48,7 @@ export default function MyActivitiesPage() {
           )}
         </div>
         {/* 내 예약 카드 리스트 */}
-        <Suspense fallback={<Loading />}>
-          <CardList />
-        </Suspense>
+        <CardList />
       </div>
     </StyledEngineProvider>
   );

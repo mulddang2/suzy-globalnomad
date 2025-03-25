@@ -19,22 +19,24 @@ const MainPage = () => {
   }, []);
 
   return (
-    <Suspense fallback={<Loading />}>
-      <div className={wrapper}>
-        <MainBanner />
-        <ActivitySearch setKeyword={setKeyword} />
-        {keyword.trim() ? (
-          <>
-            <SearchResultList keyword={keyword} />
-          </>
-        ) : (
-          <>
+    <div className={wrapper}>
+      <MainBanner />
+      <ActivitySearch setKeyword={setKeyword} />
+      {keyword.trim() ? (
+        <>
+          <SearchResultList keyword={keyword} />
+        </>
+      ) : (
+        <>
+          <Suspense fallback={<Loading />}>
             <PopularActivityList />
+          </Suspense>
+          <Suspense fallback={<Loading />}>
             <ActivityCardList />
-          </>
-        )}
-      </div>
-    </Suspense>
+          </Suspense>
+        </>
+      )}
+    </div>
   );
 };
 

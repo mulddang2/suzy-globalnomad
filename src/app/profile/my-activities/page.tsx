@@ -25,34 +25,34 @@ export default function MyActivitiesPage() {
 
   return (
     <StyledEngineProvider injectFirst>
-      <Suspense fallback={<Loading />}>
-        <div className={styles.myActivitiesPageContainer}>
-          <div className={styles.topLayout}>
-            {isMobile ? (
-              <>
-                <div>
-                  <div className={styles.mobileMenuTitle}>
-                    <CustomDrawer />
-                    <h2 className={styles.h2Title}>체험 관리</h2>
-                  </div>
+      <div className={styles.myActivitiesPageContainer}>
+        <div className={styles.topLayout}>
+          {isMobile ? (
+            <>
+              <div>
+                <div className={styles.mobileMenuTitle}>
+                  <CustomDrawer />
+                  <h2 className={styles.h2Title}>체험 관리</h2>
                 </div>
-                <button onClick={handleClick} className={styles.createButton}>
-                  체험 등록
-                </button>
-              </>
-            ) : (
-              <>
-                <h2 className={styles.h2Title}>내 체험 관리</h2>
-                <button onClick={handleClick} className={styles.createButton}>
-                  체험 등록하기
-                </button>
-              </>
-            )}
-          </div>
-          {/* 내 예약 카드 리스트 */}
-          <CardList />
+              </div>
+              <button onClick={handleClick} className={styles.createButton}>
+                체험 등록
+              </button>
+            </>
+          ) : (
+            <>
+              <h2 className={styles.h2Title}>내 체험 관리</h2>
+              <button onClick={handleClick} className={styles.createButton}>
+                체험 등록하기
+              </button>
+            </>
+          )}
         </div>
-      </Suspense>
+        {/* 내 예약 카드 리스트 */}
+        <Suspense fallback={<Loading />}>
+          <CardList />
+        </Suspense>
+      </div>
     </StyledEngineProvider>
   );
 }

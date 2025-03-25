@@ -78,7 +78,6 @@ export default function CardList() {
                     fill
                     priority={index < 3}
                     sizes='(max-width: 600px) 100vw, (max-width: 1200px) 40vw, 30vw'
-                    loading='lazy'
                     alt={'체험 이미지'}
                     className={styles.responsiveImage}
                   />

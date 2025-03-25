@@ -6,7 +6,6 @@ import MainBanner from '@/components/main-page/MainBanner';
 import PopularActivityList from '@/components/main-page/PopularActivityList';
 import SearchResultList from '@/components/main-page/SearchResultList';
 import { Suspense, useEffect, useState } from 'react';
-import Loading from './loading';
 import { wrapper } from './page.css';
 
 const MainPage = () => {
@@ -19,7 +18,7 @@ const MainPage = () => {
   }, []);
 
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense>
       <div className={wrapper}>
         <MainBanner />
         <ActivitySearch setKeyword={setKeyword} />

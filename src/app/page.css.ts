@@ -6,9 +6,8 @@ export const wrapper = style({
   flexDirection: 'column',
   alignItems: 'center',
   width: '100%',
-  minWidth: '1200px',
-  marginBottom: '8rem',
-  backgroundColor: global.color.gray[100],
+  paddingBottom: '8rem',
+  backgroundColor: global.color.whiteBg,
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
       width: 'calc(100% - 1rem)',

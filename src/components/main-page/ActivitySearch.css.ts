@@ -6,6 +6,8 @@ export const container = style({
   justifyContent: 'center',
   background: 'none',
   paddingBottom: '118px',
+  width: '62.5%',
+
   '@media': {
     'screen and (max-width: 767px)': {
       paddingBottom: '73px',
@@ -19,17 +21,18 @@ export const form = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '8px',
-  width: '1184px',
+  // width: '1184px',
+  width: '100%',
   padding: '24px',
   boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
   borderRadius: '16px',
   backgroundColor: 'white',
   '@media': {
     'screen and (max-width: 1199px) and (min-width: 768px)': {
-      width: '1000px',
+      // width: '1000px',
     },
     'screen and (max-width: 767px)': {
-      width: '400px',
+      // width: '400px',
       gap: '15px',
       padding: '16px',
     },

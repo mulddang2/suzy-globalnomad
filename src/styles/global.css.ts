@@ -4,6 +4,7 @@ export const global = createGlobalTheme(':root', {
   color: {
     black: '#1B1B1B',
     nomadBlack: '#112211',
+    whiteBg: '#FAFBFC',
 
     gray: {
       900: '#4B4B4B',

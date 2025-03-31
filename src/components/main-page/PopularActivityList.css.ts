@@ -1,6 +1,7 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 
 export const container = style({
+  width: '62.5%',
   marginTop: '2.5rem',
   marginBottom: '3.75rem',
   '@media': {
@@ -38,6 +39,7 @@ export const title = style({
 
 export const cardContainer = style({
   display: 'flex',
+  justifyContent: 'space-between',
   gap: '1.5rem',
   width: '100%',
   overflowX: 'scroll',

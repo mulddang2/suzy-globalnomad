@@ -1,7 +1,8 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 
 export const container = style({
-  width: '62%',
+  // width: '62%',
+  width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
   color: 'green',
@@ -26,7 +27,7 @@ export const categoryList = style({
   '@media': {
     'screen and (max-width: 1199px) and (min-width: 768px)': {
       gap: '8px',
-      width: '240px',
+      // width: '240px',
       paddingRight: '8px',
     },
     'screen and (max-width: 767px)': {

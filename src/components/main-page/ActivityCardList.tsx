@@ -93,12 +93,14 @@ const ActivityCardList = () => {
 
   return (
     <>
-      <CategoryFilter
-        currentCategory={currentCategory}
-        onSelectCategory={handleCategoryClick}
-        onSetSort={handleSortClick}
-      />
-      <h2 className={styles.container}>{currentCategory || '🥾 모든 체험'}</h2>
+      <div className={styles.filterContainer}>
+        <CategoryFilter
+          currentCategory={currentCategory}
+          onSelectCategory={handleCategoryClick}
+          onSetSort={handleSortClick}
+        />
+        <h2 className={styles.container}>{currentCategory || '🥾 모든 체험'}</h2>
+      </div>
       <div className={styles.gridContainer}>
         {isFetching
           ? Array.from({ length: offset }, (_, index) => <ActivityCardSkeleton key={index} />)

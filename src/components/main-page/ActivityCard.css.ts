@@ -22,18 +22,23 @@ export const activityCardInnerWrapper = style({
 });
 
 export const activityCardImage = style({
-  width: '278px',
+  objectFit: 'cover',
+});
+
+export const activityCardImageBox = style({
+  position: 'relative',
+  width: '100%',
   height: '278px',
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
+  overflow: 'hidden',
   borderRadius: '24px',
+
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
-      width: '232px',
+      // width: '232px',
       height: '232px',
     },
     'screen and (min-width: 320px) and (max-width: 767px)': {
-      width: '168px',
+      // width: '168px',
       height: '168px',
     },
   },

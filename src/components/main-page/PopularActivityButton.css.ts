@@ -1,4 +1,5 @@
 import { style, styleVariants } from '@vanilla-extract/css';
+import { global } from '@/styles/global.css';
 
 export const buttonContainer = style({
   display: 'flex',
@@ -28,6 +29,7 @@ export const icon = styleVariants({
     stroke: '#4b5563',
   },
   disabled: {
-    stroke: '#FFFFFF',
+    stroke: global.color.gray[700],
+    cursor: 'default',
   },
 });

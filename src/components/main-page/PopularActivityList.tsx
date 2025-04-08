@@ -26,16 +26,23 @@ const PopularActivityList = () => {
   const activities = data?.activities || [];
   const totalCount = data?.totalCount || 0;
 
-  const pageActivityList = activities.slice(startIdx, startIdx + OFFSET);
+  const filteredPopularActivities = activities.filter((activity) => !activity.bannerImageUrl?.includes('a.png'));
+
+  // 현재 페이지에 보여줄 활동 리스트
+  const pageActivityList = filteredPopularActivities.slice(startIdx, startIdx + OFFSET);
+
+  // 비활성화 조건
+  const isFirstPage = startIdx === 0;
+  const isLastPage = startIdx + OFFSET >= filteredPopularActivities.length;
 
   const handleLeftClick = () => {
-    if (startIdx > 0) {
+    if (!isFirstPage) {
       setStartIdx(startIdx - OFFSET);
     }
   };
 
   const handleRightClick = () => {
-    if (startIdx + OFFSET < activities.length) {
+    if (!isLastPage) {
       setStartIdx(startIdx + OFFSET);
     }
   };
@@ -48,6 +55,8 @@ const PopularActivityList = () => {
           idx={startIdx / OFFSET + 1}
           onLeftClick={handleLeftClick}
           onRightClick={handleRightClick}
+          isLeftDisabled={isFirstPage}
+          isRightDisabled={isLastPage}
         />
       </div>
       <div className={styles.cardContainer}>
@@ -60,8 +69,11 @@ const PopularActivityList = () => {
         ) : (
           pageActivityList.map((activity) => <PopularActivityCard key={activity.id} cardData={activity} />)
         )}
+
+        {filteredPopularActivities.length === 0 && totalCount !== 0 && !isFetching && (
+          <div className={styles.emptyContainer}>인기 체험 내역이 없습니다.</div>
+        )}
       </div>
-      {totalCount === 0 && !isFetching && <div className={styles.emptyContainer}>인기 체험 내역이 없습니다.</div>}
     </div>
   );
 };

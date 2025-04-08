@@ -4,32 +4,42 @@ import React from 'react';
 import * as styles from './PopularActivityButton.css';
 
 interface PopularActivityButtonProps {
-  idx: number;
   onLeftClick: () => void;
   onRightClick: () => void;
+  isLeftDisabled: boolean;
+  isRightDisabled: boolean;
 }
 
-const PopularActivityButton = ({ idx, onLeftClick, onRightClick }: PopularActivityButtonProps) => {
+const PopularActivityButton = ({
+  onLeftClick,
+  onRightClick,
+  isLeftDisabled,
+  isRightDisabled,
+}: PopularActivityButtonProps) => {
   return (
     <div className={styles.buttonContainer}>
       <button
         type='button'
         onClick={onLeftClick}
-        disabled={idx === 0}
+        disabled={isLeftDisabled}
         aria-label='Go to previous Activity'
-        className={`${styles.arrowButton} ${idx === 0 ? styles.arrowButtonDisabled : ''}`}
+        className={`${styles.arrowButton} ${isLeftDisabled ? styles.arrowButtonDisabled : ''}`}
       >
-        <PopularLeftArrowBtn className={styles.icon[idx === 0 ? 'disabled' : 'enabled']} />
+        <PopularLeftArrowBtn
+          className={styles.icon[isLeftDisabled ? 'disabled' : 'enabled']}
+        />
       </button>
 
       <button
         type='button'
         onClick={onRightClick}
-        disabled={idx === 8}
+        disabled={isRightDisabled}
         aria-label='Go to next Activity'
-        className={`${styles.arrowButton} ${idx === 8 ? styles.arrowButtonDisabled : ''}`}
+        className={`${styles.arrowButton} ${isRightDisabled ? styles.arrowButtonDisabled : ''}`}
       >
-        <PoPularRightArrowBtn className={styles.icon[idx === 8 ? 'disabled' : 'enabled']} />
+        <PoPularRightArrowBtn
+          className={styles.icon[isRightDisabled ? 'disabled' : 'enabled']}
+        />
       </button>
     </div>
   );

@@ -1,6 +1,7 @@
 'use client';
 
 import getPopularActivity from '@/apis/get-popular-activity';
+import { SECTION_TITLES } from '@/constants/text';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import PopularCardSkeleton from '../skeletonui/mainpage/PopularCardSkeleton';
@@ -50,9 +51,8 @@ const PopularActivityList = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h2 className={styles.title}>🔥인기 체험</h2>
+        <h2 className={styles.title}>{SECTION_TITLES.POPULAR_ACTIVITY}</h2>
         <PopularActivityButton
-          idx={startIdx / OFFSET + 1}
           onLeftClick={handleLeftClick}
           onRightClick={handleRightClick}
           isLeftDisabled={isFirstPage}

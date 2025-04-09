@@ -19,37 +19,38 @@ export const container = style({
 export const header = style({
   display: 'flex',
   justifyContent: 'space-between',
+  alignItems: 'center',
+  marginBottom: '33px',
+  '@media': {
+    'screen and (min-width: 320px) and (max-width: 767px)': {
+      marginBottom: '24px',
+    },
+  },
 });
 
 export const title = style({
-  fontSize: '2rem',
+  fontSize: '36px',
   fontWeight: 'bold',
-  marginBottom: '2rem',
   '@media': {
-    'screen and (min-width: 768px) and (max-width: 1199px)': {
-      fontSize: '1.125rem',
-      marginBottom: '1.5rem',
-    },
     'screen and (min-width: 320px) and (max-width: 767px)': {
-      fontSize: '1rem',
-      marginBottom: '1.5rem',
+      fontSize: '18px',
     },
   },
 });
 
 export const cardContainer = style({
-  display: 'flex',
-  justifyContent: 'space-between',
-  gap: '1.5rem',
-  width: '100%',
-  overflowX: 'scroll',
+  display: 'grid',
+  gridTemplateColumns: 'repeat(3, 1fr)',
+  gap: '16px',
+
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
-      width: 'calc(100% - 1.5rem)',
-      gap: '2rem',
+      gridTemplateColumns: 'repeat(3, 80%)',
+      overflowX: 'auto',
+      scrollSnapType: 'x mandatory',
     },
-    'screen and (min-width: 320px) and (max-width: 767px)': {
-      gap: '1rem',
+    'screen and (max-width: 767px)': {
+      gridTemplateColumns: 'repeat(2, 1fr)',
     },
   },
 });

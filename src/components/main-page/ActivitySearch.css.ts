@@ -1,4 +1,6 @@
+import { fontSizes } from '@/styles/fontStyles.css';
 import { style } from '@vanilla-extract/css';
+import { global } from '@/styles/global.css';
 
 export const container = style({
   position: 'relative',
@@ -21,34 +23,32 @@ export const form = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '8px',
-  // width: '1184px',
   width: '100%',
   padding: '24px',
   boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
   borderRadius: '16px',
   backgroundColor: 'white',
   '@media': {
-    'screen and (max-width: 1199px) and (min-width: 768px)': {
-      // width: '1000px',
-    },
+    'screen and (max-width: 1199px) and (min-width: 768px)': {},
     'screen and (max-width: 767px)': {
-      // width: '400px',
       gap: '15px',
       padding: '16px',
     },
   },
 });
 
-export const label = style({
-  color: 'black',
-  fontSize: '1.25rem',
-  fontWeight: 'bold',
-  '@media': {
-    'screen and (max-width: 767px)': {
-      fontSize: '1rem',
+export const label = style([
+  fontSizes.textXl,
+  {
+    color: global.color.black,
+    fontWeight: 'bold',
+    '@media': {
+      'screen and (max-width: 767px)': {
+        fontSize: '1rem',
+      },
     },
   },
-});
+]);
 
 export const inputContainer = style({
   display: 'flex',

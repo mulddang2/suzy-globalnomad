@@ -5,6 +5,7 @@ import {
   setCurrentViewedActivity,
   setRecentlyViewedActivities,
 } from '@/utils/recent-activities';
+import Image from 'next/image';
 import Rating from '../rating/Rating';
 import * as styles from './PopularActivityCard.css';
 
@@ -36,7 +37,14 @@ const PopularActivityCard = ({
 
   return (
     <div onClick={handleClick} className={styles.cardContainer}>
-      <div className={styles.imageContainer} style={{ backgroundImage: `url('${bannerImageUrl}')` }}>
+      <div className={styles.imageContainer}>
+        <Image
+          src={bannerImageUrl}
+          alt={title}
+          fill
+          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+          className={styles.popularActivityImage}
+        />
         <div className={styles.overlay} />
       </div>
       <div className={styles.contentContainer}>

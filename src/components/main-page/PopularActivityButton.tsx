@@ -25,9 +25,7 @@ const PopularActivityButton = ({
         aria-label='Go to previous Activity'
         className={`${styles.arrowButton} ${isLeftDisabled ? styles.arrowButtonDisabled : ''}`}
       >
-        <PopularLeftArrowBtn
-          className={styles.icon[isLeftDisabled ? 'disabled' : 'enabled']}
-        />
+        <PopularLeftArrowBtn className={styles.icon[isLeftDisabled ? 'disabled' : 'enabled']} />
       </button>
 
       <button
@@ -37,9 +35,7 @@ const PopularActivityButton = ({
         aria-label='Go to next Activity'
         className={`${styles.arrowButton} ${isRightDisabled ? styles.arrowButtonDisabled : ''}`}
       >
-        <PoPularRightArrowBtn
-          className={styles.icon[isRightDisabled ? 'disabled' : 'enabled']}
-        />
+        <PoPularRightArrowBtn className={styles.icon[isRightDisabled ? 'disabled' : 'enabled']} />
       </button>
     </div>
   );

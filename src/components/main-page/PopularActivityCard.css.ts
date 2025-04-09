@@ -2,26 +2,38 @@ import { style } from '@vanilla-extract/css';
 
 export const cardContainer = style({
   position: 'relative',
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: '16px',
+  height: '384px',
+  cursor: 'pointer',
 });
 
 export const imageContainer = style({
   position: 'relative',
-  width: '378px',
-  height: '378px',
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
   borderRadius: '24px',
+  height: '384px',
+  width: '100%',
+
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
-      width: '317px',
-      height: '317px',
+      width: '50%',
+      selectors: {
+        '&:nth-of-type(1)': {
+          width: '100%', // 첫 번째는 가로 전체
+        },
+      },
     },
     'screen and (min-width: 320px) and (max-width: 767px)': {
-      width: '186px',
-      height: '186px',
+      width: '50%',
     },
   },
+});
+
+export const popularActivityImage = style({
+  borderRadius: '24px',
+  objectFit: 'cover',
+  position: 'absolute',
 });
 
 export const overlay = style({
@@ -38,7 +50,6 @@ export const contentContainer = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '20px',
-  width: '230px',
   color: 'white',
   '@media': {
     'screen and (min-width: 320px) and (max-width: 767px)': {

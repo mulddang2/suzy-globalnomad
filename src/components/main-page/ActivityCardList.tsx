@@ -3,6 +3,7 @@ import { queryKeys } from '@/apis/querykeys';
 import ActivityCard from '@/components/main-page/ActivityCard';
 import Pagination from '@/components/pagination/Pagination';
 import ActivityCardSkeleton from '@/components/skeletonui/mainpage/ActivityCardSkeleton';
+import { SECTION_TITLES } from '@/constants/text';
 import { ActivityResponse } from '@/types/mainpage';
 import { useQuery } from '@tanstack/react-query';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -91,6 +92,8 @@ const ActivityCardList = () => {
   const activities = allActivityList?.activities || [];
   const totalCount = allActivityList?.totalCount || 0;
 
+  const filteredAllActivities = activities.filter((activity) => !activity.bannerImageUrl?.includes('a.png'));
+
   return (
     <>
       <div className={styles.filterContainer}>
@@ -99,13 +102,15 @@ const ActivityCardList = () => {
           onSelectCategory={handleCategoryClick}
           onSetSort={handleSortClick}
         />
-        <h2 className={styles.container}>{currentCategory || '🥾 모든 체험'}</h2>
+        <h2 className={styles.container}>{currentCategory || SECTION_TITLES.ALL_ACTIVITY}</h2>
       </div>
       <div className={styles.gridContainer}>
         {isFetching
           ? Array.from({ length: offset }, (_, index) => <ActivityCardSkeleton key={index} />)
-          : activities.map((activity) => <ActivityCard key={activity.id} cardData={activity} />)}
-        {totalCount === 0 && !isFetching && <div className={styles.noActivities}>신청할 수 있는 체험이 없습니다.</div>}
+          : filteredAllActivities.map((activity) => <ActivityCard key={activity.id} cardData={activity} />)}
+        {filteredAllActivities.length === 0 && !isFetching && (
+          <div className={styles.noActivities}>신청할 수 있는 체험이 없습니다.</div>
+        )}
       </div>
       {totalCount !== 0 && (
         <Pagination

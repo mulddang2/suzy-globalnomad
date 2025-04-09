@@ -102,5 +102,4 @@ globalStyle('body', {
   wordBreak: 'keep-all',
   fontFamily: 'Pretendard, sans-serif',
   color: global.color.black,
-  fontSize: '1.6rem',
 });

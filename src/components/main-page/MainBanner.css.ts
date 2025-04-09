@@ -39,63 +39,58 @@ export const contentWrapper = style({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  paddingLeft: '2rem',
-  paddingRight: '2rem',
   width: '100%',
-  maxWidth: '1000px',
+  maxWidth: '62.5%',
+  height: '100%',
   '@media': {
-    'screen and (min-width: 768px) and (max-width: 1199px)': {
-      paddingLeft: '1rem',
-      paddingRight: '1rem',
-    },
-    'screen and (max-width: 767px)': {
-      paddingLeft: '0.5rem',
-      paddingRight: '0.5rem',
-    },
+    'screen and (min-width: 768px) and (max-width: 1199px)': {},
+    'screen and (max-width: 767px)': {},
   },
 });
 
 export const textWrapper = style({
-  marginTop: '16rem',
   display: 'flex',
   flexDirection: 'column',
   gap: '1.25rem',
   width: '502px',
+  justifyContent: 'center',
   '@media': {
-    'screen and (min-width: 768px) and (max-width: 1199px)': {
-      width: '440px',
-    },
-    'screen and (max-width: 767px)': {
-      width: '184px',
-    },
+    'screen and (min-width: 768px) and (max-width: 1199px)': {},
+    'screen and (max-width: 767px)': {},
   },
 });
 
 export const title = style({
   color: 'white',
-  fontSize: '3.75rem',
+  fontSize: '68px',
+  lineHeight: '81px',
   fontWeight: 'bold',
-  lineHeight: '1.2',
+
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
-      fontSize: '3.375rem',
+      fontSize: '54px',
+      lineHeight: '64px',
     },
     'screen and (max-width: 767px)': {
-      fontSize: '1.5rem',
+      fontSize: '24px',
+      lineHeight: '29px',
     },
   },
 });
 
 export const subtitle = style({
   color: 'white',
-  fontSize: '1.25rem',
+  fontSize: '24px',
+  lineHeight: '29px',
   fontWeight: 'bold',
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
-      fontSize: '1rem',
+      fontSize: '20px',
+      lineHeight: '26px',
     },
     'screen and (max-width: 767px)': {
-      fontSize: '0.875rem',
+      fontSize: '14px',
+      lineHeight: '26px',
     },
   },
 });
@@ -105,7 +100,6 @@ export const errorWrapper = style({
   justifyContent: 'center',
   textAlign: 'center',
   color: 'white',
-  fontSize: '1rem',
   fontWeight: 'bold',
 });
 

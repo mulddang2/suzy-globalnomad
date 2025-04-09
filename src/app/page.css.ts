@@ -9,15 +9,7 @@ export const wrapper = style({
   paddingBottom: '8rem',
   backgroundColor: global.color.whiteBg,
   '@media': {
-    'screen and (min-width: 768px) and (max-width: 1199px)': {
-      width: 'calc(100% - 1rem)',
-    },
-    'screen and (min-width: 320px) and (max-width: 767px)': {
-      width: '100%',
-      padding: '0.5rem',
-    },
-    'screen and (min-width: 1200px)': {
-      width: '100%',
-    },
+    'screen and (min-width: 320px) and (max-width: 767px)': {},
+    'screen and (min-width: 1200px)': {},
   },
 });

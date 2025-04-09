@@ -18,12 +18,13 @@ export const bannerWrapper = style({
   },
 });
 
-export const loadingContainer = style({
+export const loadingOverlay = style({
+  position: 'absolute',
+  inset: 0,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  width: '100%',
-  height: '100%',
+  zIndex: 3,
 });
 
 export const overlay = style({

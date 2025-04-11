@@ -52,7 +52,7 @@ export const contentWrapper = style({
 export const textWrapper = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '1.25rem',
+  gap: '20px',
   width: '502px',
   justifyContent: 'center',
   '@media': {

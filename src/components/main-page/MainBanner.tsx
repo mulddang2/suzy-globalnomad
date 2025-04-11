@@ -39,7 +39,7 @@ const MainBanner = () => {
       <div className={styles.contentWrapper}>
         <div className={styles.textWrapper}>
           <h1 className={styles.title}>{isLoading ? '로딩 중입니다..' : data?.activities[0]?.title || '체험 제목'}</h1>
-          <p className={styles.subtitle}>{`${calendarNum}월의 인기 체험🔥`}</p>
+          <p className={styles.subtitle}>{`${calendarNum}월의 인기 체험 BEST🔥`}</p>
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ export const global = createGlobalTheme(':root', {
     black: '#1B1B1B',
     nomadBlack: '#112211',
     whiteBg: '#FAFBFC',
+    white: '#FFFFFF',
 
     gray: {
       900: '#4B4B4B',

@@ -22,7 +22,7 @@ export const form = style({
   top: '-56px',
   display: 'flex',
   flexDirection: 'column',
-  gap: '8px',
+  gap: '32px',
   width: '100%',
   padding: '24px',
   boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
@@ -55,6 +55,7 @@ export const inputContainer = style({
   alignItems: 'center',
   gap: '12px',
   width: '100%',
+  height: '56px',
 });
 
 export const inputBox = style({
@@ -62,9 +63,8 @@ export const inputBox = style({
   display: 'flex',
   alignItems: 'center',
   width: '992px',
-  height: '56px',
   border: '1px solid #d1d5db',
-  borderRadius: '8px',
+  borderRadius: '4px',
   ':focus-within': {
     border: '1px solid #34d399',
   },
@@ -99,21 +99,24 @@ export const input = style({
   },
 });
 
-export const button = style({
-  backgroundColor: 'black',
-  color: 'white',
-  borderRadius: '8px',
-  fontWeight: 'bold',
-  minWidth: '136px',
-  height: '75px',
-  padding: '0 40px',
-  ':hover': {
-    backgroundColor: '#444',
-  },
-  '@media': {
-    'screen and (max-width: 767px)': {
-      minWidth: '96px',
-      padding: '0 20px',
+export const button = style([
+  fontSizes.textLg,
+  {
+    backgroundColor: global.color.nomadBlack,
+    color: global.color.white,
+    borderRadius: '4px',
+    fontWeight: 'bold',
+    minWidth: '136px',
+    height: '56px',
+    padding: '0 40px',
+    ':hover': {
+      backgroundColor: '#444',
+    },
+    '@media': {
+      'screen and (max-width: 767px)': {
+        minWidth: '96px',
+        padding: '0 20px',
+      },
     },
   },
-});
+]);

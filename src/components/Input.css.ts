@@ -19,6 +19,7 @@ export const inputContainer = style({
   alignItems: 'center',
   gridTemplateColumns: 'auto 1fr auto',
   width: '100%',
+  height: '100%',
   outline: `1px solid ${global.color.gray[800]}`,
   backgroundColor: '#fff',
 

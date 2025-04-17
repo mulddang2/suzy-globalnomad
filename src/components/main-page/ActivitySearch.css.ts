@@ -8,7 +8,6 @@ export const container = style({
   justifyContent: 'center',
   background: 'none',
   paddingBottom: '118px',
-  width: '62.5%',
 
   '@media': {
     'screen and (max-width: 767px)': {

@@ -66,10 +66,6 @@ export const global = createGlobalTheme(':root', {
   },
 });
 
-globalStyle('html', {
-  fontSize: '62.5%',
-});
-
 globalStyle('*, ::before, ::after', {
   boxSizing: 'border-box',
 });

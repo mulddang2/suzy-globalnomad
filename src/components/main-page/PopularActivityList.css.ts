@@ -1,7 +1,6 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 
 export const container = style({
-  width: '62.5%',
   marginTop: '2.5rem',
   marginBottom: '3.75rem',
   '@media': {
@@ -42,6 +41,8 @@ export const cardContainer = style({
   display: 'grid',
   gridTemplateColumns: 'repeat(3, 1fr)',
   gap: '16px',
+  width: '100%',
+  maxWidth: '1200px',
 
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
@@ -55,18 +56,19 @@ export const cardContainer = style({
   },
 });
 
-export const skeletonContainer = style({
+export const skeletonCardContainer = style({
   display: 'flex',
-  gap: '1.5rem',
-  minWidth: 'max-content',
-  '@media': {
-    'screen and (min-width: 768px) and (max-width: 1199px)': {
-      gap: '2rem',
-    },
-    'screen and (min-width: 320px) and (max-width: 767px)': {
-      gap: '1rem',
-    },
-  },
+  flexDirection: 'column',
+  gap: '16px',
+  width: '100%',
+});
+
+export const skeletonContainer = style({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+  gap: '16px',
+  width: '100%',
+  padding: '1rem',
 });
 
 export const emptyContainer = style({

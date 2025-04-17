@@ -1,15 +1,14 @@
 import { style } from '@vanilla-extract/css';
 
-export const skeleton = style({
-  width: '380px',
-  height: '380px',
+export const popularSkeleton = style({
+  width: '100%',
+  height: '384px',
   backgroundColor: '#e0e0e0',
   borderRadius: '24px',
   position: 'relative',
   '@media': {
     'screen and (max-width: 1199px)': {
-      width: '317px',
-      height: '317px',
+      width: '100%',
     },
     'screen and (max-width: 767px)': {
       width: '186px',

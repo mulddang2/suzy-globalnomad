@@ -1,8 +1,6 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 
-export const filterContainer = style({
-  width: '62.5%',
-});
+export const filterContainer = style({});
 
 export const container = style({
   marginTop: '2.5rem',
@@ -30,7 +28,6 @@ export const gridContainer = style({
   gridTemplateColumns: 'repeat(4, 1fr)',
   gap: '1.5rem',
   maxWidth: '1200px',
-  width: '62.5%',
   height: '918px',
   marginBottom: '4.5rem',
   '@media': {

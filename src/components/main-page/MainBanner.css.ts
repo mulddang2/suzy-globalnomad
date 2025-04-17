@@ -10,7 +10,7 @@ export const bannerWrapper = style({
   height: '600px',
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
-      height: '360px',
+      height: '550px',
     },
     'screen and (max-width: 767px)': {
       height: '240px',
@@ -40,12 +40,15 @@ export const contentWrapper = style({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  width: '100%',
-  maxWidth: '62.5%',
+  width: '62.5%',
   height: '100%',
   '@media': {
-    'screen and (min-width: 768px) and (max-width: 1199px)': {},
-    'screen and (max-width: 767px)': {},
+    'screen and (min-width: 768px) and (max-width: 1199px)': {
+      width: '93.5%',
+    },
+    'screen and (min-width: 320px) and (max-width: 767px)': {
+      width: '91.5%',
+    },
   },
 });
 

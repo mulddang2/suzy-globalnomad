@@ -6,7 +6,7 @@ import MainBanner from '@/components/main-page/MainBanner';
 import PopularActivityList from '@/components/main-page/PopularActivityList';
 import SearchResultList from '@/components/main-page/SearchResultList';
 import { Suspense, useEffect, useState } from 'react';
-import { wrapper } from './page.css';
+import * as styles from './page.css';
 
 const MainPage = () => {
   const [keyword, setKeyword] = useState<string>('');
@@ -19,19 +19,21 @@ const MainPage = () => {
 
   return (
     <Suspense>
-      <div className={wrapper}>
+      <div className={styles.wrapper}>
         <MainBanner />
-        <ActivitySearch setKeyword={setKeyword} />
-        {keyword.trim() ? (
-          <>
-            <SearchResultList keyword={keyword} />
-          </>
-        ) : (
-          <>
-            <PopularActivityList />
-            <ActivityCardList />
-          </>
-        )}
+        <div className={styles.mainLayout}>
+          <ActivitySearch setKeyword={setKeyword} />
+          {keyword.trim() ? (
+            <>
+              <SearchResultList keyword={keyword} />
+            </>
+          ) : (
+            <div>
+              <PopularActivityList />
+              <ActivityCardList />
+            </div>
+          )}
+        </div>
       </div>
     </Suspense>
   );

@@ -21,6 +21,14 @@ export const headerBox = style({
   width: '62.5%',
   height: '70px',
   margin: '0 auto',
+  '@media': {
+    'screen and (min-width: 768px) and (max-width: 1199px)': {
+      width: '93.5%',
+    },
+    'screen and (min-width: 320px) and (max-width: 767px)': {
+      width: '91.5%',
+    },
+  },
 });
 
 export const logoContainer = style({

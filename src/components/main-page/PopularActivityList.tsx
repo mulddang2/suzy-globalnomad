@@ -59,7 +59,7 @@ const PopularActivityList = () => {
           isRightDisabled={isLastPage}
         />
       </div>
-      <div className={styles.cardContainer}>
+      <div className={isFetching ? styles.skeletonCardContainer : styles.cardContainer}>
         {isFetching ? (
           <div className={styles.skeletonContainer}>
             {Array.from({ length: OFFSET }, (_, index) => (

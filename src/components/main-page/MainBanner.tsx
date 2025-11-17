@@ -22,15 +22,15 @@ const MainBanner = () => {
           alt={data?.activities[0]?.title || '배너 이미지'}
           priority
           fetchPriority='high'
-          width={1920}
-          height={600}
-          style={{ width: '100%', height: 'auto' }}
+          quality={90}
+          fill
+          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
         />
       )}
 
       {isLoading && (
         <div className={styles.loadingOverlay}>
-          <Image src={loadingSpinner} alt='로딩 중' width={80} height={80} />
+          <Image className={styles.loadingSpinner} src={loadingSpinner} alt='로딩 중' width={80} height={80} />
         </div>
       )}
 

@@ -8,11 +8,12 @@ export const bannerWrapper = style({
   backgroundPosition: 'center',
   width: '100%',
   height: '600px',
+
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
       height: '550px',
     },
-    'screen and (max-width: 767px)': {
+    'screen and (min-width: 320px) and (max-width: 767px)': {
       height: '240px',
     },
   },
@@ -25,6 +26,18 @@ export const loadingOverlay = style({
   justifyContent: 'center',
   alignItems: 'center',
   zIndex: 3,
+});
+
+export const loadingSpinner = style({
+  width: '80px',
+  height: '80px',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      width: '40px',
+      height: '40px',
+    },
+  },
 });
 
 export const overlay = style({
@@ -55,29 +68,31 @@ export const contentWrapper = style({
 export const textWrapper = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '20px',
   width: '502px',
   justifyContent: 'center',
+  gap: '20px',
+
   '@media': {
-    'screen and (min-width: 768px) and (max-width: 1199px)': {},
-    'screen and (max-width: 767px)': {},
+    'screen and (max-width: 1199px)': {
+      gap: '8px',
+    },
   },
 });
 
 export const title = style({
   color: 'white',
   fontSize: '68px',
-  lineHeight: '81px',
   fontWeight: 'bold',
+  maxHeight: '162px',
 
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
       fontSize: '54px',
-      lineHeight: '64px',
+      maxHeight: '128px',
     },
     'screen and (max-width: 767px)': {
       fontSize: '24px',
-      lineHeight: '29px',
+      maxHeight: '58px',
     },
   },
 });
@@ -85,16 +100,13 @@ export const title = style({
 export const subtitle = style({
   color: 'white',
   fontSize: '24px',
-  lineHeight: '29px',
   fontWeight: 'bold',
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
       fontSize: '20px',
-      lineHeight: '26px',
     },
     'screen and (max-width: 767px)': {
       fontSize: '14px',
-      lineHeight: '26px',
     },
   },
 });

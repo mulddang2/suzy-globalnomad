@@ -27,7 +27,6 @@ const ActivitySearch: React.FC<ActivitySearchProps> = ({ setKeyword }) => {
           <Input
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
-            style={{ paddingLeft: '0.8rem' }}
             placeholder='내가 원하는 체험은'
             icon={<Search />}
             iconPosition='left'

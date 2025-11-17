@@ -57,47 +57,6 @@ export const inputContainer = style({
   height: '56px',
 });
 
-export const inputBox = style({
-  position: 'relative',
-  display: 'flex',
-  alignItems: 'center',
-  width: '992px',
-  border: '1px solid #d1d5db',
-  borderRadius: '4px',
-  ':focus-within': {
-    border: '1px solid #34d399',
-  },
-  '@media': {
-    'screen and (max-width: 1199px) and (min-width: 768px)': {
-      width: '952px',
-    },
-    'screen and (max-width: 767px)': {
-      width: '187px',
-    },
-  },
-});
-
-export const icon = style({
-  width: '24px',
-  height: '24px',
-  margin: '12px',
-});
-
-export const input = style({
-  outline: 'none',
-  width: '916px',
-  paddingLeft: '8px',
-  fontSize: '1rem',
-  '@media': {
-    'screen and (max-width: 1199px) and (min-width: 768px)': {
-      width: '730px',
-    },
-    'screen and (max-width: 767px)': {
-      width: '124px',
-    },
-  },
-});
-
 export const button = style([
   fontSizes.textLg,
   {

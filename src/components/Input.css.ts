@@ -48,6 +48,7 @@ export const errorMessage = style({
 });
 
 export const leftIconDiv = style({
+  marginRight: '13px',
   gridColumn: '1',
 });
 

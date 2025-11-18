@@ -1,4 +1,4 @@
-import ReservationCardSkeleton from '@/components/skeletonui/my-reservations/ReservationCardSkeleton';
+import ReservationCardSkeleton from '@/components/skeleton-ui/my-reservations/ReservationCardSkeleton';
 import * as styles from './loading.css';
 
 export default function Loading() {

@@ -3,7 +3,9 @@ import { style } from '@vanilla-extract/css';
 export const cardContainer = style({
   position: 'relative',
   display: 'flex',
-  flexWrap: 'wrap',
+  justifyContent: 'space-between',
+  flexWrap: 'nowrap',
+  // width: '384px',
   gap: '16px',
   height: '384px',
   cursor: 'pointer',
@@ -13,19 +15,12 @@ export const imageContainer = style({
   position: 'relative',
   borderRadius: '24px',
   height: '384px',
-  width: '100%',
+  // width: '100%',
+  width: '384px',
 
   '@media': {
-    'screen and (min-width: 768px) and (max-width: 1199px)': {
-      width: '50%',
-      selectors: {
-        '&:nth-of-type(1)': {
-          width: '100%', // 첫 번째는 가로 전체
-        },
-      },
-    },
     'screen and (min-width: 320px) and (max-width: 767px)': {
-      width: '50%',
+      // width: '50%',
     },
   },
 });

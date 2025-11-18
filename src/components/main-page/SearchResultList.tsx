@@ -1,7 +1,7 @@
 import getSearchResult from '@/apis/get-search-result';
 import ActivityCard from '@/components/main-page/ActivityCard';
 import Pagination from '@/components/pagination/Pagination';
-import ActivityCardSkeleton from '@/components/skeletonui/mainpage/ActivityCardSkeleton';
+import ActivityCardSkeleton from '@/components/skeleton-ui/main-page/ActivityCardSkeleton';
 import { ActivityInfo, ActivityResponse } from '@/types/mainpage';
 import { useEffect, useState } from 'react';
 import * as styles from './SearchResultList.css';

@@ -6,6 +6,7 @@ export const container = style({
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
       marginTop: '1.5rem',
+      overflow: 'hidden',
       marginBottom: '2.5rem',
     },
     'screen and (min-width: 320px) and (max-width: 767px)': {
@@ -37,24 +38,22 @@ export const title = style({
   },
 });
 
-export const cardContainer = style({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(3, 1fr)',
-  gap: '16px',
-  width: '100%',
-  maxWidth: '1200px',
-
-  '@media': {
-    'screen and (min-width: 768px) and (max-width: 1199px)': {
-      gridTemplateColumns: 'repeat(3, 80%)',
-      overflowX: 'auto',
-      scrollSnapType: 'x mandatory',
-    },
-    'screen and (max-width: 767px)': {
-      gridTemplateColumns: 'repeat(2, 1fr)',
-    },
-  },
+export const swiperNavigationButtons = style({
+  display: 'flex',
+  gap: '10px',
 });
+
+export const buttonActive = style({
+  color: '#4B4B4B',
+  cursor: 'pointer',
+});
+
+export const buttonDisabled = style({
+  color: '#A1A1A1',
+  cursor: 'default',
+});
+
+export const cardContainer = style({});
 
 export const skeletonCardContainer = style({
   display: 'flex',
@@ -68,7 +67,6 @@ export const skeletonContainer = style({
   gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
   gap: '16px',
   width: '100%',
-  padding: '1rem',
 });
 
 export const emptyContainer = style({
@@ -89,5 +87,23 @@ export const emptyContainer = style({
 });
 
 globalStyle('::-webkit-scrollbar', {
+  display: 'none',
+});
+
+globalStyle('.swiper-wrapper', {
+  display: 'flex',
+  flexWrap: 'nowrap',
+});
+
+globalStyle('.swiperContainer', {
+  overflow: 'hidden',
+  '@media': {
+    'screen and (min-width: 320px) and (max-width: 767px)': {
+      overflow: 'visible',
+    },
+  },
+});
+
+globalStyle('.swiper-button-next > svg, .swiper-button-prev > svg', {
   display: 'none',
 });

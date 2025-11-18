@@ -3,7 +3,7 @@
 import { fetchMyReservations, fetchMyReservedSchedule } from '@/apis/my-activity-board';
 import ButtonX from '@/assets/icons/btn-x.svg';
 import DropDownB from '@/components/dropdown/DropDownB';
-import ReservationItemSkeleton from '@/components/skeletonui/my-activity-board/ReservationItemSkeleton';
+import ReservationItemSkeleton from '@/components/skeleton-ui/my-activity-board/ReservationItemSkeleton';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import * as styles from './MyActivityModal.css';

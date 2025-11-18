@@ -33,9 +33,9 @@ export const loadingSpinner = style({
   height: '80px',
 
   '@media': {
-    'screen and (max-width: 767px)': {
-      width: '40px',
-      height: '40px',
+    'screen and (max-width: 1199px)': {
+      width: '50px',
+      height: '50px',
     },
   },
 });

@@ -14,8 +14,6 @@ export const cardContainer = style({
 export const imageContainer = style({
   position: 'relative',
   borderRadius: '24px',
-  height: '384px',
-  // width: '100%',
   width: '384px',
 
   '@media': {

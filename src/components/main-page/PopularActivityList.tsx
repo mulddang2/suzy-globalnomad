@@ -1,8 +1,11 @@
 'use client';
 
+import useGetActivities from '@/apis/get-activities';
+import getPopularActivity from '@/apis/get-popular-activity';
 import SwiperPrevButton from '@/assets/icons/left-path-arrow.svg';
 import SwiperNextButton from '@/assets/icons/right-path-arrow.svg';
 import { SECTION_TITLES } from '@/constants/text';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
@@ -10,6 +13,13 @@ import PopularActivityCard from './PopularActivityCard';
 import * as styles from './PopularActivityList.css';
 
 const PopularActivityList = () => {
+  const PAGE = 1;
+  const SIZE = 10;
+
+  const { data } = useQuery({
+    queryKey: ['popularActivity', PAGE, SIZE],
+    queryFn: getPopularActivity,
+  });
   const [swiper, setSwiper] = useState<SwiperClass>();
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -60,97 +70,11 @@ const PopularActivityList = () => {
           scrollbar={{ draggable: true }}
           className='swiperContainer'
         >
-          <SwiperSlide>
-            <PopularActivityCard
-              cardData={{
-                id: 1,
-                userId: 1,
-                title: 'Sample Activity 1',
-                description: 'This is a sample activity description.',
-                category: 'Adventure',
-                price: 50000,
-                address: '123 Sample St, Sample City',
-                bannerImageUrl: '/src/assets/images/test-image-experience1.png',
-                rating: 4.5,
-                reviewCount: 120,
-                createdAt: '2023-01-01',
-                updatedAt: '2023-01-02',
-              }}
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <PopularActivityCard
-              cardData={{
-                id: 1,
-                userId: 1,
-                title: 'Sample Activity 1',
-                description: 'This is a sample activity description.',
-                category: 'Adventure',
-                price: 50000,
-                address: '123 Sample St, Sample City',
-                bannerImageUrl: '/src/assets/images/test-image-experience1.png',
-
-                rating: 4.5,
-                reviewCount: 120,
-                createdAt: '2023-01-01',
-                updatedAt: '2023-01-02',
-              }}
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <PopularActivityCard
-              cardData={{
-                id: 1,
-                userId: 1,
-                title: 'Sample Activity 1',
-                description: 'This is a sample activity description.',
-                category: 'Adventure',
-                price: 50000,
-                address: '123 Sample St, Sample City',
-                bannerImageUrl: '/src/assets/images/test-image-experience1.png',
-                rating: 4.5,
-                reviewCount: 120,
-                createdAt: '2023-01-01',
-                updatedAt: '2023-01-02',
-              }}
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <PopularActivityCard
-              cardData={{
-                id: 1,
-                userId: 1,
-                title: 'Sample Activity 1',
-                description: 'This is a sample activity description.',
-                category: 'Adventure',
-                price: 50000,
-                address: '123 Sample St, Sample City',
-                bannerImageUrl: '/src/assets/images/test-image-experience1.png',
-                rating: 4.5,
-                reviewCount: 120,
-                createdAt: '2023-01-01',
-                updatedAt: '2023-01-02',
-              }}
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <PopularActivityCard
-              cardData={{
-                id: 1,
-                userId: 1,
-                title: 'Sample Activity 1',
-                description: 'This is a sample activity description.',
-                category: 'Adventure',
-                price: 50000,
-                address: '123 Sample St, Sample City',
-                bannerImageUrl: '/sample1.jpg',
-                rating: 4.5,
-                reviewCount: 120,
-                createdAt: '2023-01-01',
-                updatedAt: '2023-01-02',
-              }}
-            />
-          </SwiperSlide>
+          {data?.activities.map((activity) => (
+            <SwiperSlide key={activity.id}>
+              <PopularActivityCard cardData={activity} />
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </div>

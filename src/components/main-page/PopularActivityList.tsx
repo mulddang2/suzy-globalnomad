@@ -1,78 +1,157 @@
 'use client';
 
-import getPopularActivity from '@/apis/get-popular-activity';
+import SwiperPrevButton from '@/assets/icons/left-path-arrow.svg';
+import SwiperNextButton from '@/assets/icons/right-path-arrow.svg';
 import { SECTION_TITLES } from '@/constants/text';
-import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import PopularCardSkeleton from '../skeletonui/mainpage/PopularCardSkeleton';
-import PopularActivityButton from './PopularActivityButton';
+import { Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import PopularActivityCard from './PopularActivityCard';
 import * as styles from './PopularActivityList.css';
 
-const OFFSET = 3;
-
 const PopularActivityList = () => {
-  const [startIdx, setStartIdx] = useState(0);
-
-  const { data, isFetching, isError, error } = useQuery({
-    queryKey: ['popularActivity', 1, 10],
-    queryFn: getPopularActivity,
-    staleTime: 5 * 60 * 1000,
-  });
-
-  if (isError) {
-    return <div>{error?.message || '데이터를 가져오는 중 오류가 발생했습니다.'}</div>;
-  }
-
-  const activities = data?.activities || [];
-  const totalCount = data?.totalCount || 0;
-
-  const filteredPopularActivities = activities.filter((activity) => !activity.bannerImageUrl?.includes('a.png'));
-
-  // 현재 페이지에 보여줄 활동 리스트
-  const pageActivityList = filteredPopularActivities.slice(startIdx, startIdx + OFFSET);
-
-  // 비활성화 조건
-  const isFirstPage = startIdx === 0;
-  const isLastPage = startIdx + OFFSET >= filteredPopularActivities.length;
-
-  const handleLeftClick = () => {
-    if (!isFirstPage) {
-      setStartIdx(startIdx - OFFSET);
-    }
-  };
-
-  const handleRightClick = () => {
-    if (!isLastPage) {
-      setStartIdx(startIdx + OFFSET);
-    }
-  };
+  const [swiper, setSwiper] = useState<SwiperClass>();
+  const [isBeginning, setIsBeginning] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h2 className={styles.title}>{SECTION_TITLES.POPULAR_ACTIVITY}</h2>
-        <PopularActivityButton
-          onLeftClick={handleLeftClick}
-          onRightClick={handleRightClick}
-          isLeftDisabled={isFirstPage}
-          isRightDisabled={isLastPage}
-        />
-      </div>
-      <div className={isFetching ? styles.skeletonCardContainer : styles.cardContainer}>
-        {isFetching ? (
-          <div className={styles.skeletonContainer}>
-            {Array.from({ length: OFFSET }, (_, index) => (
-              <PopularCardSkeleton key={index} />
-            ))}
+        <div className={styles.swiperNavigationButtons}>
+          <div className='swiper-button-prev'>
+            <button className={isBeginning ? styles.buttonDisabled : styles.buttonActive} disabled={isBeginning}>
+              <SwiperPrevButton stroke='currentColor' />
+            </button>
           </div>
-        ) : (
-          pageActivityList.map((activity) => <PopularActivityCard key={activity.id} cardData={activity} />)
-        )}
+          <div className='swiper-button-next'>
+            <button className={isEnd ? styles.buttonDisabled : styles.buttonActive} disabled={isEnd}>
+              <SwiperNextButton stroke='currentColor' />
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className={styles.cardContainer}>
+        <Swiper
+          modules={[Navigation, Pagination]}
+          onSwiper={(e) => {
+            setSwiper(e);
+          }}
+          breakpoints={{
+            320: {
+              slidesPerView: 1,
+              spaceBetween: 16,
+            },
+            768: {
+              slidesPerView: 3,
+              spaceBetween: 32,
+            },
+          }}
+          spaceBetween={24}
+          navigation={{
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          }}
+          onSlideChange={(e) => {
+            setIsBeginning(e.isBeginning);
+            setIsEnd(e.isEnd);
+          }}
+          pagination={{ type: 'custom' }}
+          scrollbar={{ draggable: true }}
+          className='swiperContainer'
+        >
+          <SwiperSlide>
+            <PopularActivityCard
+              cardData={{
+                id: 1,
+                userId: 1,
+                title: 'Sample Activity 1',
+                description: 'This is a sample activity description.',
+                category: 'Adventure',
+                price: 50000,
+                address: '123 Sample St, Sample City',
+                bannerImageUrl: '/src/assets/images/test-image-experience1.png',
+                rating: 4.5,
+                reviewCount: 120,
+                createdAt: '2023-01-01',
+                updatedAt: '2023-01-02',
+              }}
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <PopularActivityCard
+              cardData={{
+                id: 1,
+                userId: 1,
+                title: 'Sample Activity 1',
+                description: 'This is a sample activity description.',
+                category: 'Adventure',
+                price: 50000,
+                address: '123 Sample St, Sample City',
+                bannerImageUrl: '/src/assets/images/test-image-experience1.png',
 
-        {filteredPopularActivities.length === 0 && totalCount !== 0 && !isFetching && (
-          <div className={styles.emptyContainer}>인기 체험 내역이 없습니다.</div>
-        )}
+                rating: 4.5,
+                reviewCount: 120,
+                createdAt: '2023-01-01',
+                updatedAt: '2023-01-02',
+              }}
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <PopularActivityCard
+              cardData={{
+                id: 1,
+                userId: 1,
+                title: 'Sample Activity 1',
+                description: 'This is a sample activity description.',
+                category: 'Adventure',
+                price: 50000,
+                address: '123 Sample St, Sample City',
+                bannerImageUrl: '/src/assets/images/test-image-experience1.png',
+                rating: 4.5,
+                reviewCount: 120,
+                createdAt: '2023-01-01',
+                updatedAt: '2023-01-02',
+              }}
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <PopularActivityCard
+              cardData={{
+                id: 1,
+                userId: 1,
+                title: 'Sample Activity 1',
+                description: 'This is a sample activity description.',
+                category: 'Adventure',
+                price: 50000,
+                address: '123 Sample St, Sample City',
+                bannerImageUrl: '/src/assets/images/test-image-experience1.png',
+                rating: 4.5,
+                reviewCount: 120,
+                createdAt: '2023-01-01',
+                updatedAt: '2023-01-02',
+              }}
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <PopularActivityCard
+              cardData={{
+                id: 1,
+                userId: 1,
+                title: 'Sample Activity 1',
+                description: 'This is a sample activity description.',
+                category: 'Adventure',
+                price: 50000,
+                address: '123 Sample St, Sample City',
+                bannerImageUrl: '/sample1.jpg',
+                rating: 4.5,
+                reviewCount: 120,
+                createdAt: '2023-01-01',
+                updatedAt: '2023-01-02',
+              }}
+            />
+          </SwiperSlide>
+        </Swiper>
       </div>
     </div>
   );

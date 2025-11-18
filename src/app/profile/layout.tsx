@@ -9,6 +9,10 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import * as styles from './layout.css';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 
 export default function ProfilePageLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();

@@ -2,15 +2,23 @@ import { fontSizes } from '@/styles/fontStyles.css';
 import { style, styleVariants } from '@vanilla-extract/css';
 import { global } from '@/styles/global.css';
 
+const defaultVariant = {
+  borderRadius: '4px',
+  padding: '15px 16px',
+};
+
 export const variantStyles = styleVariants({
-  default: {
-    borderRadius: '4px',
-    padding: '15px 16px',
-  },
+  default: defaultVariant,
+
   /** 로그인, 회원가입만 해당 스타일 */
   authPage: {
     borderRadius: '6px',
     padding: '16px 20px',
+  },
+
+  withIcon: {
+    ...defaultVariant,
+    padding: '8px 16px 8px 12px',
   },
 });
 
@@ -48,14 +56,22 @@ export const errorMessage = style({
 });
 
 export const leftIconDiv = style({
-  marginRight: '13px',
   gridColumn: '1',
+  display: 'flex',
+  alignItems: 'center',
+  paddingRight: '12px',
 });
 
 export const inputField = style({
+  margin: '0',
+  padding: '0',
   gridColumn: '2',
-  minWidth: '100px',
+  minWidth: '0',
+  width: '100%',
   border: 'none',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
 
   selectors: {
     '&:focus': {
@@ -64,6 +80,16 @@ export const inputField = style({
 
     '&::placeholder': {
       color: global.color.gray[600],
+    },
+  },
+
+  '@media': {
+    'screen and (max-width: 768px)': {
+      selectors: {
+        '&::placeholder': {
+          fontSize: '14px',
+        },
+      },
     },
   },
 });

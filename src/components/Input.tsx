@@ -41,7 +41,7 @@ import * as styles from './Input.css';
 interface IconInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: React.ReactNode;
   iconPosition?: 'left' | 'right';
-  variant?: 'default' | 'authPage';
+  variant?: 'default' | 'authPage' | 'withIcon';
   error?: boolean;
   errorMessage?: string;
   register?: (name: string, options?: RegisterOptions) => UseFormRegisterReturn; // react-hook-form의 register 함수

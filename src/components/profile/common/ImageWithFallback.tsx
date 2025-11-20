@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-const DEFAULT_PROFILE_IMG_URL = '/images/default-ready-image.webp';
+const DEFAULT_PROFILE_IMG_URL = '/images/fallback-image.jpg';
 
 interface ImageProps {
   alt: string;
@@ -11,9 +11,23 @@ interface ImageProps {
   fill?: boolean;
   sizes?: string;
   className?: string;
+  fetchPriority?: 'high' | 'low' | 'auto';
+  priority?: boolean;
+  quality?: number;
 }
 
-export default function ImageWithFallback({ alt, src, height, width, fill, sizes, className }: ImageProps) {
+export default function ImageWithFallback({
+  alt,
+  src,
+  height,
+  width,
+  fill,
+  sizes,
+  className,
+  fetchPriority,
+  priority,
+  quality,
+}: ImageProps) {
   const [imgSrc, setImgSrc] = useState<string>(src);
 
   return (
@@ -25,6 +39,9 @@ export default function ImageWithFallback({ alt, src, height, width, fill, sizes
       fill={fill}
       sizes={sizes}
       className={className}
+      fetchPriority={fetchPriority}
+      priority={priority}
+      quality={quality}
       onError={() => setImgSrc(DEFAULT_PROFILE_IMG_URL)}
     />
   );

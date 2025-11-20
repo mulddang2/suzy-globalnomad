@@ -2,6 +2,7 @@ import useGetActivities from '@/apis/get-activities';
 import fallbackImage from '@/assets/images/fallback-image.jpg';
 import loadingSpinner from '@/assets/images/loading-spinner.webp';
 import Image from 'next/image';
+import ImageWithFallback from '../profile/common/ImageWithFallback';
 import * as styles from './MainBanner.css';
 
 const MainBanner = () => {
@@ -17,8 +18,8 @@ const MainBanner = () => {
   return (
     <div className={styles.bannerWrapper}>
       {!isLoading && bannerImageUrl && (
-        <Image
-          src={bannerImageUrl || fallbackImage}
+        <ImageWithFallback
+          src={bannerImageUrl}
           alt={data?.activities[0]?.title || '배너 이미지'}
           priority
           fetchPriority='high'

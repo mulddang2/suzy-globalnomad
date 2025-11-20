@@ -1,6 +1,5 @@
 'use client';
 
-import useGetActivities from '@/apis/get-activities';
 import getPopularActivity from '@/apis/get-popular-activity';
 import SwiperPrevButton from '@/assets/icons/left-path-arrow.svg';
 import SwiperNextButton from '@/assets/icons/right-path-arrow.svg';
@@ -53,11 +52,14 @@ const PopularActivityList = () => {
               spaceBetween: 16,
             },
             768: {
-              slidesPerView: 3,
+              slidesPerView: 2,
               spaceBetween: 32,
             },
+            1199: {
+              slidesPerView: 'auto',
+              spaceBetween: 24,
+            },
           }}
-          spaceBetween={24}
           navigation={{
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',

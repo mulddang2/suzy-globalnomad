@@ -1,11 +1,10 @@
 import { globalStyle, style } from '@vanilla-extract/css';
+import { global } from '@/styles/global.css';
 
 export const container = style({
-  // width: '62%',
   width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
-  color: 'green',
 
   selectors: {
     '&.active': {
@@ -20,19 +19,15 @@ export const categoryWrapper = style({
 
 export const categoryList = style({
   display: 'flex',
-  gap: '14px',
+  gap: '24px',
   overflowX: 'scroll',
-  paddingRight: '14px',
 
   '@media': {
     'screen and (max-width: 1199px) and (min-width: 768px)': {
-      gap: '8px',
-      // width: '240px',
-      paddingRight: '8px',
+      gap: '14px',
     },
     'screen and (max-width: 767px)': {
-      gap: '6px',
-      paddingRight: '6px',
+      gap: '8px',
     },
   },
 });
@@ -42,35 +37,42 @@ globalStyle(`${categoryList}::-webkit-scrollbar`, {
 });
 
 export const categoryButton = style({
-  minWidth: '127px',
-  fontSize: '1rem',
-  border: '1px solid green',
-  borderRadius: '0.5rem',
-  padding: '1rem 1.25rem',
+  width: '127px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '58px',
+  fontSize: global.fontSize.regular,
+  lineHeight: global.lineHeights.small,
+  border: `1px solid ${global.color.green[200]}`,
+  color: global.color.green[200],
+  borderRadius: '15px',
   backgroundColor: '#FFFFFF',
+  textWrap: 'nowrap',
+
   selectors: {
     '&:hover': {
-      backgroundColor: 'green',
-      color: '#FFFFFF',
-    },
-    '&.active': {
-      backgroundColor: '#4CAF50',
+      backgroundColor: global.color.green[200],
       color: '#FFFFFF',
     },
   },
 
   '@media': {
     'screen and (max-width: 1199px) and (min-width: 768px)': {
-      minWidth: '100px',
-      fontSize: '0.875rem',
-      padding: '0.75rem 1rem',
+      maxWidth: '120px',
     },
     'screen and (max-width: 767px)': {
-      minWidth: '80px',
-      fontSize: '0.75rem',
-      padding: '0.5rem 0.75rem',
+      maxWidth: '80px',
+      fontSize: global.fontSize.small,
+      lineHeight: global.lineHeights.small,
+      height: '41px',
     },
   },
+});
+
+export const activeCategoryButton = style({
+  backgroundColor: global.color.green[200],
+  color: '#FFFFFF',
 });
 
 export const sortWrapper = style({

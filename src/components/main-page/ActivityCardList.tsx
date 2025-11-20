@@ -1,24 +1,12 @@
-import getCurrentPageActivity from '@/apis/get-current-page-activity';
-import { queryKeys } from '@/apis/querykeys';
 import ActivityCard from '@/components/main-page/ActivityCard';
 import Pagination from '@/components/pagination/Pagination';
 import ActivityCardSkeleton from '@/components/skeleton-ui/main-page/ActivityCardSkeleton';
 import { SECTION_TITLES } from '@/constants/text';
-import { ActivityResponse } from '@/types/mainpage';
-import { useQuery } from '@tanstack/react-query';
+import { usePageActivity } from '@/hooks/use-activity-list';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { MouseEvent, useEffect, useState } from 'react';
 import * as styles from './ActivityCardList.css';
 import CategoryFilter from './CategoryFilter';
-
-const usePageActivity = (pageNum: number, size: number, category: string, sort: string) => {
-  return useQuery<ActivityResponse, Error>({
-    queryKey: queryKeys.currentPageActivity(pageNum, size, category, sort),
-    queryFn: () => getCurrentPageActivity(pageNum, size, category, sort),
-    staleTime: 5 * 60 * 1000,
-    placeholderData: { activities: [], totalCount: 0 },
-  });
-};
 
 const ActivityCardList = () => {
   const searchParams = useSearchParams();
@@ -92,8 +80,6 @@ const ActivityCardList = () => {
   const activities = allActivityList?.activities || [];
   const totalCount = allActivityList?.totalCount || 0;
 
-  const filteredAllActivities = activities.filter((activity) => !activity.bannerImageUrl?.includes('a.png'));
-
   return (
     <>
       <div className={styles.filterContainer}>
@@ -107,8 +93,8 @@ const ActivityCardList = () => {
       <div className={styles.gridContainer}>
         {isFetching
           ? Array.from({ length: offset }, (_, index) => <ActivityCardSkeleton key={index} />)
-          : filteredAllActivities.map((activity) => <ActivityCard key={activity.id} cardData={activity} />)}
-        {filteredAllActivities.length === 0 && !isFetching && (
+          : activities.map((activity) => <ActivityCard key={activity.id} cardData={activity} />)}
+        {activities.length === 0 && !isFetching && (
           <div className={styles.noActivities}>신청할 수 있는 체험이 없습니다.</div>
         )}
       </div>

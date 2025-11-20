@@ -1,26 +1,28 @@
+import { fontSizes, fontWeights } from '@/styles/fontStyles.css';
 import { style } from '@vanilla-extract/css';
+import { global } from '@/styles/global.css';
 
 export const cardContainer = style({
   position: 'relative',
   display: 'flex',
   justifyContent: 'space-between',
   flexWrap: 'nowrap',
-  // width: '384px',
   gap: '16px',
   height: '384px',
   cursor: 'pointer',
+
+  '@media': {
+    'screen and (min-width: 320px) and (max-width: 767px)': {
+      width: '186px',
+      height: '186px',
+    },
+  },
 });
 
 export const imageContainer = style({
   position: 'relative',
   borderRadius: '24px',
   width: '384px',
-
-  '@media': {
-    'screen and (min-width: 320px) and (max-width: 767px)': {
-      // width: '50%',
-    },
-  },
 });
 
 export const popularActivityImage = style({
@@ -44,38 +46,46 @@ export const contentContainer = style({
   flexDirection: 'column',
   gap: '20px',
   color: 'white',
+  width: '90%',
+  maxWidth: '251px',
   '@media': {
     'screen and (min-width: 320px) and (max-width: 767px)': {
       bottom: '24px',
-      width: '146px',
+      maxWidth: '146px',
       gap: '6px',
     },
-  },
-});
-
-export const ratingContainer = style({
-  display: 'flex',
-  gap: '4px',
-});
-
-export const title = style({
-  fontSize: '2rem',
-  fontWeight: 'bold',
-  display: '-webkit-box',
-  WebkitLineClamp: 2,
-  WebkitBoxOrient: 'vertical',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  '@media': {
-    'screen and (min-width: 768px) and (max-width: 1199px)': {
-      fontSize: '1.5rem',
-    },
-    'screen and (min-width: 320px) and (max-width: 767px)': {
-      fontSize: '1rem',
-      WebkitLineClamp: 1,
+    'screen and (max-width: 1199px)': {
+      textOverflow: 'ellipsis',
+      minWidth: '146px',
+      overflow: 'hidden',
     },
   },
 });
+
+export const ratingContainer = style([
+  fontWeights.semibold,
+  {
+    display: 'flex',
+    gap: '4px',
+  },
+]);
+
+export const title = style([
+  fontSizes.text3xl,
+  fontWeights.bold,
+  {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    height: '84px',
+    '@media': {
+      'screen and (min-width: 320px) and (max-width: 767px)': {
+        height: '52px',
+        fontSize: global.fontSize.regular,
+        lineHeight: global.lineHeights.small,
+      },
+    },
+  },
+]);
 
 export const priceContainer = style({
   display: 'flex',
@@ -89,3 +99,11 @@ export const priceContainer = style({
     },
   },
 });
+
+export const pricePerPerson = style([
+  fontSizes.textMd,
+  fontWeights.regular,
+  {
+    color: global.color.gray[700],
+  },
+]);

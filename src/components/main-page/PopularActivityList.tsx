@@ -49,7 +49,7 @@ const PopularActivityList = () => {
           }}
           breakpoints={{
             320: {
-              slidesPerView: 1,
+              slidesPerView: 'auto',
               spaceBetween: 16,
             },
             768: {
@@ -68,6 +68,7 @@ const PopularActivityList = () => {
           }}
           pagination={{ type: 'custom' }}
           scrollbar={{ draggable: true }}
+          slidesOffsetAfter={0}
           className='swiperContainer'
         >
           {data?.activities.map((activity) => (

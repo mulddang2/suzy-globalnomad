@@ -1,4 +1,5 @@
 import { ActivityInfo, CurrentViewedActivity } from '@/types/mainpage';
+import { formatToKor } from '@/utils/format-to-kor';
 import {
   getCurrentViewedActivity,
   getRecentlyViewedActivities,
@@ -52,12 +53,12 @@ const PopularActivityCard = ({
 
         <div className={styles.contentContainer}>
           <div className={styles.ratingContainer}>
-            <Rating rating={rating} reviewCount={reviewCount} />
+            <Rating rating={rating} reviewCount={reviewCount} small />
           </div>
           <div className={styles.title}>{title}</div>
           <div className={styles.priceContainer}>
-            {`₩ ${price}`}
-            <span className='text-sm'>/인</span>
+            {formatToKor(price)}
+            <span className={styles.pricePerPerson}>/ 인</span>
           </div>
         </div>
       </div>

@@ -1,17 +1,22 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 
 export const container = style({
-  marginTop: '2.5rem',
+  marginTop: '34px',
   marginBottom: '3.75rem',
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '32px',
+
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
-      marginTop: '1.5rem',
-      overflow: 'hidden',
+      marginTop: '18px',
       marginBottom: '2.5rem',
     },
     'screen and (min-width: 320px) and (max-width: 767px)': {
-      marginTop: '1.5rem',
+      marginTop: '24px',
       marginBottom: '2.5rem',
+      gap: '16px',
     },
   },
 });
@@ -20,10 +25,11 @@ export const header = style({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  marginBottom: '33px',
+  height: '43px',
+
   '@media': {
     'screen and (min-width: 320px) and (max-width: 767px)': {
-      marginBottom: '24px',
+      height: '21px',
     },
   },
 });
@@ -31,6 +37,7 @@ export const header = style({
 export const title = style({
   fontSize: '36px',
   fontWeight: 'bold',
+
   '@media': {
     'screen and (min-width: 320px) and (max-width: 767px)': {
       fontSize: '18px',
@@ -41,6 +48,12 @@ export const title = style({
 export const swiperNavigationButtons = style({
   display: 'flex',
   gap: '10px',
+
+  '@media': {
+    'screen and (min-width: 320px) and (max-width: 1199px)': {
+      display: 'none',
+    },
+  },
 });
 
 export const buttonActive = style({
@@ -75,6 +88,7 @@ export const emptyContainer = style({
   alignItems: 'center',
   height: '23.75rem',
   fontSize: '1.25rem',
+
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
       height: '19.8125rem',

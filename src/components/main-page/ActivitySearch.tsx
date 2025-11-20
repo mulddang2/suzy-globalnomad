@@ -1,6 +1,6 @@
 'use client';
 
-import Search from '@/assets/icons/search.svg';
+import Bed from '@/assets/icons/bed.svg';
 import { FormEvent, useState } from 'react';
 import Input from '../Input';
 import * as styles from './ActivitySearch.css';
@@ -23,14 +23,17 @@ const ActivitySearch: React.FC<ActivitySearchProps> = ({ setKeyword }) => {
     <div className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit}>
         <label className={styles.label}>무엇을 체험하고 싶으신가요?</label>
-        <div className={styles.inputContainer}>
-          <Input
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            placeholder='내가 원하는 체험은'
-            icon={<Search />}
-            iconPosition='left'
-          />
+        <div className={styles.inputGroup}>
+          <div className={styles.inputWrapper}>
+            <Input
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              placeholder='내가 원하는 체험은'
+              icon={<Bed />}
+              iconPosition='left'
+              variant='withIcon'
+            />
+          </div>
           <button className={styles.button} type='submit'>
             검색하기
           </button>

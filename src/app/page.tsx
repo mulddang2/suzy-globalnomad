@@ -1,5 +1,6 @@
 'use client';
 
+import Dropdown from '@/components/dropdown/Dropdown';
 import ActivityCardList from '@/components/main-page/ActivityCardList';
 import ActivitySearch from '@/components/main-page/ActivitySearch';
 import MainBanner from '@/components/main-page/MainBanner';

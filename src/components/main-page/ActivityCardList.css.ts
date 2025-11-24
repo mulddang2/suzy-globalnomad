@@ -1,47 +1,47 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 
-export const filterContainer = style({});
+export const categoryListContainer = style({
+  minHeight: '1204px',
+});
 
 export const container = style({
-  marginTop: '2.5rem',
-  marginBottom: '3.75rem',
+  marginTop: '35px',
+  marginBottom: '32px',
   fontWeight: 'bold',
-  fontSize: '2rem',
-  lineHeight: '2.5rem',
-  marginRight: '60rem',
+  display: 'flex',
+  alignItems: 'center',
+  fontSize: '36px',
+  gap: '12px',
+
   '@media': {
-    'screen and (max-width: 640px)': {
-      fontSize: '1.125rem',
-      marginTop: '1.5rem',
-      marginBottom: '2.5rem',
-    },
-    'screen and (min-width: 768px) and (max-width: 1199px)': {
-      fontSize: '1.5rem',
+    'screen and (max-width: 767px)': {
+      fontSize: '18px',
+      marginTop: '24px',
+      marginBottom: '24px',
     },
   },
 });
 
+export const emoji = style({
+  transform: 'translateY(-7px)',
+});
+
 export const gridContainer = style({
   display: 'grid',
-  // marginRight: 'auto',
-  // marginLeft: 'auto',
   gridTemplateColumns: 'repeat(4, 1fr)',
   gap: '1.5rem',
-  maxWidth: '1200px',
-  height: '918px',
-  marginBottom: '4.5rem',
+  marginBottom: '64px',
+
   '@media': {
-    'screen and (max-width: 1024px)': {
+    'screen and (min-width: 768px) and (max-width: 1199px)': {
       gridTemplateColumns: 'repeat(3, 1fr)',
-      gap: '1rem',
-      height: '1184px',
+      gap: '14px',
     },
-    'screen and (max-width: 640px)': {
+    'screen and (min-width: 320px) and (max-width: 767px)': {
       gridTemplateColumns: 'repeat(2, 1fr)',
-      gap: '0.5rem',
-      height: '638px',
-      marginBottom: '3.875rem',
+      gap: '7px',
     },
+    'screen and (max-width: 767px)': {},
   },
 });
 
@@ -61,22 +61,6 @@ export const title = style({
     },
     'screen and (min-width: 768px) and (max-width: 1199px)': {
       fontSize: '1.75rem',
-    },
-  },
-});
-
-export const cardContainer = style({
-  display: 'flex',
-  gap: '1.5rem',
-  width: '100%',
-  overflowX: 'scroll',
-  '@media': {
-    'screen and (max-width: 1024px)': {
-      width: 'calc(100% - 1.5rem)',
-      gap: '2rem',
-    },
-    'screen and (max-width: 640px)': {
-      gap: '1rem',
     },
   },
 });

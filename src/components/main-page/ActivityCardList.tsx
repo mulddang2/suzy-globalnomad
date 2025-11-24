@@ -14,8 +14,8 @@ const ActivityCardList = () => {
   const pathname = usePathname();
 
   const [currentPageNum, setCurrentPageNum] = useState(0);
-  const [currentCategory, setCurrentCategory] = useState('');
-  const [currentSort, setCurrentSort] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedSort, setSelectedSort] = useState('');
   const offset = 8;
 
   const {
@@ -23,7 +23,7 @@ const ActivityCardList = () => {
     isFetching,
     isError,
     error,
-  } = usePageActivity(currentPageNum, offset, currentCategory, currentSort);
+  } = usePageActivity(currentPageNum, offset, selectedCategory, selectedSort);
 
   useEffect(() => {
     const category = searchParams.get('category');
@@ -31,10 +31,10 @@ const ActivityCardList = () => {
     const page = searchParams.get('page');
 
     if (category) {
-      setCurrentCategory(category);
+      setSelectedCategory(category);
     }
     if (sort) {
-      setCurrentSort(sort);
+      setSelectedSort(sort);
     }
     if (page) {
       setCurrentPageNum(Number(page) - 1);
@@ -58,20 +58,20 @@ const ActivityCardList = () => {
 
   const handleCategoryClick = (e: MouseEvent<HTMLButtonElement>) => {
     const button = e.target as HTMLButtonElement;
-    const newCategory = currentCategory === button.value ? '' : button.value;
+    const newCategory = selectedCategory === button.value ? '' : button.value;
 
-    setCurrentCategory(newCategory);
+    setSelectedCategory(newCategory);
     setCurrentPageNum(0);
 
     updateQueryParams({ category: newCategory || undefined, page: 1 });
   };
 
-  const handleSortClick = (sortKey: string) => {
-    setCurrentSort(sortKey);
-    setCurrentPageNum(0);
+  // const handleSortClick = (sortKey: string) => {
+  //   setSelectedSort(sortKey);
+  //   setCurrentPageNum(0);
 
-    updateQueryParams({ sort: sortKey, page: 1 });
-  };
+  //   updateQueryParams({ sort: sortKey, page: 1 });
+  // };
 
   if (isError) {
     return <div>{(error as Error)?.message || '데이터를 가져오는 데 문제가 발생했습니다.'}</div>;
@@ -81,14 +81,17 @@ const ActivityCardList = () => {
   const totalCount = allActivityList?.totalCount || 0;
 
   return (
-    <>
-      <div className={styles.filterContainer}>
+    <section className={styles.categoryListContainer}>
+      <div>
         <CategoryFilter
-          currentCategory={currentCategory}
+          currentCategory={selectedCategory}
           onSelectCategory={handleCategoryClick}
-          onSetSort={handleSortClick}
+          // onSetSort={handleSortClick}
         />
-        <h2 className={styles.container}>{currentCategory || SECTION_TITLES.ALL_ACTIVITY}</h2>
+        <h2 className={styles.container}>
+          <span className={styles.emoji}>{selectedCategory ? '' : SECTION_TITLES.ALL_ACTIVITY.emoji}</span>
+          <span>{selectedCategory || SECTION_TITLES.ALL_ACTIVITY.text}</span>
+        </h2>
       </div>
       <div className={styles.gridContainer}>
         {isFetching
@@ -107,7 +110,7 @@ const ActivityCardList = () => {
           currentPageGroup={0}
         />
       )}
-    </>
+    </section>
   );
 };
 

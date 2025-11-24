@@ -75,12 +75,6 @@ export const activeCategoryButton = style({
   color: '#FFFFFF',
 });
 
-export const sortWrapper = style({
-  position: 'relative',
-  display: 'flex',
-  flexDirection: 'column',
-});
-
 export const sortButton = style({
   display: 'flex',
   justifyContent: 'space-between',

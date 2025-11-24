@@ -1,5 +1,4 @@
 import useGetActivities from '@/apis/get-activities';
-import fallbackImage from '@/assets/images/fallback-image.jpg';
 import loadingSpinner from '@/assets/images/loading-spinner.webp';
 import Image from 'next/image';
 import ImageWithFallback from '../profile/common/ImageWithFallback';

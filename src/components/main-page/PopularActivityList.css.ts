@@ -37,12 +37,19 @@ export const header = style({
 export const title = style({
   fontSize: '36px',
   fontWeight: 'bold',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '12px',
 
   '@media': {
     'screen and (min-width: 320px) and (max-width: 767px)': {
       fontSize: '18px',
     },
   },
+});
+
+export const emoji = style({
+  transform: 'translateY(-2px)',
 });
 
 export const swiperNavigationButtons = style({
@@ -66,7 +73,16 @@ export const buttonDisabled = style({
   cursor: 'default',
 });
 
-export const cardContainer = style({});
+export const slideItem = style({
+  width: '384px',
+  flexShrink: 0,
+
+  '@media': {
+    'screen and (min-width: 320px) and (max-width: 767px)': {
+      width: '186px',
+    },
+  },
+});
 
 export const skeletonCardContainer = style({
   display: 'flex',
@@ -111,6 +127,7 @@ globalStyle('.swiper-wrapper', {
 
 globalStyle('.swiperContainer', {
   overflow: 'hidden',
+
   '@media': {
     'screen and (min-width: 320px) and (max-width: 1199px)': {
       overflow: 'visible',

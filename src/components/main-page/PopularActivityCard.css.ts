@@ -4,31 +4,23 @@ import { global } from '@/styles/global.css';
 
 export const cardContainer = style({
   position: 'relative',
-  display: 'flex',
-  justifyContent: 'space-between',
-  flexWrap: 'nowrap',
-  gap: '16px',
-  height: '384px',
+  aspectRatio: '1 / 1',
+  width: '100%',
   cursor: 'pointer',
-
-  '@media': {
-    'screen and (min-width: 320px) and (max-width: 767px)': {
-      width: '186px',
-      height: '186px',
-    },
-  },
+  overflow: 'hidden',
+  borderRadius: '24px',
 });
 
 export const imageContainer = style({
   position: 'relative',
-  borderRadius: '24px',
-  width: '384px',
+  width: '100%',
+  height: '100%',
 });
 
 export const popularActivityImage = style({
-  borderRadius: '24px',
   objectFit: 'cover',
-  position: 'absolute',
+  width: '100%',
+  height: '100%',
 });
 
 export const overlay = style({

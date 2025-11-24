@@ -5,14 +5,7 @@ export const activityCardWrapper = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '16px',
-  '@media': {
-    'screen and (min-width: 768px) and (max-width: 1199px)': {
-      height: '374px',
-    },
-    'screen and (min-width: 320px) and (max-width: 767px)': {
-      height: '295px',
-    },
-  },
+  width: '100%',
 });
 
 export const activityCardInnerWrapper = style({
@@ -28,20 +21,9 @@ export const activityCardImage = style({
 export const activityCardImageBox = style({
   position: 'relative',
   width: '100%',
-  height: '278px',
+  aspectRatio: '1 / 1',
   overflow: 'hidden',
   borderRadius: '24px',
-
-  '@media': {
-    'screen and (min-width: 768px) and (max-width: 1199px)': {
-      // width: '232px',
-      height: '232px',
-    },
-    'screen and (min-width: 320px) and (max-width: 767px)': {
-      // width: '168px',
-      height: '168px',
-    },
-  },
 });
 
 export const activityCardDetails = style({
@@ -66,7 +48,6 @@ export const ratingWrapper = style({
 
 export const ratingText = style({
   fontWeight: '500',
-  fontSize: '1rem',
 });
 
 export const reviewCountText = style({
@@ -74,17 +55,11 @@ export const reviewCountText = style({
 });
 
 export const activityTitle = style({
-  fontSize: '2xl',
-  fontWeight: '600',
   marginBottom: '5px',
   lineClamp: '2',
   '@media': {
-    'screen and (min-width: 768px) and (max-width: 1199px)': {
-      fontSize: 'lg',
-    },
-    'screen and (min-width: 320px) and (max-width: 767px)': {
-      fontSize: 'md',
-    },
+    'screen and (min-width: 768px) and (max-width: 1199px)': {},
+    'screen and (min-width: 320px) and (max-width: 767px)': {},
   },
 });
 
@@ -95,12 +70,8 @@ export const priceWrapper = style({
   fontSize: '28px',
   fontWeight: '700',
   '@media': {
-    'screen and (min-width: 768px) and (max-width: 1199px)': {
-      fontSize: 'xl',
-    },
-    'screen and (min-width: 320px) and (max-width: 767px)': {
-      fontSize: 'lg',
-    },
+    'screen and (min-width: 768px) and (max-width: 1199px)': {},
+    'screen and (min-width: 320px) and (max-width: 767px)': {},
   },
 });
 

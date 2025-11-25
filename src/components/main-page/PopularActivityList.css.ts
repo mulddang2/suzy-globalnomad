@@ -48,10 +48,6 @@ export const title = style({
   },
 });
 
-export const emoji = style({
-  transform: 'translateY(-2px)',
-});
-
 export const swiperNavigationButtons = style({
   display: 'flex',
   gap: '10px',

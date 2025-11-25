@@ -11,7 +11,7 @@ import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import PopularActivityCard from './PopularActivityCard';
 import * as styles from './PopularActivityList.css';
 
-const PopularActivityList = () => {
+function PopularActivityList() {
   const PAGE = 1;
   const SIZE = 10;
 
@@ -27,7 +27,7 @@ const PopularActivityList = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <h2 className={styles.title}>
-          <span className={styles.emoji}>{SECTION_TITLES.POPULAR_ACTIVITY.emoji}</span>
+          <span>{SECTION_TITLES.POPULAR_ACTIVITY.emoji}</span>
           <span>{SECTION_TITLES.POPULAR_ACTIVITY.text}</span>
         </h2>
         <div className={styles.swiperNavigationButtons}>
@@ -83,6 +83,6 @@ const PopularActivityList = () => {
       </Swiper>
     </div>
   );
-};
+}
 
 export default PopularActivityList;

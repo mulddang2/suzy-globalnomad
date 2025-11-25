@@ -1,35 +1,74 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 import { global } from '@/styles/global.css';
 
-export const container = style({
+export const container = style({});
+
+// export const categoryWrapper = style({
+//   position: 'relative',
+// });
+
+export const pcLayout = style({
   width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
+  alignItems: 'center',
 
   selectors: {
     '&.active': {
       color: '#FFFFFF',
     },
   },
+
+  '@media': {
+    'screen and (max-width: 1199px) and (min-width: 768px)': {},
+    'screen and (max-width: 767px)': {
+      height: '51px',
+    },
+  },
 });
 
-export const categoryWrapper = style({
-  position: 'relative',
+export const mobileLayout = style({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
 });
 
 export const categoryList = style({
   display: 'flex',
-  gap: '24px',
-  overflowX: 'scroll',
+  overflowX: 'auto',
+  gap: '14px',
 
   '@media': {
-    'screen and (max-width: 1199px) and (min-width: 768px)': {
-      gap: '14px',
+    'screen and (min-width: 768px) and (max-width: 1199px)': {
+      maxWidth: '522px',
     },
     'screen and (max-width: 767px)': {
       gap: '8px',
+      maxWidth: '225px',
     },
   },
+});
+
+export const categoryItem = style({
+  flex: '1 1 0',
+});
+
+export const mobileCategoryItem = style({
+  // flexShrink: 0,
+});
+
+export const mobileCategoryList = style({
+  overflowX: 'hidden',
+
+  '@media': {
+    'screen and (min-width: 320px) and (max-width: 767px)': {
+      width: '256px',
+    },
+    'screen and (min-width: 768px) and (max-width: 1199px)': {
+      width: '522px',
+    },
+  },
+  // width: '100px',
 });
 
 globalStyle(`${categoryList}::-webkit-scrollbar`, {
@@ -37,8 +76,9 @@ globalStyle(`${categoryList}::-webkit-scrollbar`, {
 });
 
 export const categoryButton = style({
-  width: '127px',
+  width: '100px',
   display: 'flex',
+  flexShrink: 0,
   justifyContent: 'center',
   alignItems: 'center',
   height: '58px',
@@ -49,6 +89,7 @@ export const categoryButton = style({
   borderRadius: '15px',
   backgroundColor: '#FFFFFF',
   textWrap: 'nowrap',
+  fontWeight: '500',
 
   selectors: {
     '&:hover': {
@@ -95,7 +136,7 @@ export const sortButton = style({
       padding: '0.75rem 1rem',
     },
     'screen and (max-width: 767px)': {
-      width: '80px',
+      // width: '80px',
       height: '40px',
       fontSize: '0.75rem',
       padding: '0.5rem 0.75rem',

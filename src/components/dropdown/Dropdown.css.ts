@@ -9,7 +9,6 @@ export const container = style({
 export const dropdownButton = style({
   width: '100%',
   minWidth: '170px',
-  minHeight: '53px',
   display: 'inline-flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -18,7 +17,6 @@ export const dropdownButton = style({
   backgroundColor: '#FFFFFF',
   padding: '16px 20px',
   fontSize: global.fontSize.regular,
-  lineHeight: global.lineHeights.small,
   color: global.color.green[200],
   fontWeight: 500,
   gap: '8px',

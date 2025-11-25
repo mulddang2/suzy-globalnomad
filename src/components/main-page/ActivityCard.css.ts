@@ -1,3 +1,4 @@
+import { fontSizes, fontWeights } from '@/styles/fontStyles.css';
 import { style } from '@vanilla-extract/css';
 
 export const activityCardWrapper = style({
@@ -14,10 +15,6 @@ export const activityCardInnerWrapper = style({
   gap: '16px',
 });
 
-export const activityCardImage = style({
-  objectFit: 'cover',
-});
-
 export const activityCardImageBox = style({
   position: 'relative',
   width: '100%',
@@ -26,12 +23,18 @@ export const activityCardImageBox = style({
   borderRadius: '24px',
 });
 
+export const activityCardImage = style({
+  objectFit: 'cover',
+  width: '100%',
+  height: '100%',
+});
+
 export const activityCardDetails = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '10px',
-  padding: '8px',
   borderRadius: '16px',
+
   selectors: {
     '&:hover': {
       backgroundColor: '#F5F5F5',
@@ -54,14 +57,27 @@ export const reviewCountText = style({
   color: '#888',
 });
 
-export const activityTitle = style({
-  marginBottom: '5px',
-  lineClamp: '2',
-  '@media': {
-    'screen and (min-width: 768px) and (max-width: 1199px)': {},
-    'screen and (min-width: 320px) and (max-width: 767px)': {},
+export const activityTitle = style([
+  fontSizes.text2xl,
+  fontWeights.semibold,
+  {
+    marginBottom: '5px',
+    width: '100%',
+
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: 2,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+
+    '@media': {
+      'screen and (min-width: 768px) and (max-width: 1199px)': {},
+      'screen and (min-width: 320px) and (max-width: 767px)': {
+        fontSize: '18px',
+      },
+    },
   },
-});
+]);
 
 export const priceWrapper = style({
   display: 'flex',

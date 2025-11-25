@@ -28,20 +28,23 @@ export const emoji = style({
 
 export const gridContainer = style({
   display: 'grid',
-  gridTemplateColumns: 'repeat(4, 1fr)',
-  gap: '1.5rem',
+  gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', // 내부 이미지 컨텐츠 커졌을 경우 그리드 꺠짐 방지
+  columnGap: '24px',
+  rowGap: '48px',
   marginBottom: '64px',
+  width: '100%',
 
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
       gridTemplateColumns: 'repeat(3, 1fr)',
-      gap: '14px',
+      columnGap: '16px',
+      rowGap: '32px',
     },
     'screen and (min-width: 320px) and (max-width: 767px)': {
       gridTemplateColumns: 'repeat(2, 1fr)',
-      gap: '7px',
+      columnGap: '8px',
+      rowGap: '5px',
     },
-    'screen and (max-width: 767px)': {},
   },
 });
 

@@ -33,12 +33,12 @@ function PopularActivityList() {
         <div className={styles.swiperNavigationButtons}>
           <div className='swiper-button-prev'>
             <button className={isBeginning ? styles.buttonDisabled : styles.buttonActive} disabled={isBeginning}>
-              <SwiperPrevButton stroke='currentColor' />
+              <SwiperPrevButton width={11} hight={22} stroke='currentColor' />
             </button>
           </div>
           <div className='swiper-button-next'>
             <button className={isEnd ? styles.buttonDisabled : styles.buttonActive} disabled={isEnd}>
-              <SwiperNextButton stroke='currentColor' />
+              <SwiperNextButton width={11} hight={22} stroke='currentColor' />
             </button>
           </div>
         </div>

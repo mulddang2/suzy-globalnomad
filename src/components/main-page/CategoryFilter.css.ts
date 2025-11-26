@@ -33,6 +33,12 @@ export const mobileLayout = style({
   alignItems: 'center',
 });
 
+export const mobileCategoryWrapper = style({
+  position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
+});
+
 export const categoryList = style({
   display: 'flex',
   overflowX: 'auto',
@@ -58,21 +64,66 @@ export const mobileCategoryItem = style({
 });
 
 export const mobileCategoryList = style({
-  overflowX: 'hidden',
+  // overflowX: 'auto',
+  position: 'relative',
+  width: '447px',
+  overflow: 'hidden',
+  selectors: {
+    '&::after': {
+      content: '',
+      position: 'absolute',
+      right: '-10px',
+      background: 'linear-gradient(to left, #FAFBFC, rgba(250, 251, 252, 0.8), transparent) ',
+      bottom: 0,
+      width: '17%',
+      height: '100%',
+      zIndex: 10,
+      pointerEvents: 'none',
+    },
+  },
 
   '@media': {
     'screen and (min-width: 320px) and (max-width: 767px)': {
       width: '256px',
+
+      selectors: {
+        '&::after': {
+          width: '116px',
+          right: '-53px',
+          background: 'linear-gradient(to left, #FAFBFC 72%, rgba(250, 251, 252, 0.8), transparent) ',
+        },
+      },
     },
     'screen and (min-width: 768px) and (max-width: 1199px)': {
-      width: '522px',
+      // width: '522px',
     },
   },
   // width: '100px',
 });
 
-globalStyle(`${categoryList}::-webkit-scrollbar`, {
-  display: 'none',
+export const mobileCategoryNextButton = style({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius: '50%',
+  width: '32px',
+  height: '32px',
+  objectFit: 'cover',
+  objectPosition: 'center',
+  position: 'absolute',
+  right: '-50px',
+  // top: '50%',
+  // transform: 'translateY(-50%)',
+  border: `1px solid ${global.color.gray[700]}`,
+  backgroundColor: '#FFFFFF',
+  cursor: 'pointer',
+  zIndex: 11,
+
+  '@media': {
+    'screen and (min-width: 320px) and (max-width: 767px)': {
+      display: 'none',
+    },
+  },
 });
 
 export const categoryButton = style({
@@ -159,4 +210,12 @@ export const popoverWrapper = style({
       width: '8px',
     },
   },
+});
+
+globalStyle('.swiper-scrollbar', {
+  display: 'none',
+});
+
+globalStyle(`${categoryList}::-webkit-scrollbar`, {
+  display: 'none',
 });

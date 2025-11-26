@@ -130,7 +130,3 @@ globalStyle('.swiperContainer', {
     },
   },
 });
-
-globalStyle('.swiper-button-next > svg, .swiper-button-prev > svg', {
-  display: 'none',
-});

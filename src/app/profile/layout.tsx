@@ -8,10 +8,6 @@ import ProfileSideNavMenu from '@/components/profile/common/ProfileSideNavMenu';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
 import * as styles from './layout.css';
 
 export default function ProfilePageLayout({ children }: { children: React.ReactNode }) {
@@ -26,7 +22,6 @@ export default function ProfilePageLayout({ children }: { children: React.ReactN
     setIsPCOrTablet(PCOrTabletQuery);
   }, [PCOrTabletQuery]);
 
-  /** 제 페이지 외, url은 어떤 경로명으로 작업하실 지 몰라서 나중에 페이지 연결 해두겠습니다. */
   const profileSideMenuData = [
     {
       title: '내 정보',

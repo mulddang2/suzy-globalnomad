@@ -50,7 +50,7 @@ const CategoryFilter = ({ currentCategory, onSelectCategory }: CategoryFilterPro
           </ul>
 
           <div className={styles.priceDropdownWrapper}>
-            <Dropdown headerTitle='가격' list={['가격이 낮은 순', '가격이 높은 순']} />
+            <Dropdown headerTitle='가격' list={['높은 가격 순', '낮은 가격 순']} />
           </div>
         </div>
       ) : (
@@ -102,7 +102,7 @@ const CategoryFilter = ({ currentCategory, onSelectCategory }: CategoryFilterPro
             </button>
           </div>
           <div className={styles.priceDropdownWrapper}>
-            <Dropdown headerTitle='가격' list={['가격이 낮은 순', '가격이 높은 순']} />
+            <Dropdown headerTitle='가격' list={['높은 가격 순', '낮은 가격 순']} />
           </div>
         </div>
       )}

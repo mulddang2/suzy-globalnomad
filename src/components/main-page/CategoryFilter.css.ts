@@ -36,10 +36,11 @@ export const mobileCategoryWrapper = style({
   '@media': {
     'screen and (max-width: 767px)': {
       width: '256px',
-      height: '41px',
+      maxWidth: '63%',
     },
     'screen and (min-width: 768px) and (max-width: 1199px)': {
       width: '522px',
+      maxWidth: '60%',
     },
   },
 });
@@ -68,11 +69,6 @@ export const categoryItem = style({
 export const mobileCategoryItem = style({
   width: 'auto !important',
   flexShrink: 0,
-  '@media': {
-    'screen and (max-width: 767px)': {
-      height: '41px',
-    },
-  },
 });
 
 export const mobileCategoryList = style({
@@ -148,10 +144,18 @@ export const mobileCategoryNextButton = style({
 
 export const priceDropdownWrapper = style({
   height: '53px',
-
+  minWidth: '130px',
+  width: 'auto',
   '@media': {
+    'screen and (min-width: 768px) and (max-width: 1199px)': {
+      minWidth: '120px',
+      maxWidth: '120px',
+    },
     'screen and (min-width: 320px) and (max-width: 767px)': {
-      height: '41px',
+      maxHeight: '41px',
+      width: '90px',
+      minWidth: '90px',
+      maxWidth: '90px',
     },
   },
 });

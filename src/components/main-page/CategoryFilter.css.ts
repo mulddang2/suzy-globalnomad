@@ -1,12 +1,6 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 import { global } from '@/styles/global.css';
 
-export const container = style({});
-
-// export const categoryWrapper = style({
-//   position: 'relative',
-// });
-
 export const pcLayout = style({
   width: '100%',
   display: 'flex',
@@ -37,6 +31,17 @@ export const mobileCategoryWrapper = style({
   position: 'relative',
   display: 'flex',
   alignItems: 'center',
+  width: '447px',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      width: '256px',
+      height: '41px',
+    },
+    'screen and (min-width: 768px) and (max-width: 1199px)': {
+      width: '522px',
+    },
+  },
 });
 
 export const categoryList = style({
@@ -57,25 +62,38 @@ export const categoryList = style({
 
 export const categoryItem = style({
   flex: '1 1 0',
+  height: '100%',
 });
 
 export const mobileCategoryItem = style({
-  // flexShrink: 0,
+  width: 'auto !important',
+  flexShrink: 0,
+  '@media': {
+    'screen and (max-width: 767px)': {
+      height: '41px',
+    },
+  },
 });
 
 export const mobileCategoryList = style({
-  // overflowX: 'auto',
+  padding: '0 !important',
+  marginLeft: '0 !important',
+  marginRight: '0 !important',
+  listStyle: 'none !important',
+
+  width: '100%',
+  height: '100%',
   position: 'relative',
-  width: '447px',
   overflow: 'hidden',
+
   selectors: {
     '&::after': {
       content: '',
       position: 'absolute',
-      right: '-10px',
+      right: '0',
       background: 'linear-gradient(to left, #FAFBFC, rgba(250, 251, 252, 0.8), transparent) ',
       bottom: 0,
-      width: '17%',
+      width: '50px',
       height: '100%',
       zIndex: 10,
       pointerEvents: 'none',
@@ -84,21 +102,23 @@ export const mobileCategoryList = style({
 
   '@media': {
     'screen and (min-width: 320px) and (max-width: 767px)': {
-      width: '256px',
-
       selectors: {
         '&::after': {
-          width: '116px',
-          right: '-53px',
+          width: '40px',
+          right: '0',
           background: 'linear-gradient(to left, #FAFBFC 72%, rgba(250, 251, 252, 0.8), transparent) ',
         },
       },
     },
-    'screen and (min-width: 768px) and (max-width: 1199px)': {
-      // width: '522px',
+  },
+});
+
+export const mobileCategoryRemovePseudo = style({
+  selectors: {
+    '&::after': {
+      content: 'none',
     },
   },
-  // width: '100px',
 });
 
 export const mobileCategoryNextButton = style({
@@ -112,8 +132,8 @@ export const mobileCategoryNextButton = style({
   objectPosition: 'center',
   position: 'absolute',
   right: '-50px',
-  // top: '50%',
-  // transform: 'translateY(-50%)',
+  top: '50%',
+  transform: 'translateY(-50%)',
   border: `1px solid ${global.color.gray[700]}`,
   backgroundColor: '#FFFFFF',
   cursor: 'pointer',
@@ -126,13 +146,23 @@ export const mobileCategoryNextButton = style({
   },
 });
 
+export const priceDropdownWrapper = style({
+  height: '53px',
+
+  '@media': {
+    'screen and (min-width: 320px) and (max-width: 767px)': {
+      height: '41px',
+    },
+  },
+});
+
 export const categoryButton = style({
   width: '100px',
+  height: '100%',
   display: 'flex',
   flexShrink: 0,
   justifyContent: 'center',
   alignItems: 'center',
-  height: '58px',
   fontSize: global.fontSize.regular,
   lineHeight: global.lineHeights.small,
   border: `1px solid ${global.color.green[200]}`,
@@ -141,6 +171,8 @@ export const categoryButton = style({
   backgroundColor: '#FFFFFF',
   textWrap: 'nowrap',
   fontWeight: '500',
+  padding: '16px 0',
+  maxHeight: '58px',
 
   selectors: {
     '&:hover': {
@@ -151,13 +183,15 @@ export const categoryButton = style({
 
   '@media': {
     'screen and (max-width: 1199px) and (min-width: 768px)': {
+      width: '120px',
       maxWidth: '120px',
     },
     'screen and (max-width: 767px)': {
       maxWidth: '80px',
+      padding: '7.5px 0',
+
       fontSize: global.fontSize.small,
       lineHeight: global.lineHeights.small,
-      height: '41px',
     },
   },
 });
@@ -187,7 +221,6 @@ export const sortButton = style({
       padding: '0.75rem 1rem',
     },
     'screen and (max-width: 767px)': {
-      // width: '80px',
       height: '40px',
       fontSize: '0.75rem',
       padding: '0.5rem 0.75rem',
@@ -195,22 +228,22 @@ export const sortButton = style({
   },
 });
 
-export const popoverWrapper = style({
-  position: 'absolute',
-  top: 0,
-  right: 0,
-  width: '14px',
-  height: '100%',
+// export const popoverWrapper = style({
+//   position: 'absolute',
+//   top: 0,
+//   right: 0,
+//   width: '14px',
+//   height: '100%',
 
-  '@media': {
-    'screen and (max-width: 1199px) and (min-width: 768px)': {
-      width: '10px',
-    },
-    'screen and (max-width: 767px)': {
-      width: '8px',
-    },
-  },
-});
+//   '@media': {
+//     'screen and (max-width: 1199px) and (min-width: 768px)': {
+//       width: '10px',
+//     },
+//     'screen and (max-width: 767px)': {
+//       width: '8px',
+//     },
+//   },
+// });
 
 globalStyle('.swiper-scrollbar', {
   display: 'none',

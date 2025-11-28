@@ -1,11 +1,11 @@
-// import 'swiper/css';
 import MobileSwiperNextButton from '@/assets/icons/right-path-arrow.svg';
 import { CATEGORY_LIST } from '@/constants/categories';
 import useResponsiveQuery from '@/hooks/use-media-query';
 import { MouseEvent, useEffect, useState } from 'react';
+import 'swiper/css';
 import 'swiper/css/scrollbar';
 import { Navigation, Pagination, Scrollbar } from 'swiper/modules';
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import Dropdown from '../dropdown/Dropdown';
 import * as styles from './CategoryFilter.css';
 
@@ -18,6 +18,7 @@ interface CategoryFilterProps {
 const CategoryFilter = ({ currentCategory, onSelectCategory }: CategoryFilterProps) => {
   const { isPc } = useResponsiveQuery();
   const [isMounted, setIsMounted] = useState(false);
+  const [isEnd, setIsEnd] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -28,7 +29,7 @@ const CategoryFilter = ({ currentCategory, onSelectCategory }: CategoryFilterPro
   }
 
   return (
-    <div className={styles.container}>
+    <div>
       {isPc ? (
         <div className={styles.pcLayout}>
           <ul className={styles.categoryList}>
@@ -48,14 +49,20 @@ const CategoryFilter = ({ currentCategory, onSelectCategory }: CategoryFilterPro
             })}
           </ul>
 
-          <Dropdown headerTitle='가격' list={['가격이 낮은 순', '가격이 높은 순']} />
+          <div className={styles.priceDropdownWrapper}>
+            <Dropdown headerTitle='가격' list={['가격이 낮은 순', '가격이 높은 순']} />
+          </div>
         </div>
       ) : (
         <div className={styles.mobileLayout}>
           <div className={styles.mobileCategoryWrapper}>
-            <div className={styles.mobileCategoryList}>
+            <div className={`${styles.mobileCategoryList} ${isEnd ? styles.mobileCategoryRemovePseudo : ''}`}>
               <Swiper
                 modules={[Navigation, Pagination, Scrollbar]}
+                observer={true}
+                observeParents={true}
+                touchStartPreventDefault={false}
+                slidesOffsetAfter={0}
                 breakpoints={{
                   320: {
                     slidesPerView: 'auto',
@@ -66,12 +73,12 @@ const CategoryFilter = ({ currentCategory, onSelectCategory }: CategoryFilterPro
                     spaceBetween: 14,
                   },
                 }}
-                pagination={{ type: 'custom' }}
+                onSlideChange={(swiper) => {
+                  setIsEnd(swiper.isEnd);
+                }}
                 scrollbar={{ draggable: true, hide: true }}
-                freeMode={true}
                 allowTouchMove={true}
                 watchSlidesProgress={true}
-                preventClicksPropagation={true}
                 navigation={{ nextEl: '.swiper-button-next' }}
               >
                 {CATEGORY_LIST.map((category) => {
@@ -94,7 +101,9 @@ const CategoryFilter = ({ currentCategory, onSelectCategory }: CategoryFilterPro
               <MobileSwiperNextButton width={13} height={10} stroke='currentColor' />
             </button>
           </div>
-          <Dropdown headerTitle='가격' list={['가격이 낮은 순', '가격이 높은 순']} />
+          <div className={styles.priceDropdownWrapper}>
+            <Dropdown headerTitle='가격' list={['가격이 낮은 순', '가격이 높은 순']} />
+          </div>
         </div>
       )}
     </div>

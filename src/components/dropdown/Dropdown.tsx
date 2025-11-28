@@ -43,8 +43,8 @@ export default function Dropdown({ headerTitle, list, onSelectItem }: DropdownPr
   return (
     <div ref={dropdownRef} className={styles.container}>
       <button onClick={toggleDropdown} className={styles.dropdownButton}>
-        <span>{selectedItem}</span>
-        <DownWardTriangle />
+        <span className={styles.itemText}>{selectedItem}</span>
+        <DownWardTriangle width={12} height={7} />
       </button>
 
       {isListOpen && (

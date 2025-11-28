@@ -9,30 +9,34 @@ export const container = style({
 
 export const dropdownButton = style({
   width: '100%',
-  minWidth: '170px',
   display: 'inline-flex',
-  justifyContent: 'space-between',
+  justifyContent: 'center',
   alignItems: 'center',
   borderRadius: '15px',
   border: `1px solid ${global.color.green[200]}`,
   backgroundColor: '#FFFFFF',
-  padding: '13.5px 20px',
+  padding: '13.5px 10px',
   fontSize: global.fontSize.regular,
   color: global.color.green[200],
   fontWeight: 500,
   gap: '8px',
   height: '100%',
-
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
-      minWidth: 'auto',
+      padding: '10px 8px',
+      gap: '3px',
     },
     'screen and (max-width: 767px)': {
       fontSize: global.fontSize.xSmall,
       lineHeight: 'normal',
-      minWidth: 'auto',
+      padding: '8px 4px',
+      gap: '3px',
     },
   },
+});
+
+export const itemText = style({
+  textWrap: 'nowrap',
 });
 
 export const dropdownList = style({

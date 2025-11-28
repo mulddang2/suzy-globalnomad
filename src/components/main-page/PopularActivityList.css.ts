@@ -4,9 +4,6 @@ export const container = style({
   marginTop: '34px',
   marginBottom: '3.75rem',
   height: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '32px',
 
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
@@ -24,12 +21,11 @@ export const container = style({
 export const header = style({
   display: 'flex',
   justifyContent: 'space-between',
-  alignItems: 'center',
-  height: '43px',
+  marginBottom: '32px',
 
   '@media': {
     'screen and (min-width: 320px) and (max-width: 767px)': {
-      height: '21px',
+      marginBottom: '16px',
     },
   },
 });

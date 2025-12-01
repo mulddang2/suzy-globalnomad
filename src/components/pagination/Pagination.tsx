@@ -1,7 +1,7 @@
 import ArrowLeft from '@/assets/icons/Arrow-Left.svg';
 import ArrowRight from '@/assets/icons/Arrow-Right.svg';
 import React from 'react';
-import { leftArrow, pageButton, paginationContainer, prevNextButton, rightArrow } from './Pagination.css';
+import * as styles from './Pagination.css';
 
 interface PaginationProps {
   currentPage: number;
@@ -36,14 +36,14 @@ const Pagination = ({ currentPage, totalCount, offsetLimit, setPageNum, currentP
   const visiblePages = getVisiblePageNumbers();
 
   return (
-    <div className={paginationContainer}>
-      <button className={prevNextButton} onClick={() => setPageNum(currentPage - 1)} disabled={currentPage === 1}>
-        <ArrowLeft className={leftArrow} />
+    <div className={styles.paginationContainer}>
+      <button className={styles.prevNextButton} onClick={() => setPageNum(currentPage - 1)} disabled={currentPage <= 1}>
+        <ArrowLeft className={styles.leftArrow} />
       </button>
       {visiblePages.map((page) => (
         <button
           key={page}
-          className={`${pageButton} ${currentPage === page ? 'selected' : ''}`}
+          className={`${styles.pageButton} ${currentPage === page ? styles.activePageButton : ''}`}
           onClick={() => setPageNum(page)}
           style={{ fontWeight: currentPage === page ? 'bold' : 'normal' }}
         >
@@ -51,11 +51,15 @@ const Pagination = ({ currentPage, totalCount, offsetLimit, setPageNum, currentP
         </button>
       ))}
       <button
-        className={prevNextButton}
-        onClick={() => setPageNum(currentPage + 1)}
-        disabled={currentPage === totalPages}
+        className={styles.prevNextButton}
+        onClick={() => {
+          if (currentPage < totalPages) {
+            setPageNum(currentPage + 1);
+          }
+        }}
+        disabled={currentPage >= totalPages}
       >
-        <ArrowRight className={rightArrow} />
+        <ArrowRight className={styles.rightArrow} />
       </button>
     </div>
   );

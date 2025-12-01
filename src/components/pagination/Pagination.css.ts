@@ -1,6 +1,7 @@
-import { style } from '@vanilla-extract/css';
+import { StyleRule, style } from '@vanilla-extract/css';
+import { global } from '@/styles/global.css';
 
-const sharedButtonStyle = {
+const sharedButtonStyle: StyleRule = {
   width: '4rem',
   height: '4rem',
   backgroundColor: '#fff',
@@ -11,7 +12,7 @@ const sharedButtonStyle = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  textAlign: 'center' as const,
+  textAlign: 'center',
   fontWeight: 'bold',
   fontSize: '1rem',
 };
@@ -20,16 +21,28 @@ export const pageButton = style({
   ...sharedButtonStyle,
   selectors: {
     '&:hover': {
-      backgroundColor: '#0B3B2D',
-      color: '#fff',
+      backgroundColor: 'rgba(11, 59, 45, 0.05)',
+      color: global.color.green[200],
     },
     '&:disabled': {
-      backgroundColor: '#f1f1f1',
+      backgroundColor: '#E0E0E0',
+      color: '#9E9E9E',
+      borderColor: '#E0E0E0',
       cursor: 'not-allowed',
+      opacity: 0.7,
     },
-    '&.selected': {
-      backgroundColor: '#0B3B2D',
-      color: '#fff',
+  },
+});
+
+export const activePageButton = style({
+  fontWeight: 'bold',
+  color: '#fff',
+  backgroundColor: global.color.green[200],
+
+  selectors: {
+    '&:hover': {
+      backgroundColor: 'rgba(11, 59, 45, 0.05)',
+      color: global.color.green[200],
     },
   },
 });
@@ -39,24 +52,25 @@ export const prevNextButton = style({
   padding: '0.65rem',
   selectors: {
     '&:hover': {
-      backgroundColor: '#0B3B2D',
-      color: '#fff',
+      backgroundColor: 'rgba(11, 59, 45, 0.05)',
+      color: global.color.green[200],
     },
     '&:disabled': {
-      backgroundColor: '#f1f1f1',
+      backgroundColor: '#E0E0E0',
+      color: '#9E9E9E',
+      borderColor: '#E0E0E0',
       cursor: 'not-allowed',
+      opacity: 0.7,
     },
   },
 });
 
 export const rightArrow = style({
-  width: '2rem',
-  height: '2rem',
   transition: 'fill 0.3s',
   fill: '#000',
   selectors: {
     '&:hover': {
-      fill: '#007bff',
+      color: global.color.green[200],
     },
     '[disabled] &': {
       fill: '#6c757d',
@@ -69,7 +83,8 @@ export const leftArrow = style({
   fill: '#000',
   selectors: {
     '&:hover': {
-      fill: '#007bff',
+      backgroundColor: 'rgba(11, 59, 45, 0.05)',
+      color: global.color.green[200],
     },
     '[disabled] &': {
       fill: '#6c757d',

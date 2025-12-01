@@ -1,21 +1,20 @@
-import MobileSwiperNextButton from '@/assets/icons/right-path-arrow.svg';
 import { CATEGORY_LIST } from '@/constants/categories';
 import useResponsiveQuery from '@/hooks/use-media-query';
-import { MouseEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
-import { Navigation, Pagination, Scrollbar } from 'swiper/modules';
+import { Scrollbar } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Dropdown from '../dropdown/Dropdown';
 import * as styles from './CategoryFilter.css';
 
 interface CategoryFilterProps {
   currentCategory: string;
-  onSelectCategory: (e: MouseEvent<HTMLButtonElement>) => void;
-  // onSetSort: (sortKey: string) => void;
+  onSelectCategory: (category: string) => void;
+  onSortChange: (sortKey: string) => void;
 }
 
-const CategoryFilter = ({ currentCategory, onSelectCategory }: CategoryFilterProps) => {
+const CategoryFilter = ({ currentCategory, onSelectCategory, onSortChange }: CategoryFilterProps) => {
   const { isPc } = useResponsiveQuery();
   const [isMounted, setIsMounted] = useState(false);
   const [isEnd, setIsEnd] = useState(false);
@@ -27,6 +26,11 @@ const CategoryFilter = ({ currentCategory, onSelectCategory }: CategoryFilterPro
   if (!isMounted) {
     return null;
   }
+
+  const handleCategoryClick = (category: string) => {
+    const nextCategory = currentCategory === category ? '' : category;
+    onSelectCategory(nextCategory);
+  };
 
   return (
     <div>
@@ -40,7 +44,7 @@ const CategoryFilter = ({ currentCategory, onSelectCategory }: CategoryFilterPro
                     className={`${styles.categoryButton} ${currentCategory === category ? styles.activeCategoryButton : ''}`}
                     type='button'
                     value={category}
-                    onClick={onSelectCategory}
+                    onClick={() => handleCategoryClick(category)}
                   >
                     {category}
                   </button>
@@ -50,7 +54,11 @@ const CategoryFilter = ({ currentCategory, onSelectCategory }: CategoryFilterPro
           </ul>
 
           <div className={styles.priceDropdownWrapper}>
-            <Dropdown headerTitle='가격' list={['높은 가격 순', '낮은 가격 순']} />
+            <Dropdown
+              onSelectItem={onSortChange}
+              headerTitle='정렬'
+              list={['최신 순', '리뷰 많은 순', '높은 가격 순', '낮은 가격 순']}
+            />
           </div>
         </div>
       ) : (
@@ -58,11 +66,17 @@ const CategoryFilter = ({ currentCategory, onSelectCategory }: CategoryFilterPro
           <div className={styles.mobileCategoryWrapper}>
             <div className={`${styles.mobileCategoryList} ${isEnd ? styles.mobileCategoryRemovePseudo : ''}`}>
               <Swiper
-                modules={[Navigation, Pagination, Scrollbar]}
+                modules={[Scrollbar]}
                 observer={true}
                 observeParents={true}
-                touchStartPreventDefault={false}
+                touchStartPreventDefault={true}
+                nested={true}
+                touchRatio={1}
+                touchAngle={45}
                 slidesOffsetAfter={0}
+                threshold={5}
+                preventClicks={false}
+                preventClicksPropagation={false}
                 breakpoints={{
                   320: {
                     slidesPerView: 'auto',
@@ -78,17 +92,22 @@ const CategoryFilter = ({ currentCategory, onSelectCategory }: CategoryFilterPro
                 }}
                 scrollbar={{ draggable: true, hide: true }}
                 allowTouchMove={true}
+                noSwiping={false}
                 watchSlidesProgress={true}
                 navigation={{ nextEl: '.swiper-button-next' }}
               >
                 {CATEGORY_LIST.map((category) => {
                   return (
-                    <SwiperSlide className={styles.mobileCategoryItem} key={category}>
+                    // 슬라이더 드래그 미작동 이슈로 실제로는 버튼에 onClick 이벤트를 걸지 않고, SwiperSlide에 걸어줌
+                    // button 태그는 접근성 때문에 추가
+                    <SwiperSlide
+                      key={category}
+                      className={styles.mobileCategoryItem}
+                      onClick={() => handleCategoryClick(category)}
+                    >
                       <button
-                        className={`${styles.categoryButton} ${currentCategory === category ? styles.activeCategoryButton : ''}`}
                         type='button'
-                        value={category}
-                        onClick={onSelectCategory}
+                        className={`${styles.mobileCategoryButton} ${currentCategory === category ? styles.activeCategoryButton : ''}`}
                       >
                         {category}
                       </button>
@@ -97,12 +116,13 @@ const CategoryFilter = ({ currentCategory, onSelectCategory }: CategoryFilterPro
                 })}
               </Swiper>
             </div>
-            <button className={`swiper-button-next ${styles.mobileCategoryNextButton}`}>
-              <MobileSwiperNextButton width={13} height={10} stroke='currentColor' />
-            </button>
           </div>
           <div className={styles.priceDropdownWrapper}>
-            <Dropdown headerTitle='가격' list={['높은 가격 순', '낮은 가격 순']} />
+            <Dropdown
+              headerTitle='정렬'
+              list={['최신 순', '리뷰 많은 순', '높은 가격 순', '낮은 가격 순']}
+              onSelectItem={onSortChange}
+            />
           </div>
         </div>
       )}

@@ -23,24 +23,32 @@ export const pcLayout = style({
 
 export const mobileLayout = style({
   display: 'flex',
-  justifyContent: 'space-between',
   alignItems: 'center',
+  gap: '40px',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      gap: '8px',
+    },
+  },
 });
 
 export const mobileCategoryWrapper = style({
   position: 'relative',
   display: 'flex',
   alignItems: 'center',
-  width: '447px',
+  width: '100%',
+  gap: '16px',
+
+  flex: '1 1 0',
+  minWidth: 0,
 
   '@media': {
     'screen and (max-width: 767px)': {
-      width: '256px',
-      maxWidth: '63%',
+      gap: '8px',
     },
     'screen and (min-width: 768px) and (max-width: 1199px)': {
-      width: '522px',
-      maxWidth: '60%',
+      gap: '16px',
     },
   },
 });
@@ -69,6 +77,7 @@ export const categoryItem = style({
 export const mobileCategoryItem = style({
   width: 'auto !important',
   flexShrink: 0,
+  cursor: 'pointer',
 });
 
 export const mobileCategoryList = style({
@@ -80,7 +89,8 @@ export const mobileCategoryList = style({
   width: '100%',
   height: '100%',
   position: 'relative',
-  overflow: 'hidden',
+
+  flex: '1 1 0',
 
   selectors: {
     '&::after': {
@@ -117,35 +127,12 @@ export const mobileCategoryRemovePseudo = style({
   },
 });
 
-export const mobileCategoryNextButton = style({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  borderRadius: '50%',
-  width: '32px',
-  height: '32px',
-  objectFit: 'cover',
-  objectPosition: 'center',
-  position: 'absolute',
-  right: '-50px',
-  top: '50%',
-  transform: 'translateY(-50%)',
-  border: `1px solid ${global.color.gray[700]}`,
-  backgroundColor: '#FFFFFF',
-  cursor: 'pointer',
-  zIndex: 11,
-
-  '@media': {
-    'screen and (min-width: 320px) and (max-width: 767px)': {
-      display: 'none',
-    },
-  },
-});
-
 export const priceDropdownWrapper = style({
   height: '53px',
-  minWidth: '130px',
+  minWidth: '150px',
   width: 'auto',
+  flexShrink: 0,
+
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
       minWidth: '120px',
@@ -180,8 +167,36 @@ export const categoryButton = style({
 
   selectors: {
     '&:hover': {
-      backgroundColor: global.color.green[200],
-      color: '#FFFFFF',
+      backgroundColor: 'rgba(11, 59, 45, 0.05)',
+      color: global.color.green[200],
+    },
+  },
+});
+
+export const mobileCategoryButton = style({
+  width: '100px',
+  height: '100%',
+  display: 'flex',
+  flexShrink: 0,
+  justifyContent: 'center',
+  alignItems: 'center',
+  fontSize: global.fontSize.regular,
+  lineHeight: global.lineHeights.small,
+  border: `1px solid ${global.color.green[200]}`,
+  color: global.color.green[200],
+  borderRadius: '15px',
+  backgroundColor: '#FFFFFF',
+  textWrap: 'nowrap',
+  fontWeight: '500',
+  padding: '16px 0',
+  maxHeight: '58px',
+  touchAction: 'pan-y',
+  pointerEvents: 'none',
+
+  selectors: {
+    [`${mobileCategoryItem}:hover &`]: {
+      backgroundColor: 'rgba(11, 59, 45, 0.05)',
+      color: global.color.green[200],
     },
   },
 
@@ -203,6 +218,17 @@ export const categoryButton = style({
 export const activeCategoryButton = style({
   backgroundColor: global.color.green[200],
   color: '#FFFFFF',
+
+  selectors: {
+    '&:hover': {
+      backgroundColor: global.color.green[200],
+      color: '#FFFFFF',
+    },
+    [`${mobileCategoryItem}:hover &`]: {
+      backgroundColor: global.color.green[200],
+      color: '#FFFFFF',
+    },
+  },
 });
 
 export const sortButton = style({

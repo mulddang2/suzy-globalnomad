@@ -50,7 +50,14 @@ export default function Dropdown({ headerTitle, list, onSelectItem }: DropdownPr
       {isListOpen && (
         <div className={styles.dropdownList}>
           {list.map((item) => (
-            <button key={item} onClick={() => selectItem(item)} className={styles.dropdownListItem}>
+            <button
+              key={item}
+              onClick={() => {
+                selectItem(item);
+                onSelectItem?.(item);
+              }}
+              className={styles.dropdownListItem}
+            >
               {item}
             </button>
           ))}

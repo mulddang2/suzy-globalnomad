@@ -21,7 +21,7 @@ export const dropdownButton = style({
   fontWeight: 500,
   gap: '8px',
   height: '100%',
-  
+
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
       padding: '10px 8px',

@@ -1,21 +1,24 @@
 import ActivityCard from '@/components/main-page/ActivityCard';
 import Pagination from '@/components/pagination/Pagination';
 import ActivityCardSkeleton from '@/components/skeleton-ui/main-page/ActivityCardSkeleton';
+import { CATEGORY_EMOJI } from '@/constants/categories';
 import { SECTION_TITLES } from '@/constants/text';
 import { usePageActivity } from '@/hooks/use-activity-list';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { MouseEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as styles from './ActivityCardList.css';
 import CategoryFilter from './CategoryFilter';
 
-const ActivityCardList = () => {
+type SortOption = 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest';
+
+function ActivityCardList() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
   const [currentPageNum, setCurrentPageNum] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedSort, setSelectedSort] = useState('');
+  const [sortOption, setSortOption] = useState('most_reviewed' as SortOption);
   const offset = 8;
 
   const {
@@ -23,18 +26,18 @@ const ActivityCardList = () => {
     isFetching,
     isError,
     error,
-  } = usePageActivity(currentPageNum, offset, selectedCategory, selectedSort);
+  } = usePageActivity(currentPageNum, offset, selectedCategory, sortOption);
 
   useEffect(() => {
     const category = searchParams.get('category');
-    const sort = searchParams.get('sort');
+    const sortOption = searchParams.get('sort');
     const page = searchParams.get('page');
 
     if (category) {
       setSelectedCategory(category);
     }
-    if (sort) {
-      setSelectedSort(sort);
+    if (sortOption && ['most_reviewed', 'price_asc', 'price_desc', 'latest'].includes(sortOption)) {
+      setSortOption(sortOption as SortOption);
     }
     if (page) {
       setCurrentPageNum(Number(page) - 1);
@@ -56,22 +59,38 @@ const ActivityCardList = () => {
 
   const handlePageChange = (page: number) => setCurrentPageNum(page);
 
-  const handleCategoryClick = (e: MouseEvent<HTMLButtonElement>) => {
-    const button = e.target as HTMLButtonElement;
-    const newCategory = selectedCategory === button.value ? '' : button.value;
-
+  const handleCategoryClick = (newCategory: string) => {
     setSelectedCategory(newCategory);
     setCurrentPageNum(0);
 
     updateQueryParams({ category: newCategory || undefined, page: 1 });
   };
 
-  // const handleSortClick = (sortKey: string) => {
-  //   setSelectedSort(sortKey);
-  //   setCurrentPageNum(0);
+  const handleSortChange = (sortKey: string) => {
+    let apiSortKey: SortOption = 'most_reviewed';
 
-  //   updateQueryParams({ sort: sortKey, page: 1 });
-  // };
+    switch (sortKey) {
+      case '리뷰 많은 순':
+        apiSortKey = 'most_reviewed';
+        break;
+      case '낮은 가격 순':
+        apiSortKey = 'price_asc';
+        break;
+      case '높은 가격 순':
+        apiSortKey = 'price_desc';
+        break;
+      case '최신 순':
+        apiSortKey = 'latest';
+        break;
+      default:
+        apiSortKey = 'most_reviewed';
+    }
+
+    setSortOption(apiSortKey);
+    setCurrentPageNum(0);
+
+    updateQueryParams({ sort: apiSortKey || undefined, page: 1 });
+  };
 
   if (isError) {
     return <div>{(error as Error)?.message || '데이터를 가져오는 데 문제가 발생했습니다.'}</div>;
@@ -86,10 +105,10 @@ const ActivityCardList = () => {
         <CategoryFilter
           currentCategory={selectedCategory}
           onSelectCategory={handleCategoryClick}
-          // onSetSort={handleSortClick}
+          onSortChange={handleSortChange}
         />
         <h2 className={styles.container}>
-          <span className={styles.emoji}>{selectedCategory ? '' : SECTION_TITLES.ALL_ACTIVITY.emoji}</span>
+          <span>{selectedCategory ? CATEGORY_EMOJI[selectedCategory] : SECTION_TITLES.ALL_ACTIVITY.emoji}</span>
           <span>{selectedCategory || SECTION_TITLES.ALL_ACTIVITY.text}</span>
         </h2>
       </div>
@@ -112,6 +131,6 @@ const ActivityCardList = () => {
       )}
     </section>
   );
-};
+}
 
 export default ActivityCardList;

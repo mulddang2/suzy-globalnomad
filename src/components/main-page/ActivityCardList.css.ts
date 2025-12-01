@@ -22,10 +22,6 @@ export const container = style({
   },
 });
 
-export const emoji = style({
-  transform: 'translateY(-7px)',
-});
-
 export const gridContainer = style({
   display: 'grid',
   gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', // 내부 이미지 컨텐츠 커졌을 경우 그리드 꺠짐 방지

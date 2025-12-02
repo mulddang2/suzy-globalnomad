@@ -1,3 +1,4 @@
+import { convertToCdnUrl } from '@/utils/imageUtils';
 import { useQuery } from '@tanstack/react-query';
 import { axiosInstance } from './axios-instance';
 import { queryKeys } from './querykeys';
@@ -43,9 +44,6 @@ export interface GetActivitiesResponse {
   activities: Activity[];
 }
 
-const CDN_BASE = process.env.NEXT_PUBLIC_IMAGE_CDN_BASE!;
-const ORIGINAL_BASE = 'https://sp-globalnomad-api.vercel.app/10-2/';
-
 async function getActivities(request: GetActivitiesRequest) {
   const params =
     request.method === 'cursor'
@@ -66,10 +64,9 @@ async function getActivities(request: GetActivitiesRequest) {
   });
   const data = response.data;
 
-  // bannerImageUrl을 CDN 경로로 변환
   const transformedActivities = data.activities.map((activity) => ({
     ...activity,
-    bannerImageUrl: activity.bannerImageUrl.replace(ORIGINAL_BASE, `${CDN_BASE}/tr:f-auto`),
+    bannerImageUrl: convertToCdnUrl(activity.bannerImageUrl),
   }));
 
   return {

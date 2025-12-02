@@ -29,17 +29,20 @@ export const gridContainer = style({
   rowGap: '48px',
   marginBottom: '64px',
   width: '100%',
+  gridAutoRows: '450px',
 
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
       gridTemplateColumns: 'repeat(3, 1fr)',
       columnGap: '16px',
       rowGap: '32px',
+      gridAutoRows: '400px',
     },
     'screen and (min-width: 320px) and (max-width: 767px)': {
       gridTemplateColumns: 'repeat(2, 1fr)',
       columnGap: '8px',
-      rowGap: '5px',
+      rowGap: '20px',
+      gridAutoRows: '380px',
     },
   },
 });

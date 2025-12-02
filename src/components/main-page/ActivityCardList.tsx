@@ -16,9 +16,16 @@ function ActivityCardList() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [currentPageNum, setCurrentPageNum] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [sortOption, setSortOption] = useState('most_reviewed' as SortOption);
+  const [currentPageNum, setCurrentPageNum] = useState(() => {
+    const page = searchParams.get('page');
+    return page ? Number(page) - 1 : 0;
+  });
+  const [selectedCategory, setSelectedCategory] = useState(() => {
+    return searchParams.get('category') || '';
+  });
+  const [sortOption, setSortOption] = useState(() => {
+    return (searchParams.get('sort') as SortOption) || 'most_reviewed';
+  });
   const offset = 8;
 
   const {
@@ -57,7 +64,7 @@ function ActivityCardList() {
     router.push(`${pathname}?${newQuery.toString()}`, { scroll: false });
   };
 
-  const handlePageChange = (page: number) => setCurrentPageNum(page);
+  const handlePageChange = (page: number) => setCurrentPageNum(page - 1);
 
   const handleCategoryClick = (newCategory: string) => {
     setSelectedCategory(newCategory);
@@ -116,13 +123,22 @@ function ActivityCardList() {
         {isFetching
           ? Array.from({ length: offset }, (_, index) => <ActivityCardSkeleton key={index} />)
           : activities.map((activity) => <ActivityCard key={activity.id} cardData={activity} />)}
+
+        {!isFetching &&
+          activities.length > 0 &&
+          Array.from({ length: offset - activities.length }).map((_, index) => (
+            <div key={`empty-${index}`} aria-hidden='true' style={{ visibility: 'hidden' }}>
+              <ActivityCardSkeleton />
+            </div>
+          ))}
+
         {activities.length === 0 && !isFetching && (
           <div className={styles.noActivities}>신청할 수 있는 체험이 없습니다.</div>
         )}
       </div>
       {totalCount !== 0 && (
         <Pagination
-          currentPage={currentPageNum}
+          currentPage={currentPageNum + 1}
           totalCount={totalCount}
           offsetLimit={offset}
           setPageNum={handlePageChange}

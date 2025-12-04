@@ -1,9 +1,9 @@
 import ActivityCard from '@/components/main-page/ActivityCard';
-import Pagination from '@/components/pagination/Pagination';
 import ActivityCardSkeleton from '@/components/skeleton-ui/main-page/ActivityCardSkeleton';
 import { CATEGORY_EMOJI } from '@/constants/categories';
 import { SECTION_TITLES } from '@/constants/text';
 import { usePageActivity } from '@/hooks/use-activity-list';
+import Pagination from '@mui/material/Pagination';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import * as styles from './ActivityCardList.css';
@@ -15,41 +15,26 @@ function ActivityCardList() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+  const OFFSET = 8;
 
-  const [currentPageNum, setCurrentPageNum] = useState(() => {
-    const page = searchParams.get('page');
-    return page ? Number(page) - 1 : 0;
-  });
-  const [selectedCategory, setSelectedCategory] = useState(() => {
-    return searchParams.get('category') || '';
-  });
-  const [sortOption, setSortOption] = useState(() => {
-    return (searchParams.get('sort') as SortOption) || 'most_reviewed';
-  });
-  const offset = 8;
+  const currentPageNum = Number(searchParams.get('page') || '1') - 1;
+  const selectedCategory = searchParams.get('category') || '';
+  const sortOption = (searchParams.get('sort') as SortOption) || 'most_reviewed';
+
+  const [totalCount, setTotalCount] = useState(0);
 
   const {
     data: allActivityList,
     isFetching,
     isError,
     error,
-  } = usePageActivity(currentPageNum, offset, selectedCategory, sortOption);
+  } = usePageActivity(currentPageNum, OFFSET, selectedCategory, sortOption);
 
   useEffect(() => {
-    const category = searchParams.get('category');
-    const sortOption = searchParams.get('sort');
-    const page = searchParams.get('page');
-
-    if (category) {
-      setSelectedCategory(category);
+    if (allActivityList?.totalCount) {
+      setTotalCount(allActivityList.totalCount);
     }
-    if (sortOption && ['most_reviewed', 'price_asc', 'price_desc', 'latest'].includes(sortOption)) {
-      setSortOption(sortOption as SortOption);
-    }
-    if (page) {
-      setCurrentPageNum(Number(page) - 1);
-    }
-  }, [searchParams]);
+  }, [allActivityList]);
 
   const updateQueryParams = (params: Record<string, string | number | undefined>) => {
     const newQuery = new URLSearchParams(searchParams);
@@ -64,12 +49,11 @@ function ActivityCardList() {
     router.push(`${pathname}?${newQuery.toString()}`, { scroll: false });
   };
 
-  const handlePageChange = (page: number) => setCurrentPageNum(page - 1);
+  const handlePageChange = (page: number) => {
+    updateQueryParams({ page });
+  };
 
   const handleCategoryClick = (newCategory: string) => {
-    setSelectedCategory(newCategory);
-    setCurrentPageNum(0);
-
     updateQueryParams({ category: newCategory || undefined, page: 1 });
   };
 
@@ -93,9 +77,6 @@ function ActivityCardList() {
         apiSortKey = 'most_reviewed';
     }
 
-    setSortOption(apiSortKey);
-    setCurrentPageNum(0);
-
     updateQueryParams({ sort: apiSortKey || undefined, page: 1 });
   };
 
@@ -104,7 +85,6 @@ function ActivityCardList() {
   }
 
   const activities = allActivityList?.activities || [];
-  const totalCount = allActivityList?.totalCount || 0;
 
   return (
     <section className={styles.categoryListContainer}>
@@ -121,12 +101,12 @@ function ActivityCardList() {
       </div>
       <div className={styles.gridContainer}>
         {isFetching
-          ? Array.from({ length: offset }, (_, index) => <ActivityCardSkeleton key={index} />)
+          ? Array.from({ length: OFFSET }, (_, index) => <ActivityCardSkeleton key={index} />)
           : activities.map((activity) => <ActivityCard key={activity.id} cardData={activity} />)}
 
         {!isFetching &&
           activities.length > 0 &&
-          Array.from({ length: offset - activities.length }).map((_, index) => (
+          Array.from({ length: OFFSET - activities.length }).map((_, index) => (
             <div key={`empty-${index}`} aria-hidden='true' style={{ visibility: 'hidden' }}>
               <ActivityCardSkeleton />
             </div>
@@ -136,13 +116,13 @@ function ActivityCardList() {
           <div className={styles.noActivities}>신청할 수 있는 체험이 없습니다.</div>
         )}
       </div>
-      {totalCount !== 0 && (
+      {totalCount > 0 && (
         <Pagination
-          currentPage={currentPageNum + 1}
-          totalCount={totalCount}
-          offsetLimit={offset}
-          setPageNum={handlePageChange}
-          currentPageGroup={0}
+          count={Math.ceil(totalCount / OFFSET)}
+          onChange={(_, page) => handlePageChange(page)}
+          page={currentPageNum + 1}
+          variant='outlined'
+          shape='rounded'
         />
       )}
     </section>

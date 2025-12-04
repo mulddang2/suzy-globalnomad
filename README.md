@@ -12,6 +12,7 @@
 # GlobalNomad Refactoring (진행 중)
 
 ## 소개
+
 팀 프로젝트를 개인 레포지토리로 포크 후, 메인페이지·상세페이지·공용 컴포넌트 중심으로 전반적인 UI/UX 개선과 성능 최적화를 진행했습니다.
 반응형 레이아웃 리뉴얼, Swiper 기반 카테고리 슬라이드 구현, Skeleton·스피너를 통한 로딩 최적화, 카카오 지도 기능 추가 등 사용자 경험 개선에 집중했습니다.
 또한 CDN 기반 이미지 경로 적용, fallback 이미지, 상수 분리, 커스텀 훅 분리 등 코드 구조를 정리하고, 불필요한 스타일·파일 제거 및 import order 정리 등을 통해 유지보수성을 크게 향상시켰습니다.
@@ -19,11 +20,12 @@
 > **기간: 2025.01.25 ~ 현재**
 
 ## 배포 주소
+
 **테스트 계정** ID: player@gmail.com / PW: player1234
+
 > 개인 리펙토링: **배포 URL**: https://globalnomard.netlify.app/ <br/>  
 > Legacy: **배포 URL**: https://codeit-globalnomad.vercel.app/main?page=1
->
-> 
+
 ## 팀 소개
 
 <div align="center">

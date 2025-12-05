@@ -1,5 +1,5 @@
-import ArrowLeft from '@/assets/icons/Arrow-Left.svg';
-import ArrowRight from '@/assets/icons/Arrow-Right.svg';
+import ArrowLeft from '@/assets/icons/arrow-left.svg';
+import ArrowRight from '@/assets/icons/arrow-right.svg';
 import React from 'react';
 import * as styles from './Pagination.css';
 

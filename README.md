@@ -212,8 +212,8 @@
 │  │     └─ page.tsx
 │  ├─ assets
 │  │  ├─ icons
-│  │  │  ├─ Arrow-Left.svg
-│  │  │  ├─ Arrow-Right.svg
+│  │  │  ├─ arrow-left.svg
+│  │  │  ├─ arrow-right.svg
 │  │  │  ├─ account-check-outline.svg
 │  │  │  ├─ alarm.svg
 │  │  │  ├─ arrow-down.svg

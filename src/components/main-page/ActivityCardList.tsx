@@ -1,8 +1,11 @@
+import PaginationPrevBtn from '@/assets/icons/arrow-left.svg';
+import PaginationNextButton from '@/assets/icons/arrow-right.svg';
 import ActivityCard from '@/components/main-page/ActivityCard';
 import ActivityCardSkeleton from '@/components/skeleton-ui/main-page/ActivityCardSkeleton';
 import { CATEGORY_EMOJI } from '@/constants/categories';
 import { SECTION_TITLES } from '@/constants/text';
 import { usePageActivity } from '@/hooks/use-activity-list';
+import { PaginationItem } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -104,26 +107,36 @@ function ActivityCardList() {
           ? Array.from({ length: OFFSET }, (_, index) => <ActivityCardSkeleton key={index} />)
           : activities.map((activity) => <ActivityCard key={activity.id} cardData={activity} />)}
 
-        {!isFetching &&
-          activities.length > 0 &&
-          Array.from({ length: OFFSET - activities.length }).map((_, index) => (
-            <div key={`empty-${index}`} aria-hidden='true' style={{ visibility: 'hidden' }}>
-              <ActivityCardSkeleton />
-            </div>
-          ))}
-
         {activities.length === 0 && !isFetching && (
           <div className={styles.noActivities}>신청할 수 있는 체험이 없습니다.</div>
         )}
       </div>
       {totalCount > 0 && (
-        <Pagination
-          count={Math.ceil(totalCount / OFFSET)}
-          onChange={(_, page) => handlePageChange(page)}
-          page={currentPageNum + 1}
-          variant='outlined'
-          shape='rounded'
-        />
+        <div className={styles.paginationContainer}>
+          <Pagination
+            count={Math.ceil(totalCount / OFFSET)}
+            onChange={(_, page) => handlePageChange(page)}
+            page={currentPageNum + 1}
+            variant='outlined'
+            shape='rounded'
+            renderItem={(item) => (
+              <PaginationItem
+                slots={{
+                  previous: PaginationPrevBtn,
+                  next: PaginationNextButton,
+                }}
+                sx={{
+                  '&.Mui-selected': {
+                    backgroundColor: '#0B3B2D',
+                    color: 'white',
+                  },
+                  borderRadius: '8px',
+                }}
+                {...item}
+              />
+            )}
+          />
+        </div>
       )}
     </section>
   );

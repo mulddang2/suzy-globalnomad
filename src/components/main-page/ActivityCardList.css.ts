@@ -1,7 +1,8 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 
 export const categoryListContainer = style({
-  minHeight: '1204px',
+  minHeight: '1200px',
+  position: 'relative',
 });
 
 export const container = style({
@@ -28,8 +29,8 @@ export const gridContainer = style({
   columnGap: '24px',
   rowGap: '48px',
   width: '100%',
-  flex: 1,
-  marginBottom: '64px',
+  gridAutoRows: 'auto',
+  minHeight: 'max-content',
 
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
@@ -41,6 +42,27 @@ export const gridContainer = style({
       gridTemplateColumns: 'repeat(2, 1fr)',
       columnGap: '8px',
       rowGap: '16px',
+    },
+  },
+});
+
+export const paginationContainer = style({
+  display: 'flex',
+  justifyContent: 'center',
+  paddingBottom: '3rem',
+  width: '100%',
+
+  marginTop: '64px',
+  marginBottom: '50px',
+
+  '@media': {
+    'screen and (min-width: 768px) and (max-width: 1199px)': {
+      marginTop: '72px',
+    },
+
+    'screen and (min-width: 320px) and (max-width: 767px)': {
+      marginTop: '38px',
+      marginBottom: '83px',
     },
   },
 });

@@ -6,7 +6,6 @@ export const wrapper = style({
   flexDirection: 'column',
   alignItems: 'center',
   width: '100%',
-  paddingBottom: '8rem',
   backgroundColor: global.color.whiteBg,
 });
 

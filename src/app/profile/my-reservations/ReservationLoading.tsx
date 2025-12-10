@@ -1,7 +1,7 @@
 import ReservationCardSkeleton from '@/components/skeleton-ui/my-reservations/ReservationCardSkeleton';
-import * as styles from './loading.css';
+import * as styles from './ReservationLoading.css';
 
-export default function Loading() {
+export default function ReservationLoading() {
   return (
     <div className={styles.content}>
       <div className={styles.contentHeader}>

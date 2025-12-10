@@ -36,8 +36,9 @@
 
 </div>
 
+🔗 Notion 협업문서 바로가기: https://plucky-potential-23f.notion.site/1587db17f7ba8004b456ff9d6baae49c?v=1587db17f7ba80c19d89000cd81b7b30
+
 ## 프로젝트 소개
-🔗 Notion 바로가기: https://plucky-potential-23f.notion.site/1587db17f7ba8004b456ff9d6baae49c?v=1587db17f7ba80c19d89000cd81b7b30
 
 사용자가 판매자와 체험자 모두 될 수 있는 플랫폼으로, 캘린더, 지도 및 주소 관련 기능을 구현한 체험 상품 예약 프로젝트 입니다.
 

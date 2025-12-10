@@ -57,8 +57,7 @@ export const refreshAccessToken = async (): Promise<string> => {
         },
       },
     );
-    const { accessToken } = response.data;
-    return accessToken;
+    return response.data;
   } catch (error) {
     console.error('토큰 갱신 실패:', error);
     throw new Error('토큰 갱신 실패');

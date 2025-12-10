@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { keyframes, style } from '@vanilla-extract/css';
 import { global } from '@/styles/global.css';
 
 export const headerContainer = style({
@@ -113,4 +113,28 @@ export const authButton = style({
   color: '#1b1b1b',
   cursor: 'pointer',
   transition: 'background-color 0.2s ease',
+});
+
+const colorPulse = keyframes({
+  '0%': {
+    backgroundColor: global.color.green[200], // 기본: 짙은 녹색 (#0B3B2D)
+    transform: 'scale(1)',
+  },
+  '50%': {
+    backgroundColor: global.color.lightGreen, // 강조: 밝은 녹색 (#00AC07)
+    transform: 'scale(1.05)', // 살짝 커짐
+    boxShadow: '0 0 12px rgba(0, 172, 7, 0.6)', // 밝은 녹색 빛 번짐 효과
+  },
+  '100%': {
+    backgroundColor: global.color.green[200], // 복귀
+    transform: 'scale(1)',
+  },
+});
+
+export const testLoginButton = style({
+  backgroundColor: global.color.green[200],
+  color: '#fff',
+  padding: '6px',
+
+  animation: `${colorPulse} 2s infinite`,
 });

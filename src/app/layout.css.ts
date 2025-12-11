@@ -8,4 +8,5 @@ export const container = style({
 
 export const main = style({
   flex: '1',
+  paddingTop: '70px',
 });

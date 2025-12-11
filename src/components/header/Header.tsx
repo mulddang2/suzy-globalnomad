@@ -8,7 +8,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { AlarmModal } from '../alarm/AlarmModal';
-import { Button } from '../button/Button';
 import { Dropdown } from './DropDown';
 import * as styles from './Header.css';
 
@@ -16,12 +15,12 @@ const TEST_EMAIL = process.env.NEXT_PUBLIC_TEST_EMAIL;
 const TEST_PASSWORD = process.env.NEXT_PUBLIC_TEST_PASSWORD;
 
 export function Header() {
-  const { user, isTestLoggedIn, setUser } = useUserStore();
+  const { user, setUser, setAuthInitialized, isAuthInitialized } = useUserStore();
+  const isLoggedIn = Boolean(user);
 
-  const router = useRouter();
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const isLoggedIn = Boolean(user) || isTestLoggedIn;
+  const router = useRouter();
 
   const testLoggedIn = async () => {
     if (!TEST_EMAIL || !TEST_PASSWORD) {
@@ -57,9 +56,10 @@ export function Header() {
           localStorage.removeItem('refreshToken');
         }
       }
+      setAuthInitialized(true);
     };
     restoreUser();
-  }, [setUser, user]);
+  }, [setUser, user, setAuthInitialized]);
 
   return (
     <header className={styles.headerContainer}>
@@ -75,36 +75,42 @@ export function Header() {
           />
         </div>
 
-        {isLoggedIn || isTestLoggedIn ? (
-          // 로그인
-          <div className={styles.userInfo}>
-            <div className={styles.notificationContainer}>
-              <button className={styles.notificationButton} onClick={() => setModalOpen(true)}>
-                <AlarmIcon />
-              </button>
-              {/* 알림 모달 */}
-              {isModalOpen && (
-                <div className={styles.alarmModalContainer}>
-                  <AlarmModal onClose={() => setModalOpen(false)} />
-                </div>
-              )}
-            </div>
-            <div className={styles.divider}></div>
-            <Dropdown />
-          </div>
+        {!isAuthInitialized ? (
+          <div className={styles.authButtons}></div>
         ) : (
-          // 비 로그인
-          <div className={styles.authButtons}>
-            <button onClick={testLoggedIn} className={styles.testLoginButton}>
-              테스트 로그인
-            </button>
-            <button onClick={() => router.push('/login')} className={styles.authButton}>
-              로그인
-            </button>
-            <button onClick={() => router.push('/signup')} className={styles.authButton}>
-              회원가입
-            </button>
-          </div>
+          <>
+            {isLoggedIn ? (
+              // 로그인
+              <div className={styles.userInfo}>
+                <div className={styles.notificationContainer}>
+                  <button className={styles.notificationButton} onClick={() => setModalOpen(true)}>
+                    <AlarmIcon />
+                  </button>
+                  {/* 알림 모달 */}
+                  {isModalOpen && (
+                    <div className={styles.alarmModalContainer}>
+                      <AlarmModal onClose={() => setModalOpen(false)} />
+                    </div>
+                  )}
+                </div>
+                <div className={styles.divider}></div>
+                <Dropdown />
+              </div>
+            ) : (
+              // 비 로그인
+              <div className={styles.authButtons}>
+                <button onClick={testLoggedIn} className={styles.testLoginButton}>
+                  테스트 로그인
+                </button>
+                <button onClick={() => router.push('/login')} className={styles.authButton}>
+                  로그인
+                </button>
+                <button onClick={() => router.push('/signup')} className={styles.authButton}>
+                  회원가입
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </header>

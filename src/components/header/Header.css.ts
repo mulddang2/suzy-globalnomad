@@ -4,6 +4,10 @@ import { global } from '@/styles/global.css';
 export const headerContainer = style({
   width: '100%',
   margin: '0 auto',
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  zIndex: 100,
 
   borderBottom: `0.1rem solid ${global.color.gray[300]}`,
   backgroundColor: '#FFFFFF',
@@ -117,17 +121,22 @@ export const authButton = style({
 
 const colorPulse = keyframes({
   '0%': {
-    backgroundColor: global.color.green[200], // 기본: 짙은 녹색 (#0B3B2D)
+    backgroundColor: global.color.green[200],
     transform: 'scale(1)',
+    opacity: 1,
+    boxShadow: '0 0 0 rgba(11, 59, 45, 0)',
   },
   '50%': {
-    backgroundColor: global.color.lightGreen, // 강조: 밝은 녹색 (#00AC07)
-    transform: 'scale(1.05)', // 살짝 커짐
-    boxShadow: '0 0 12px rgba(0, 172, 7, 0.6)', // 밝은 녹색 빛 번짐 효과
+    backgroundColor: global.color.green[200],
+    transform: 'scale(1.01)',
+    opacity: 0.95,
+    boxShadow: '0 0 4px rgba(11, 59, 45, 0.15)',
   },
   '100%': {
-    backgroundColor: global.color.green[200], // 복귀
+    backgroundColor: global.color.green[200],
     transform: 'scale(1)',
+    opacity: 1,
+    boxShadow: '0 0 0 rgba(11, 59, 45, 0)',
   },
 });
 

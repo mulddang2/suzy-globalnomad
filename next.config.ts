@@ -30,6 +30,7 @@ const nextConfig: NextConfig = {
 
     return config;
   },
+
   transpilePackages: ['@company/design-system'],
 };
 

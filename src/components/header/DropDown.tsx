@@ -1,6 +1,5 @@
 'use client';
 
-import { fetchUserInfo } from '@/apis/users';
 import defaultUserImage from '@/assets/images/default-user.png';
 import { useUserStore } from '@/stores/useUserStore';
 import Image from 'next/image';
@@ -11,7 +10,7 @@ import * as styles from './DropDown.css';
 export const Dropdown: React.FC = () => {
   const router = useRouter();
 
-  const { user, clearUser, setUser } = useUserStore();
+  const { user, clearUser } = useUserStore();
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 

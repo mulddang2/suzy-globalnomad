@@ -11,24 +11,12 @@ interface SignupResponse {
 }
 
 export const signup = async (email: string, nickname: string, password: string): Promise<SignupResponse> => {
-  const teamId = '10-2';
-  const url = `https://sp-globalnomad-api.vercel.app/${teamId}/users`;
-
   try {
-    const response = await axiosInstance.post<SignupResponse>(
-      url,
-      {
-        email,
-        nickname,
-        password,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      },
-    );
+    const response = await axiosInstance.post<SignupResponse>('/users', {
+      email,
+      nickname,
+      password,
+    });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -48,13 +36,7 @@ export const signup = async (email: string, nickname: string, password: string):
 
 //내 정보 조회
 export const fetchUserInfo = async () => {
-  const accessToken = localStorage.getItem('accessToken');
-  const teamId = '10-2';
-  const response = await axiosInstance.get(`https://sp-globalnomad-api.vercel.app/${teamId}/users/me`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  const response = await axiosInstance.get('/users/me');
   return response.data;
 };
 
@@ -64,15 +46,8 @@ export const updateUserInfo = async (data: {
   profileImageUrl?: string;
   newPassword?: string;
 }): Promise<void> => {
-  const accessToken = localStorage.getItem('accessToken');
-  const teamId = '10-2';
   try {
-    const response = await axiosInstance.patch(`https://sp-globalnomad-api.vercel.app/${teamId}/users/me`, data, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await axiosInstance.patch('/users/me', data);
     console.log('User info updated:', response.data);
   } catch (error) {
     console.error('Error updating user info:', error);

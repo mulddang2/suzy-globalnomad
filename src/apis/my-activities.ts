@@ -1,8 +1,9 @@
 import { axiosInstance } from '@/apis/axios-instance';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 export const fetchMyActivities = async (pageParam = null) => {
   try {
-    const token = localStorage.getItem('accessToken');
+    const token = useAuthStore.getState().accessToken;
 
     if (!token) {
       throw new Error('No access token found');

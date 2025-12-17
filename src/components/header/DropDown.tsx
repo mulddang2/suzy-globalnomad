@@ -1,7 +1,7 @@
 'use client';
 
 import defaultUserImage from '@/assets/images/default-user.png';
-import { useUserStore } from '@/stores/useUserStore';
+import { useAuthStore } from '@/stores/useAuthStore';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
@@ -10,7 +10,7 @@ import * as styles from './DropDown.css';
 export const Dropdown: React.FC = () => {
   const router = useRouter();
 
-  const { user, clearUser } = useUserStore();
+  const { user, clearAuth } = useAuthStore();
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
@@ -26,11 +26,8 @@ export const Dropdown: React.FC = () => {
     } else if (option === '예약 현황') {
       router.push('/profile/my-activity-board');
     } else if (option === '로그아웃') {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-
-      if (clearUser) {
-        clearUser();
+      if (clearAuth) {
+        clearAuth();
         router.push('/login');
       }
     }

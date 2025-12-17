@@ -1,3 +1,4 @@
+import { useAuthStore } from '@/stores/useAuthStore';
 import axios from 'axios';
 import { refreshAccessToken } from './auth';
 
@@ -9,7 +10,7 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     if (!config.headers.Authorization) {
-      const accessToken = localStorage.getItem('accessToken');
+      const accessToken = useAuthStore.getState().accessToken;
       if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`;
       }
@@ -28,7 +29,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const newAccessToken = await refreshAccessToken();
-        localStorage.setItem('accessToken', newAccessToken);
+        useAuthStore.setState({ accessToken: newAccessToken });
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return axiosInstance(originalRequest);
       } catch (refreshError) {

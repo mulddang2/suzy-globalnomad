@@ -10,6 +10,7 @@ import Input from '@/components/Input';
 import { Button } from '@/components/button/Button';
 import Dialog from '@/components/modal/Dialog';
 import Modal from '@/components/modal/Modal';
+import { useAuthStore } from '@/stores/useAuthStore';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
@@ -42,10 +43,8 @@ export default function LoginPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const { accessToken, refreshToken, user } = await login(email, password);
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
-      localStorage.setItem('userInfo', JSON.stringify(user));
+      const { accessToken, refreshToken, userData } = await login(email, password);
+      useAuthStore.setState({ accessToken, refreshToken, user: userData });
       window.location.href = '/';
     } catch {
       setAlertMessage('비밀번호가 일치하지 않습니다.');

@@ -3,8 +3,9 @@
 import { login } from '@/apis/auth';
 import { fetchUserInfo } from '@/apis/users';
 import AlarmIcon from '@/assets/icons/alarm.svg';
-import { useUserStore } from '@/stores/useUserStore';
+import { useAuthStore } from '@/stores/useAuthStore';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { AlarmModal } from '../alarm/AlarmModal';
@@ -15,7 +16,7 @@ const TEST_EMAIL = process.env.NEXT_PUBLIC_TEST_EMAIL;
 const TEST_PASSWORD = process.env.NEXT_PUBLIC_TEST_PASSWORD;
 
 export function Header() {
-  const { user, setUser, setAuthInitialized, isAuthInitialized } = useUserStore();
+  const { user, setAuth, setUser, setAuthInitialized, isAuthInitialized, clearAuth, accessToken } = useAuthStore();
   const isLoggedIn = Boolean(user);
 
   const [isModalOpen, setModalOpen] = useState(false);
@@ -29,12 +30,10 @@ export function Header() {
     }
 
     try {
-      const { accessToken, refreshToken, user } = await login(TEST_EMAIL, TEST_PASSWORD);
-      setUser(user);
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
+      const { accessToken, refreshToken, userData } = await login(TEST_EMAIL, TEST_PASSWORD);
+      setAuth(userData, accessToken, refreshToken);
 
-      if (user) {
+      if (userData) {
         router.push('/');
       }
     } catch (error) {
@@ -44,35 +43,34 @@ export function Header() {
 
   useEffect(() => {
     const restoreUser = async () => {
-      const accessToken = localStorage.getItem('accessToken');
-
-      if (accessToken && !user) {
+      if (!user && accessToken) {
         try {
           const userData = await fetchUserInfo();
           setUser(userData);
         } catch (error) {
           console.error('토큰이 유효하지 않아 로그아웃 처리합니다.', error);
-          localStorage.removeItem('accessToken');
-          localStorage.removeItem('refreshToken');
+          clearAuth();
         }
       }
       setAuthInitialized(true);
     };
     restoreUser();
-  }, [setUser, user, setAuthInitialized]);
+  }, [user, setAuth, setAuthInitialized, accessToken]);
 
   return (
     <header className={styles.headerContainer}>
       <div className={styles.headerBox}>
-        <div className={styles.logoContainer} onClick={() => router.push('/')}>
-          <Image
-            src='/icons/logo.svg'
-            priority
-            alt='GlobalNomad 로고'
-            className={styles.logoImage}
-            width={172}
-            height={30}
-          />
+        <div className={styles.logoContainer}>
+          <Link href='/'>
+            <Image
+              src='/icons/logo.svg'
+              priority
+              alt='GlobalNomad 로고'
+              className={styles.logoImage}
+              width={172}
+              height={30}
+            />
+          </Link>
         </div>
 
         {!isAuthInitialized ? (

@@ -1,4 +1,4 @@
-import { useUserStore } from '@/stores/useUserStore';
+import { useAuthStore } from '@/stores/useAuthStore';
 import axios from 'axios';
 import { axiosInstance } from './axios-instance';
 
@@ -32,7 +32,7 @@ export const login = async (email: string, password: string): Promise<LoginRespo
 
 //토큰 갱신
 export const refreshAccessToken = async (): Promise<string> => {
-  const refreshToken = useUserStore.getState().refreshToken;
+  const refreshToken = useAuthStore.getState().refreshToken;
   if (!refreshToken) {
     throw new Error('Refresh Token이 없습니다.');
   }

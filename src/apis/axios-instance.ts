@@ -1,12 +1,12 @@
 import { useAuthStore } from '@/stores/useAuthStore';
 import axios from 'axios';
 import { refreshAccessToken } from './auth';
+import { BASE_URL } from './constants';
 
 export const axiosInstance = axios.create({
-  baseURL: 'https://sp-globalnomad-api.vercel.app/10-2/',
+  baseURL: BASE_URL,
 });
 
-// 요청 인터셉터: Access Token 자동 추가
 axiosInstance.interceptors.request.use(
   (config) => {
     if (!config.headers.Authorization) {
@@ -20,7 +20,6 @@ axiosInstance.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
-// 응답 인터셉터: 401 에러 처리
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {

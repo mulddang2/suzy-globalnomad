@@ -1,7 +1,7 @@
 'use client';
 
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
 export default function KakaoMap({ address }: { address: string }) {

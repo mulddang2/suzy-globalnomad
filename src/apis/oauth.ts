@@ -18,7 +18,7 @@ export const fetchKakaoAccessToken = async (code: string) => {
     code,
   });
 
-  const response = await axiosInstance.post(TOKEN_URL, params, {
+  const response = await axios.post(TOKEN_URL, params, {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
   });
 
@@ -37,10 +37,7 @@ export const fetchKakaoUserInfo = async (accessToken: string) => {
 
 //간편 회원가입
 export const signupWithKakao = async (nickname: string, token: string) => {
-  const BASE_URL = 'https://sp-globalnomad-api.vercel.app';
-  const TEAM_ID = '10-2';
-
-  const response = await axiosInstance.post(`${BASE_URL}/${TEAM_ID}/oauth/sign-up/kakao`, {
+  const response = await axiosInstance.post('/oauth/sign-up/kakao', {
     nickname,
     redirectUri: REDIRECT_URI,
     token,

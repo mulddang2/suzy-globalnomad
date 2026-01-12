@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   description: '사용자가 판매자와 체험자 모두 될 수 있는 체험 상품을 예약하는 기능을 제공하는 서비스입니다.',
 };
 
-export const API = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAOJSKEY}&libraries=services,clusterer&autoload=false`;
+const API = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAOJSKEY}&libraries=services,clusterer&autoload=false`;
 
 export default function RootLayout({
   children,

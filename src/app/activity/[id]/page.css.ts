@@ -11,6 +11,7 @@ export const detailPageBox = style({
   width: '62.5%',
   margin: '0 auto',
   marginTop: '78px',
+  marginBottom: '293px',
 
   '@media': {
     'screen and (max-width: 797px)': {
@@ -137,23 +138,30 @@ export const ratingLayout = style({
   marginTop: '24px',
 });
 
-export const averageRating = style({
-  fontSize: '50px',
-  fontWeight: 'semiBold',
-  color: global.color.nomadBlack,
-});
+export const averageRating = style([
+  {
+    fontSize: '50px',
+    color: global.color.nomadBlack,
+  },
+  fontWeights.semibold,
+]);
 
 export const averageRatingLayout = style({
   display: 'flex',
+  color: global.color.nomadBlack,
   flexDirection: 'column',
   gap: '8px',
 });
 
-export const ratingReviewLayout = style({
-  display: 'flex',
-  gap: '6px',
-  alignItems: 'center',
-});
+export const ratingReviewLayout = style([
+  {
+    display: 'flex',
+    gap: '6px',
+    alignItems: 'center',
+    color: global.color.black,
+  },
+  fontSizes.textMd,
+]);
 
 export const paragraph = style([
   fontSizes.textLg,
@@ -204,4 +212,62 @@ export const locationBox = style({
 
 export const address = style({
   fontSize: '14px',
+});
+
+export const bodyContainer = style({
+  display: 'flex',
+  gap: '24px',
+  marginTop: '40px',
+  alignItems: 'flex-start',
+  '@media': {
+    'screen and (max-width: 1199px)': {
+      flexDirection: 'column',
+    },
+  },
+});
+
+export const mainContent = style({
+  flex: 1,
+  width: '100%',
+  minWidth: 0,
+});
+
+export const sidebar = style({
+  width: '384px',
+  flexShrink: 0,
+  '@media': {
+    'screen and (max-width: 1199px)': {
+      width: '100%',
+      marginTop: '24px',
+      display: 'none',
+    },
+    'screen and (max-width: 767px)': {
+      display: 'block',
+      width: '100%',
+    },
+  },
+});
+
+export const sidebarLayout = style({
+  width: '320px',
+  flexShrink: 0,
+  '@media': {
+    'screen and (max-width: 1199px)': {
+      width: '100%',
+      position: 'fixed',
+      bottom: 0,
+      left: 0,
+      zIndex: 100,
+      backgroundColor: 'white',
+      borderTop: `1px solid ${global.color.gray[200]}`,
+      padding: '0',
+    },
+  },
+});
+
+export const loadingContainer = style({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: 'calc(100vh - 200px)',
 });

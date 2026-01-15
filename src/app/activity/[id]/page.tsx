@@ -1,13 +1,17 @@
 'use client';
 
+import PaginationPrevBtn from '@/assets/icons/arrow-left.svg';
+import PaginationNextButton from '@/assets/icons/arrow-right.svg';
 import IconLocation from '@/assets/icons/location.svg';
 import StarFill from '@/assets/icons/star-fill.svg';
+import ReservationSidebar from '@/components/detail-page/ReservationSidebar';
 import ReviewCardList from '@/components/detail-page/ReviewCardList';
 import KakaoMap from '@/components/kakao-map/KakaoMap';
 import ImageWithFallback from '@/components/profile/common/ImageWithFallback';
 import Rating from '@/components/rating/Rating';
 import { useActivitiesReviews } from '@/hooks/use-activities-reviews';
 import { useMyActivitiesDetails } from '@/hooks/use-my-activities-details';
+import { CircularProgress, PaginationItem } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
@@ -92,56 +96,85 @@ export default function DetailPage() {
                   </div>
                 )}
               </div>
-              <div className={styles.horizontalLine}></div>
-              <div className={styles.descLayout}>
-                <h3 className={styles.subheading}>체험 설명</h3>
-                <p className={styles.paragraph}>{activity.data.description}</p>
-              </div>
 
-              <div className={styles.horizontalLine}></div>
-
-              <div className={styles.mapLocationLayout}>
-                <div className={styles.mapContainer}>
-                  <KakaoMap address={activity.data.address} />
-                </div>
-                <div className={styles.locationLayout}>
-                  <div className={styles.locationBox}>
-                    <IconLocation />
+              <div className={styles.bodyContainer}>
+                <div className={styles.mainContent}>
+                  <div className={styles.horizontalLine}></div>
+                  <div className={styles.descLayout}>
+                    <h3 className={styles.subheading}>체험 설명</h3>
+                    <p className={styles.paragraph}>{activity.data.description}</p>
                   </div>
-                  <span>{activity.data.address}</span>
-                </div>
-              </div>
-              <div className={styles.horizontalLine}></div>
-            </>
-          ) : (
-            <div>로딩 중...</div>
-          )}
-          {reviews && (
-            <>
-              <div className={styles.reviewCountLayout}>
-                <h3 className={styles.subheading}>후기</h3>
-                <div className={styles.ratingLayout}>
-                  <p className={styles.averageRating}>{reviews.averageRating.toFixed(1)}</p>
-                  <div className={styles.averageRatingLayout}>
-                    <p>{reviewSummery(reviews.averageRating)}</p>
 
-                    <div className={styles.ratingReviewLayout}>
-                      <StarFill width={16} height={16} />
-                      <p>{reviews.totalCount.toLocaleString()}개 후기</p>
+                  <div className={styles.horizontalLine}></div>
+
+                  <div className={styles.mapLocationLayout}>
+                    <div className={styles.mapContainer}>
+                      <KakaoMap address={activity.data.address} />
+                    </div>
+                    <div className={styles.locationLayout}>
+                      <div className={styles.locationBox}>
+                        <IconLocation />
+                      </div>
+                      <span>{activity?.data.address}</span>
                     </div>
                   </div>
+                  <div className={styles.horizontalLine}></div>
+
+                  {reviews ? (
+                    <>
+                      <div className={styles.reviewCountLayout}>
+                        <h3 className={styles.subheading}>후기</h3>
+                        <div className={styles.ratingLayout}>
+                          <p className={styles.averageRating}>{reviews.averageRating.toFixed(1)}</p>
+                          <div className={styles.averageRatingLayout}>
+                            <p>{reviewSummery(reviews.averageRating)}</p>
+
+                            <div className={styles.ratingReviewLayout}>
+                              <StarFill width={16} height={16} />
+                              <p>{reviews.totalCount.toLocaleString()}개 후기</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <ReviewCardList reviewsData={reviews} />
+
+                      <Pagination
+                        count={Math.ceil(reviews.totalCount / 3)}
+                        page={page}
+                        onChange={(_, value) => setPage(value)}
+                        variant='outlined'
+                        shape='rounded'
+                        sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}
+                        renderItem={(item) => (
+                          <PaginationItem
+                            slots={{
+                              previous: PaginationPrevBtn,
+                              next: PaginationNextButton,
+                            }}
+                            sx={{
+                              '&.Mui-selected': {
+                                backgroundColor: '#0B3B2D',
+                                color: 'white',
+                              },
+                              borderRadius: '8px',
+                            }}
+                            {...item}
+                          />
+                        )}
+                      />
+                    </>
+                  ) : null}
+                </div>
+
+                <div className={styles.sidebarLayout}>
+                  <ReservationSidebar price={activity.data.price} activityId={Number(id)} />
                 </div>
               </div>
-              <ReviewCardList reviewsData={reviews} />
-
-              <Pagination
-                count={Math.ceil(reviews.totalCount / 3)} // 한 페이지당 3개 리뷰
-                page={page}
-                onChange={(_, value) => setPage(value)}
-                variant='outlined'
-                shape='rounded'
-              />
             </>
+          ) : (
+            <div className={styles.loadingContainer}>
+              <CircularProgress color='inherit' />
+            </div>
           )}
         </div>
       </div>

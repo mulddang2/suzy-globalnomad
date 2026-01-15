@@ -6,7 +6,12 @@ import * as styles from './Rating.css';
 // dark mode: 기본은 defaultMode 검은글씨, darkMode 설정하면 흰글씨(true).
 // small: 기본은 16px, small 설정하면 14px(true).
 
-export default function Rating(props: { rating: number; reviewCount: number; darkMode?: boolean; small?: boolean }) {
+export default function Rating(props: {
+  rating: number | string;
+  reviewCount: number;
+  darkMode?: boolean;
+  small?: boolean;
+}) {
   return (
     <div className={styles.rating}>
       <StarFill className={props.small ? styles.smallIcon : styles.defaultIcon} />

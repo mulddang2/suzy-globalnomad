@@ -4,11 +4,11 @@ import IconLocation from '@/assets/icons/location.svg';
 import StarFill from '@/assets/icons/star-fill.svg';
 import ReviewCardList from '@/components/detail-page/ReviewCardList';
 import KakaoMap from '@/components/kakao-map/KakaoMap';
+import ImageWithFallback from '@/components/profile/common/ImageWithFallback';
 import Rating from '@/components/rating/Rating';
 import { useActivitiesReviews } from '@/hooks/use-activities-reviews';
 import { useMyActivitiesDetails } from '@/hooks/use-my-activities-details';
 import Pagination from '@mui/material/Pagination';
-import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import * as styles from './page.css';
@@ -19,6 +19,8 @@ export default function DetailPage() {
   const { data: activity, isLoading } = useMyActivitiesDetails(id ? Number(id) : null);
 
   const { data: reviews } = useActivitiesReviews(id ? Number(id) : null, page);
+
+  const [failedSubImageCount, setFailedSubImageCount] = useState(0);
 
   const reviewSummery = (averageRating: number) => {
     if (averageRating >= 4) {
@@ -52,28 +54,36 @@ export default function DetailPage() {
                   <div className={styles.locationBox}>
                     <IconLocation />
                   </div>
-                  <span>{activity.data.address}</span>
+                  <span className={styles.address}>{activity.data.address}</span>
                 </div>
               </div>
-              <div className={styles.activityImageLayout}>
+              <div
+                className={
+                  failedSubImageCount === 0 && activity.data.subImages && activity.data.subImages.length > 0
+                    ? styles.activityImageLayout
+                    : styles.activityImageFullLayout
+                }
+              >
                 <div className={styles.bannerImageBox}>
-                  <Image
+                  <ImageWithFallback
                     fill
-                    sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                     src={activity.data.bannerImageUrl}
+                    className={styles.image}
                     alt={`${activity.data.title} 배너 이미지`}
                   />
                 </div>
-                {activity.data.subImages && (
+                {activity.data.subImages && activity.data.subImages.length - failedSubImageCount > 0 && (
                   <div className={styles.subImageBox}>
                     {activity.data.subImages.map(
-                      (subImage: { imageUrl: string | undefined }, index: number | null | undefined) =>
+                      (subImage: { imageUrl: string | undefined }, index: number) =>
                         subImage.imageUrl && (
                           <div key={index} className={styles.subImageWrapper}>
-                            <Image
+                            <ImageWithFallback
                               fill
-                              sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                               src={subImage.imageUrl}
+                              hideOnError={true}
+                              className={styles.image}
+                              onError={() => setFailedSubImageCount((prev) => prev + 1)}
                               alt={`${activity.data.title} 서브 이미지`}
                             />
                           </div>

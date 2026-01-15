@@ -14,6 +14,8 @@ interface ImageProps {
   fetchPriority?: 'high' | 'low' | 'auto';
   priority?: boolean;
   quality?: number;
+  hideOnError?: boolean;
+  onError?: () => void;
 }
 
 export default function ImageWithFallback({
@@ -27,8 +29,15 @@ export default function ImageWithFallback({
   fetchPriority,
   priority,
   quality,
+  onError,
+  hideOnError = false,
 }: ImageProps) {
   const [imgSrc, setImgSrc] = useState<string>(src);
+  const [isError, setIsError] = useState(false);
+
+  if (hideOnError && isError) {
+    return null;
+  }
 
   return (
     <Image
@@ -42,7 +51,13 @@ export default function ImageWithFallback({
       fetchPriority={fetchPriority}
       priority={priority}
       quality={quality}
-      onError={() => setImgSrc(DEFAULT_PROFILE_IMG_URL)}
+      onError={() => {
+        setImgSrc(DEFAULT_PROFILE_IMG_URL);
+        setIsError(true);
+        if (onError) {
+          onError();
+        }
+      }}
     />
   );
 }

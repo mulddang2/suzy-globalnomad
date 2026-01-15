@@ -11,6 +11,14 @@ export const detailPageBox = style({
   width: '62.5%',
   margin: '0 auto',
   marginTop: '78px',
+
+  '@media': {
+    'screen and (max-width: 797px)': {
+      width: '100%',
+      padding: '0 24px',
+      marginTop: '16px',
+    },
+  },
 });
 
 export const detailTitle = style([
@@ -20,12 +28,19 @@ export const detailTitle = style([
     color: global.color.nomadBlack,
     marginTop: '10px',
     marginBottom: '16px',
+    whiteSpace: 'noWrap',
+    '@media': {
+      'screen and (max-width: 767px)': {
+        fontSize: '24px',
+      },
+    },
   },
 ]);
 
 export const ratingLocationLayout = style({
   display: 'flex',
   gap: '12px',
+  whiteSpace: 'noWrap',
 });
 
 export const activityImageLayout = style({
@@ -36,6 +51,33 @@ export const activityImageLayout = style({
   gap: '8px',
   borderRadius: '12px',
   overflow: 'hidden',
+
+  '@media': {
+    'screen and (max-width: 797px)': {
+      marginLeft: '-24px',
+      marginRight: '-24px',
+      borderRadius: 0,
+      gridTemplateColumns: '1fr',
+    },
+  },
+});
+
+export const activityImageFullLayout = style({
+  display: 'grid',
+  margin: '25px 0 85px',
+  height: '534px',
+  gridTemplateColumns: '1fr',
+  gap: '8px',
+  borderRadius: '12px',
+  overflow: 'hidden',
+
+  '@media': {
+    'screen and (max-width: 797px)': {
+      marginLeft: '-24px',
+      marginRight: '-24px',
+      borderRadius: 0,
+    },
+  },
 });
 
 export const descLayout = style({
@@ -52,6 +94,10 @@ export const bannerImageBox = style({
   position: 'relative',
 });
 
+export const image = style({
+  objectFit: 'cover',
+});
+
 export const subImageBox = style({
   position: 'relative',
   width: '100%',
@@ -60,6 +106,12 @@ export const subImageBox = style({
   gridTemplateColumns: '1fr 1fr',
   gridTemplateRows: '1fr 1fr',
   gap: '8px',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      display: 'none',
+    },
+  },
 });
 
 export const horizontalLine = style({
@@ -140,11 +192,16 @@ export const locationLayout = style({
 
 export const detailCategory = style({
   color: global.color.nomadBlack,
+  fontSize: '14px',
 });
 
 export const locationBox = style({
   display: 'grid',
-  placeItems: 'center' /* 가로, 세로 중앙 정렬 */,
+  placeItems: 'center',
   width: '18px',
   height: '18px',
+});
+
+export const address = style({
+  fontSize: '14px',
 });

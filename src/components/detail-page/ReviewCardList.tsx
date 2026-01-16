@@ -5,24 +5,19 @@ import Image from 'next/image';
 import * as styles from './ReviewCardList.css';
 
 export default function ReviewCardList({ reviewsData }: { reviewsData: ActivitiesReviews }) {
-  if (!reviewsData) {
+  if (!reviewsData || reviewsData.reviews.length === 0) {
     return <div>리뷰가 없습니다.</div>;
   }
 
   return (
-    <div>
+    <div className={styles.listWrapper}>
       {reviewsData.reviews.map((review) => {
         return (
           review && (
-            <div key={review.id}>
+            <div key={review.id} className={styles.contentsLayout}>
               <div className={styles.profileImageBox}>
                 {review.user.profileImageUrl ? (
-                  <Image
-                    fill
-                    sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                    src={review.user.profileImageUrl}
-                    alt={`${review.user.nickname}의 프로필 이미지`}
-                  />
+                  <Image fill src={review.user.profileImageUrl} alt={`${review.user.nickname}의 프로필 이미지`} />
                 ) : (
                   <Image
                     src={defaultUserImage}
@@ -33,10 +28,13 @@ export default function ReviewCardList({ reviewsData }: { reviewsData: Activitie
                   />
                 )}
               </div>
-              <p>
-                {review.user.nickname} | {dayjs(review.createdAt).format('YYYY.MM.DD')}
-              </p>
-              <p>{review.content}</p>
+              <div>
+                <p className={styles.dateInfo}>
+                  <span className={styles.nickName}>{review.user.nickname}</span> <span>|</span>
+                  <span className={styles.dayCreated}>{dayjs(review.createdAt).format('YYYY.MM.DD')}</span>
+                </p>
+                <p className={styles.content}>{review.content}</p>
+              </div>
             </div>
           )
         );

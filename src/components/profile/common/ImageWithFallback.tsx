@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-const DEFAULT_PROFILE_IMG_URL = '/images/fallback-image.jpg';
+const DEFAULT_PROFILE_IMG_URL = '/images/fallback-image.png';
 
 interface ImageProps {
   alt: string;

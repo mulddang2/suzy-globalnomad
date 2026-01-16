@@ -95,8 +95,25 @@ export const bannerImageBox = style({
   position: 'relative',
 });
 
-export const image = style({
+export const bannerImage = style({
   objectFit: 'cover',
+});
+
+export const emptyImage = style({
+  objectFit: 'contain',
+  backgroundColor: '#fff',
+  padding: '10%',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      padding: '20%',
+    },
+  },
+});
+
+export const subImage = style({
+  objectFit: 'cover',
+  backgroundColor: '#fff',
 });
 
 export const subImageBox = style({
@@ -265,9 +282,8 @@ export const sidebarLayout = style({
   },
 });
 
-export const loadingContainer = style({
+export const loadingBarWrapper = style({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  height: 'calc(100vh - 200px)',
 });

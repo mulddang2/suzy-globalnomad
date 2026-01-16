@@ -21,12 +21,12 @@ export default function DetailPage() {
   const { id } = useParams();
   const [page, setPage] = useState(1);
   const { data: activity, isLoading } = useMyActivitiesDetails(id ? Number(id) : null);
-
   const { data: reviews } = useActivitiesReviews(id ? Number(id) : null, page);
 
   const [failedSubImageCount, setFailedSubImageCount] = useState(0);
+  const [isBannerError, setIsBannerError] = useState(false);
 
-  const reviewSummery = (averageRating: number) => {
+  const reviewSummary = (averageRating: number) => {
     if (averageRating >= 4) {
       return '매우 만족';
     }
@@ -72,8 +72,9 @@ export default function DetailPage() {
                   <ImageWithFallback
                     fill
                     src={activity.data.bannerImageUrl}
-                    className={styles.image}
+                    className={isBannerError ? styles.emptyImage : styles.bannerImage}
                     alt={`${activity.data.title} 배너 이미지`}
+                    onError={() => setIsBannerError(true)}
                   />
                 </div>
                 {activity.data.subImages && activity.data.subImages.length - failedSubImageCount > 0 && (
@@ -86,7 +87,7 @@ export default function DetailPage() {
                               fill
                               src={subImage.imageUrl}
                               hideOnError={true}
-                              className={styles.image}
+                              className={styles.subImage}
                               onError={() => setFailedSubImageCount((prev) => prev + 1)}
                               alt={`${activity.data.title} 서브 이미지`}
                             />
@@ -102,7 +103,7 @@ export default function DetailPage() {
                   <div className={styles.horizontalLine}></div>
                   <div className={styles.descLayout}>
                     <h3 className={styles.subheading}>체험 설명</h3>
-                    <p className={styles.paragraph}>{activity.data.description}</p>
+                    <p className={styles.paragraph}>{activity?.data.description}</p>
                   </div>
 
                   <div className={styles.horizontalLine}></div>
@@ -127,7 +128,7 @@ export default function DetailPage() {
                         <div className={styles.ratingLayout}>
                           <p className={styles.averageRating}>{reviews.averageRating.toFixed(1)}</p>
                           <div className={styles.averageRatingLayout}>
-                            <p>{reviewSummery(reviews.averageRating)}</p>
+                            <p>{reviewSummary(reviews.averageRating)}</p>
 
                             <div className={styles.ratingReviewLayout}>
                               <StarFill width={16} height={16} />
@@ -172,7 +173,7 @@ export default function DetailPage() {
               </div>
             </>
           ) : (
-            <div className={styles.loadingContainer}>
+            <div className={styles.loadingBarWrapper}>
               <CircularProgress color='inherit' />
             </div>
           )}

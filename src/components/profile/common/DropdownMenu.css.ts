@@ -6,12 +6,18 @@ export const menuContainer = style({
 });
 
 export const button = style({
+  cursor: 'pointer',
   ':hover': {
     backgroundColor: global.color.gray[100],
   },
   ':active': {
     backgroundColor: global.color.gray[100],
   },
+});
+
+export const active = style({
+  position: 'relative',
+  zIndex: 1301, // NOTE: MUI의 modal z-index default  => 1300
 });
 
 export const menuItem = style({

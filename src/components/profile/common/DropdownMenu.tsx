@@ -18,7 +18,7 @@ export default function DropdownMenu({ activityId, handleDelete }: DropdownMenuP
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorEl((prev) => (prev ? null : event.currentTarget));
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -28,7 +28,7 @@ export default function DropdownMenu({ activityId, handleDelete }: DropdownMenuP
     <div>
       <Button
         disableRipple
-        className={styles.button}
+        className={`${styles.button} ${open ? styles.active : ''}`}
         id='basic-button'
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup='true'

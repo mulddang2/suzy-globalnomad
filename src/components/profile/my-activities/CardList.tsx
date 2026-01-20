@@ -1,12 +1,10 @@
 import Empty from '@/assets/icons/empty.svg';
 import StarIcon from '@/assets/icons/star-fill.svg';
-import { useDeleteActivity } from '@/hooks/use-delete-activity';
+import { useHandleDeleteActivity } from '@/hooks/use-handle-delete-activity';
 import { useMyActivities } from '@/hooks/use-my-activities';
 import { MyActivitiesList } from '@/types/my-activities-list';
 import { formatToKor } from '@/utils/format-to-kor';
 import { CircularProgress } from '@mui/material';
-import { useQueryClient } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import DropdownMenu from '../common/DropdownMenu';
@@ -16,23 +14,7 @@ export default function CardList() {
   const { data, isLoading, fetchNextPage, isFetchingNextPage } = useMyActivities();
   const targetRef = useRef<HTMLDivElement>(null);
   const [, setIsDropdownOpen] = useState(false);
-  const mutation = useDeleteActivity();
-  const queryClient = useQueryClient();
-
-  const handleDelete = (id: number) => {
-    mutation.mutate(id, {
-      onSuccess: () => {
-        alert('삭제되었습니다.');
-        queryClient.invalidateQueries({ queryKey: ['my-activities'] });
-      },
-      onError: (error: Error) => {
-        const axiosError = error as AxiosError;
-        const errorMessage = (axiosError.response?.data as { message: string })?.message ?? '삭제에 실패했습니다.';
-        console.error('Error deleting activity:', error);
-        alert(errorMessage);
-      },
-    });
-  };
+  const { handleDelete } = useHandleDeleteActivity();
 
   const handleClick = () => {
     setIsDropdownOpen((prev) => !prev);

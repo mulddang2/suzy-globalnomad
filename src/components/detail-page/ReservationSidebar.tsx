@@ -1,4 +1,9 @@
+import { useAvailableSchedule } from '@/hooks/use-available-schedule';
+import { ko } from 'date-fns/locale';
+import dayjs from 'dayjs';
 import { useState } from 'react';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/style.css';
 import * as styles from './ReservationSidebar.css';
 
 interface ReservationSidebarProps {
@@ -8,17 +13,53 @@ interface ReservationSidebarProps {
 
 export default function ReservationSidebar({ price, activityId }: ReservationSidebarProps) {
   const [headcount, setHeadcount] = useState(1);
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>();
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+  const [selectedTimeId, setSelectedTimeId] = useState<number | null>(null);
+
+  const today = dayjs();
+  const minDate = today.startOf('day').toDate();
+  const [viewDate, setViewDate] = useState({
+    year: today.year(),
+    month: today.format('MM'),
+  });
+
+  const { data } = useAvailableSchedule({
+    activityId,
+    year: viewDate.year, // 2026
+    month: viewDate.month, // 01
+  });
+
+  const selectedDateStr = selectedDate ? dayjs(selectedDate).format('YYYY-MM-DD') : null;
+  const availableTimes = data?.find((schedule) => schedule.date === selectedDateStr)?.times || [];
 
   const totalPrice = price * headcount;
 
   const toggleSidebar = () => {
-    setIsOpen(!isOpen);
+    setIsSidebarVisible(!isSidebarVisible);
+  };
+
+  const handleMonthChange = (date: Date) => {
+    const newDate = dayjs(date);
+    setViewDate({
+      year: newDate.year(),
+      month: newDate.format('MM'),
+    });
+  };
+
+  const isPastDate = (date: Date) => {
+    return dayjs(date).isBefore(minDate);
+  };
+
+  const hasSchedule = (date: Date) => {
+    const dateStr = dayjs(date).format('YYYY-MM-DD');
+    const schedule = data?.find((item) => item.date === dateStr);
+
+    return !!schedule && !isPastDate(date);
   };
 
   return (
-    <div className={`${styles.sidebarContainer} ${isOpen ? styles.open : ''}`}>
+    <div className={`${styles.sidebarContainer} ${!isSidebarVisible ? styles.reserveClosed : ''}`}>
       <div className={styles.toggleHandle} onClick={toggleSidebar} />
 
       <div className={styles.priceLayout}>
@@ -31,9 +72,45 @@ export default function ReservationSidebar({ price, activityId }: ReservationSid
 
         <div>
           <h3 className={styles.sectionTitle}>날짜 선택</h3>
-          <div style={{ padding: '10px', border: '1px solid #ddd', borderRadius: '4px', marginBottom: '16px' }}>
-            날짜를 선택해주세요 (Calendar Placeholder)
+          <div className={styles.calendarContainer}>
+            <DayPicker
+              mode='single'
+              selected={selectedDate}
+              onSelect={setSelectedDate}
+              onMonthChange={handleMonthChange}
+              disabled={[isPastDate]}
+              modifiers={{ hasSchedule }}
+              modifiersClassNames={{ hasSchedule: styles.hasSchedule }}
+              locale={ko}
+            />
           </div>
+        </div>
+        <div>
+          <h3 className={styles.sectionTitle}>예약 가능한 시간</h3>
+          <div>
+            {selectedDate ? (
+              availableTimes.length > 0 ? (
+                <div className={styles.timeSlotContainer}>
+                  {availableTimes.map((time) => (
+                    <button
+                      key={time.id}
+                      className={`${styles.timeSlotButton} ${selectedTimeId === time.id ? styles.selected : ''}`}
+                      onClick={() => {
+                        setSelectedTimeId((prev) => (prev === time.id ? null : time.id));
+                      }}
+                    >
+                      {time.startTime} ~ {time.endTime}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div style={{ padding: '10px 0', color: '#666' }}>예약 가능한 시간이 없습니다.</div>
+              )
+            ) : (
+              <div style={{ padding: '10px 0', color: '#666' }}>날짜를 선택해주세요.</div>
+            )}
+          </div>
+          <div className={styles.divider} />
         </div>
 
         <div>
@@ -64,11 +141,12 @@ export default function ReservationSidebar({ price, activityId }: ReservationSid
 
       <button
         className={styles.reserveButton}
+        disabled={!selectedDate || !selectedTimeId}
         onClick={() => {
-          if (!isOpen) setIsOpen(true);
+          if (!isSidebarVisible) setIsSidebarVisible(true);
         }}
       >
-        {isOpen ? '예약하기' : '예약하기 (날짜 선택)'}
+        예약하기
       </button>
     </div>
   );

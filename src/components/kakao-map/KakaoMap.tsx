@@ -29,7 +29,7 @@ export default function KakaoMap({ address }: { address: string }) {
           const { x: lng, y: lat } = response.data.documents[0]; // x = 경도, y = 위도
           setCoords({ lat: parseFloat(lat), lng: parseFloat(lng) });
 
-          // NOTE: 좌표를 기반으로 장소 검색 실행
+          // 좌표를 기반으로 장소 검색 실행
           fetchPlaceName(parseFloat(lat), parseFloat(lng));
         }
       } catch (error) {

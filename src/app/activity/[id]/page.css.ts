@@ -7,6 +7,12 @@ export const detailPageContainer = style({
   margin: '0 auto',
 });
 
+export const activityInfoLayout = style({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+});
+
 export const detailPageBox = style({
   width: '62.5%',
   margin: '0 auto',

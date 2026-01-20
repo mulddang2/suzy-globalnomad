@@ -3,21 +3,26 @@
 import PaginationPrevBtn from '@/assets/icons/arrow-left.svg';
 import PaginationNextButton from '@/assets/icons/arrow-right.svg';
 import IconLocation from '@/assets/icons/location.svg';
+import MeatballIcon from '@/assets/icons/meatball.svg';
 import StarFill from '@/assets/icons/star-fill.svg';
 import ReservationSidebar from '@/components/detail-page/ReservationSidebar';
 import ReviewCardList from '@/components/detail-page/ReviewCardList';
 import KakaoMap from '@/components/kakao-map/KakaoMap';
+import DropdownMenu from '@/components/profile/common/DropdownMenu';
 import ImageWithFallback from '@/components/profile/common/ImageWithFallback';
 import Rating from '@/components/rating/Rating';
 import { useActivitiesReviews } from '@/hooks/use-activities-reviews';
+import { useHandleDeleteActivity } from '@/hooks/use-handle-delete-activity';
 import { useMyActivitiesDetails } from '@/hooks/use-my-activities-details';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { CircularProgress, PaginationItem } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import * as styles from './page.css';
 
 export default function DetailPage() {
+  const { user } = useAuthStore();
   const { id } = useParams();
   const [page, setPage] = useState(1);
   const { data: activity, isLoading } = useMyActivitiesDetails(id ? Number(id) : null);
@@ -25,6 +30,14 @@ export default function DetailPage() {
 
   const [failedSubImageCount, setFailedSubImageCount] = useState(0);
   const [isBannerError, setIsBannerError] = useState(false);
+  const router = useRouter();
+  const { handleDelete: deleteActivity } = useHandleDeleteActivity();
+
+  const handleDelete = (activityId: number) => {
+    deleteActivity(activityId, () => {
+      router.push('/');
+    });
+  };
 
   const reviewSummary = (averageRating: number) => {
     if (averageRating >= 4) {
@@ -50,16 +63,25 @@ export default function DetailPage() {
         <div className={styles.detailPageBox}>
           {!isLoading && activity?.data ? (
             <>
-              <span className={styles.detailCategory}>{activity.data.category}</span>
-              <h2 className={styles.detailTitle}>{activity.data.title}</h2>
-              <div className={styles.ratingLocationLayout}>
-                <Rating rating={activity.data.rating.toFixed(1)} reviewCount={activity.data.reviewCount} small />
-                <div className={styles.locationLayout}>
-                  <div className={styles.locationBox}>
-                    <IconLocation />
+              <div className={styles.activityInfoLayout}>
+                <div>
+                  <span className={styles.detailCategory}>{activity.data.category}</span>
+                  <h2 className={styles.detailTitle}>{activity.data.title}</h2>
+                  <div className={styles.ratingLocationLayout}>
+                    <Rating rating={activity.data.rating.toFixed(1)} reviewCount={activity.data.reviewCount} small />
+                    <div className={styles.locationLayout}>
+                      <div className={styles.locationBox}>
+                        <IconLocation />
+                      </div>
+                      <span className={styles.address}>{activity.data.address}</span>
+                    </div>
                   </div>
-                  <span className={styles.address}>{activity.data.address}</span>
                 </div>
+                {user?.id === activity.data.userId && (
+                  <div>
+                    <DropdownMenu handleDelete={handleDelete} activityId={activity.data.id} />
+                  </div>
+                )}
               </div>
               <div
                 className={
@@ -79,7 +101,7 @@ export default function DetailPage() {
                 </div>
                 {activity.data.subImages && activity.data.subImages.length - failedSubImageCount > 0 && (
                   <div className={styles.subImageBox}>
-                    {activity.data.subImages.map(
+                    {activity.data.subImages.slice(0, 4).map(
                       (subImage: { imageUrl: string | undefined }, index: number) =>
                         subImage.imageUrl && (
                           <div key={index} className={styles.subImageWrapper}>
@@ -166,10 +188,11 @@ export default function DetailPage() {
                     </>
                   ) : null}
                 </div>
-
-                <div className={styles.sidebarLayout}>
-                  <ReservationSidebar price={activity.data.price} activityId={Number(id)} />
-                </div>
+                {user?.id !== activity.data.userId && (
+                  <div className={styles.sidebarLayout}>
+                    <ReservationSidebar price={activity.data.price} activityId={Number(id)} />
+                  </div>
+                )}
               </div>
             </>
           ) : (

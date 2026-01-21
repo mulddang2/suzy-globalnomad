@@ -25,7 +25,7 @@ export const sidebarContainer = style({
   },
 });
 
-export const reserveClosed = style({
+export const sidebarClosed = style({
   width: '100%',
   padding: '14px',
   borderRadius: '8px',
@@ -57,7 +57,7 @@ export const contentWrapper = style({
   marginTop: '24px',
 
   selectors: {
-    [`${sidebarContainer}.${reserveClosed} &`]: {
+    [`${sidebarContainer}.${sidebarClosed} &`]: {
       '@media': {
         'screen and (max-width: 1199px)': {
           display: 'none',

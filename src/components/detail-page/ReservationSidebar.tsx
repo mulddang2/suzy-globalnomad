@@ -59,7 +59,7 @@ export default function ReservationSidebar({ price, activityId }: ReservationSid
   };
 
   return (
-    <div className={`${styles.sidebarContainer} ${!isSidebarVisible ? styles.reserveClosed : ''}`}>
+    <div className={`${styles.sidebarContainer} ${!isSidebarVisible ? styles.sidebarClosed : ''}`}>
       <div className={styles.toggleHandle} onClick={toggleSidebar} />
 
       <div className={styles.priceLayout}>
@@ -143,7 +143,7 @@ export default function ReservationSidebar({ price, activityId }: ReservationSid
         className={styles.reserveButton}
         disabled={!selectedDate || !selectedTimeId}
         onClick={() => {
-          if (!isSidebarVisible) setIsSidebarVisible(true);
+          // TODO: 예약 요청 로직 추가
         }}
       >
         예약하기

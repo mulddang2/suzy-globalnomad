@@ -1,19 +1,18 @@
 import { axiosInstance } from '@/apis/axios-instance';
 import { MyActivitiesEditData } from '@/types/my-activities-edit-data';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-export const useMyActivitiesEdit = () =>
-  useMutation({
-    mutationFn: ({ activityId, data }: { activityId: number; data: MyActivitiesEditData }) => {
-      const token = localStorage.getItem('accessToken');
-      if (!token) {
-        throw new Error('No access token found');
-      }
+export const useMyActivitiesEdit = () => {
+  const queryClient = useQueryClient();
 
-      return axiosInstance.patch(`/my-activities/${activityId}`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+
+  return useMutation({
+    mutationFn: async ({ activityId, data }: { activityId: number; data: MyActivitiesEditData }) => {
+
+      return axiosInstance.patch(`/my-activities/${activityId}`, data,);
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['my-activities', variables.activityId] });
     },
   });
+};

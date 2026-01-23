@@ -44,11 +44,12 @@ interface IconInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   variant?: 'default' | 'authPage' | 'withIcon';
   error?: boolean;
   errorMessage?: string;
-  register?: (name: string, options?: RegisterOptions) => UseFormRegisterReturn; // react-hook-form의 register 함수
+  register?: (name: string, options?: RegisterOptions) => UseFormRegisterReturn;
+  ref?: React.Ref<HTMLInputElement>;
 }
 
 export default function Input(props: IconInputProps) {
-  const { icon, iconPosition, variant = 'default', error, errorMessage, register, ...others } = props;
+  const { icon, iconPosition, variant = 'default', error, errorMessage, register, ref, ...others } = props;
 
   if (!others.type) {
     others.type = 'text';
@@ -65,9 +66,15 @@ export default function Input(props: IconInputProps) {
   return (
     <>
       <div className={`${styles.inputContainer} ${styles.variantStyles[variant]} ${error ? styles.errorStyle : ''}`}>
-        <div className={styles.leftIconDiv}>{icon && iconPosition === 'left' && icon}</div>
-        <input className={styles.inputField} {...register} {...others} />
-        <div className={styles.rightIconDiv}>{icon && iconPosition === 'right' && icon}</div>
+        {iconPosition === 'left' &&
+          <div className={styles.leftIconDiv}>{icon}</div>
+        }
+        <input className={styles.inputField} ref={ref} {...others} />
+        {
+          iconPosition === 'right' && (
+            <div className={styles.rightIconDiv}>{icon}</div>
+          )
+        }
       </div>
       {error && errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
     </>

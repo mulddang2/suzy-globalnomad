@@ -3,7 +3,7 @@
 import DropDownB from '@/components/dropdown/DropDownB';
 import EmptyCard from '@/components/profile/my-reservations/EmptyCard';
 import ReservationCard, { ReservationData } from '@/components/profile/my-reservations/ReservationCard';
-import { useMyReservations } from '@/hooks/use-my-reservations';
+import { useMyReservations } from '@/hooks/useMyReservations';
 import { useEffect, useRef, useState } from 'react';
 import ReservationLoading from './ReservationLoading';
 import * as styles from './page.css';

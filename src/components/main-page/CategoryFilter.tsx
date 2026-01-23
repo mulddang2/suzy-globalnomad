@@ -1,5 +1,5 @@
 import { CATEGORY_LIST } from '@/constants/categories';
-import useResponsiveQuery from '@/hooks/use-media-query';
+import useResponsiveQuery from '@/hooks/useMediaQuery';
 import { useEffect, useState } from 'react';
 import 'swiper/css';
 import 'swiper/css/scrollbar';

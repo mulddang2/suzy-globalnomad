@@ -5,17 +5,17 @@ export const uploadImage = async (file: File): Promise<string | null> => {
     const formData = new FormData();
     formData.append('image', file);
 
-    const token = localStorage.getItem('accessToken');
+    // const token = localStorage.getItem('accessToken');
 
-    if (!token) {
-      throw new Error('No access token found');
-    }
+    // if (!token) {
+    //   throw new Error('No access token found');
+    // }
 
     const res = await axiosInstance.post('/activities/image', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${token}`,
-      },
+      // headers: {
+      //   'Content-Type': 'multipart/form-data',
+      //   Authorization: `Bearer ${token}`,
+      // },
     });
     return res.data.activityImageUrl;
   } catch (error) {

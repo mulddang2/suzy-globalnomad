@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useDeleteActivity } from './use-delete-activity';
+import { useDeleteActivity } from './useDeleteActivity';
 
 export const useHandleDeleteActivity = () => {
   const mutation = useDeleteActivity();

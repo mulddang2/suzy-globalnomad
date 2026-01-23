@@ -1,7 +1,7 @@
 import Empty from '@/assets/icons/empty.svg';
 import StarIcon from '@/assets/icons/star-fill.svg';
-import { useHandleDeleteActivity } from '@/hooks/use-handle-delete-activity';
-import { useMyActivities } from '@/hooks/use-my-activities';
+import { useHandleDeleteActivity } from '@/hooks/useHandleDeleteActivity';
+import { useMyActivities } from '@/hooks/useMyActivities';
 import { MyActivitiesList } from '@/types/my-activities-list';
 import { formatToKor } from '@/utils/format-to-kor';
 import { CircularProgress } from '@mui/material';

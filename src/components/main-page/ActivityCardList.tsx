@@ -4,7 +4,7 @@ import ActivityCard from '@/components/main-page/ActivityCard';
 import ActivityCardSkeleton from '@/components/skeleton-ui/main-page/ActivityCardSkeleton';
 import { CATEGORY_EMOJI } from '@/constants/categories';
 import { SECTION_TITLES } from '@/constants/text';
-import { usePageActivity } from '@/hooks/use-activity-list';
+import { usePageActivity } from '@/hooks/useActivityList';
 import { PaginationItem } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';

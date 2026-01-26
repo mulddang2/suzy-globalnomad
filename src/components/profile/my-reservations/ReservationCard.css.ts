@@ -24,7 +24,7 @@ export const card = style({
       borderRadius: '18px',
     },
     'screen and (min-width: 320px) and (max-width: 767px)': {
-      width: '344px',
+      width: '100%',
       height: '128px',
       gap: '12px',
       borderRadius: '12px',
@@ -54,7 +54,7 @@ export const texts = style({
   flexDirection: 'column',
   gap: '6px',
 
-  width: '520px',
+  maxWidth: '520px',
 
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
@@ -62,7 +62,8 @@ export const texts = style({
       gap: '0px',
     },
     'screen and (min-width: 320px) and (max-width: 767px)': {
-      width: '180px',
+      flex: 1,
+      minWidth: 0,
       gap: '0px',
     },
   },
@@ -110,7 +111,6 @@ export const subtitle = style({
   fontSize: '18px',
   lineHeight: '26px',
   color: `${global.color.nomadBlack}`,
-  whiteSpace: 'nowrap',
 
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {

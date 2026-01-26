@@ -12,7 +12,7 @@ export const content = style({
       width: '429px',
     },
     'screen and (min-width: 320px) and (max-width: 767px)': {
-      width: '342px',
+      width: '100%',
     },
   },
 });

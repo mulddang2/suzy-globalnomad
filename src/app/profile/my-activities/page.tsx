@@ -9,7 +9,7 @@ import * as styles from './page.css';
 
 export default function MyActivitiesPage() {
   const router = useRouter();
-  const { isMobile } = useResponsiveQuery();
+  const { isLargeScreen } = useResponsiveQuery();
 
   const handleClick = () => {
     router.push('/profile/my-activities/create');
@@ -19,7 +19,7 @@ export default function MyActivitiesPage() {
     <StyledEngineProvider injectFirst>
       <div className={styles.myActivitiesPageContainer}>
         <div className={styles.topLayout}>
-          {isMobile ? (
+          {!isLargeScreen ? (
             <>
               <div>
                 <div className={styles.mobileMenuTitle}>

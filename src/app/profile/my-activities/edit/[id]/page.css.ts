@@ -465,11 +465,15 @@ globalStyle('.react-datepicker__input-container', {
 export const datePickerLabelContainer = style({
   display: 'grid',
 
-  gridTemplateColumns: '377fr 21px 140fr 38px  140fr 21px 56px',
+  gridTemplateColumns: '337fr 21px 160fr 38px 160fr 21px 56px',
   '@media': {
-    'screen and (min-width: 768px) and (max-width: 1199px)': {
-      gridTemplateColumns: '149fr 104fr 104fr 56px',
-      columnGap: '5px',
+    'screen and (min-width: 768px) and (max-width: 995px)': {
+      gridTemplateColumns: 'minmax(165px, 1fr) minmax(135px, 1fr) minmax(135px, 1fr) 56px',
+      columnGap: '2px',
+    },
+    'screen and (min-width: 996px) and (max-width: 1199px)': {
+      gridTemplateColumns: '125fr 130fr 130fr 56px',
+      columnGap: '4px',
     },
     'screen and (max-width: 767px)': {
       gridTemplateColumns: '107fr 79fr 79fr 56px',

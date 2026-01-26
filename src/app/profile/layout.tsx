@@ -14,8 +14,9 @@ export default function ProfilePageLayout({ children }: { children: React.ReactN
   const router = useRouter();
   const [, setImageFile] = useState<File | null>(null);
 
-  const { isPc, isTablet } = useResponsiveQuery();
-  const isPCOrTablet = isPc || isTablet;
+  const { isPc, isTablet, isLargeScreen } = useResponsiveQuery();
+
+  const showSideMenu = isPc || (isTablet && isLargeScreen);
 
   const profileSideMenuData = [
     {
@@ -50,7 +51,7 @@ export default function ProfilePageLayout({ children }: { children: React.ReactN
 
   return (
     <section className={styles.layout}>
-      {isPCOrTablet && (
+      {showSideMenu && (
         <ProfileSideNavMenu menuList={profileSideMenuData} setImageFile={(file: File) => setImageFile(file)} />
       )}
 

@@ -10,43 +10,85 @@ import Input from '@/components/Input';
 import CustomDrawer from '@/components/drawer/CustomDrawer';
 import Dialog from '@/components/modal/Dialog';
 import Modal from '@/components/modal/Modal';
-import { useMyActivitiesEdit } from '@/hooks/use-my-activities-edit';
+import { MAX_SUB_IMAGES } from '@/constants/activities';
+import { CATEGORY_LIST } from '@/constants/categories';
 import { useActivityEditForm } from '@/hooks/useActivityEditForm';
 import useDetectClose from '@/hooks/useDetectClose';
 import useResponsiveQuery from '@/hooks/useMediaQuery';
-import { useMyActivitiesDetails } from '@/hooks/useMyActivitiesDetails';
 import useSingleImageUpload from '@/hooks/useSingleImageUpload';
-import { uploadImage } from '@/hooks/useUploadImage';
-import { MyActivities } from '@/types/my-activities';
-import { MyActivitiesEditData } from '@/types/my-activities-edit-data';
 import { ReservationDateTime } from '@/types/reservation-date-time';
 import { StyledEngineProvider } from '@mui/material';
 import { DatePicker, LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { createPortal } from 'react-dom';
-import { Controller, FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import * as styles from './page.css';
 
 export default function MyActivitiesEditPage() {
-  const { isPc, isTablet, isMobile } = useResponsiveQuery();
-  const isPCOrTablet = isPc || isTablet;
-
-  const open = useDaumPostcodePopup();
-  // const mutation = useMyActivitiesEdit();
-
+  // 1. Router/Navigation
   const { id } = useParams();
-  // const { data: currentData, status } = useMyActivitiesDetails(Number(id));
-  const { imageSrc, setImageSrc, handleSingleImagePreview } = useSingleImageUpload();
 
+  // 2. State
   const [showModifyModal, setShowModifyModal] = useState(false);
 
-  const handleComplete = (data: { address: string; addressType: string; bname: string; buildingName: string }) => {
+  // 3. Refs
+  const dropDownRef = useRef(null);
+  const bannerFileRef = useRef<HTMLInputElement | null>(null);
+  const subFileRef = useRef<HTMLInputElement | null>(null);
+
+  // 4. Custom Hooks
+  const { isPc, isTablet, isMobile, isLargeScreen } = useResponsiveQuery();
+  const { imageSrc, setImageSrc, handleSingleImagePreview } = useSingleImageUpload();
+  const open = useDaumPostcodePopup();
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+    setValue,
+    getValues,
+    trigger,
+    onSubmit,
+    isSuccess,
+    isDataLoaded,
+    clearErrors,
+  } = useActivityEditForm({ activityId: Number(id) });
+  const [isDropdownOpen, setIsDropdownOpen] = useDetectClose(dropDownRef, false) as [
+    boolean,
+    React.Dispatch<React.SetStateAction<boolean>>,
+  ];
+
+  // 5. Derived State
+  const isPCOrTablet = isPc || isTablet;
+
+  // 6. Effects
+  useEffect(() => {
+    if (isDataLoaded) {
+      const banner = getValues('bannerImage');
+      if (typeof banner === 'string') {
+        setImageSrc(banner);
+      }
+    }
+  }, [isDataLoaded, getValues, setImageSrc]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setShowModifyModal(true);
+    }
+  }, [isSuccess]);
+
+  // 7. Event Handlers
+  const handleAddressComplete = (data: {
+    address: string;
+    addressType: string;
+    bname: string;
+    buildingName: string;
+  }) => {
     let fullAddress = data.address;
     let extraAddress = '';
 
@@ -65,55 +107,9 @@ export default function MyActivitiesEditPage() {
   };
 
   const handleClick = () => {
-    open({ onComplete: handleComplete });
+    open({ onComplete: handleAddressComplete });
   };
 
-  const encodeFileToBase64 = (file: File) => {
-    return new Promise<string>((resolve) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-
-      reader.onload = () => {
-        if (typeof reader.result === 'string') {
-          resolve(reader.result);
-        }
-      };
-    });
-  };
-
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-    setValue,
-    getValues,
-    trigger,
-    onSubmit,
-    isSuccess,
-    isDataLoaded,
-    clearErrors,
-  } = useActivityEditForm({ activityId: Number(id) });
-
-  useEffect(() => {
-    if (isDataLoaded) {
-      const banner = getValues('bannerImage');
-      if (typeof banner === 'string') {
-        setImageSrc(banner);
-      }
-    }
-  }, [isDataLoaded, getValues, setImageSrc]);
-
-  const categories = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
-
-  const dropDownRef = useRef(null);
-  const bannerFileRef = useRef<HTMLInputElement | null>(null);
-  const subFileRef = useRef<HTMLInputElement | null>(null);
-
-  const [isDropdownOpen, setIsDropdownOpen] = useDetectClose(dropDownRef, false) as [
-    boolean,
-    React.Dispatch<React.SetStateAction<boolean>>,
-  ];
   const toggleDropdown = () => setIsDropdownOpen((prev: boolean) => !prev);
 
   const handleBannerFileClick = () => {
@@ -133,25 +129,43 @@ export default function MyActivitiesEditPage() {
     setShowModifyModal(!showModifyModal);
   };
 
-  useEffect(() => {
-    if (isSuccess) {
-      setShowModifyModal(true);
-    }
-  }, [isSuccess]);
+  // 8. Utility Functions
+  const getSubImageContainerClass = () => {
+    const subImages = getValues('subImages');
+    const length = subImages?.length || 0;
+
+    if (length <= 1) return styles.subImageBox[0];
+    if (length <= 3) return styles.subImageBox[2];
+    if (length === 4) return styles.subImageBox[4];
+    return styles.baseSubImageContainer;
+  };
+
+  const encodeFileToBase64 = (file: File) => {
+    return new Promise<string>((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        if (typeof reader.result === 'string') {
+          resolve(reader.result);
+        }
+      };
+    });
+  };
 
   return (
     <>
       <div className={styles.activitiesPageContainer}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.topLayout}>
-            {isPCOrTablet && (
+            {isLargeScreen && (
               <>
                 <h2 className={styles.h2Title}>내 체험 수정</h2>
                 <button className={styles.submitButton}>수정하기</button>
               </>
             )}
           </div>
-          {isMobile && (
+          {!isLargeScreen && (
             <>
               <div className={styles.topLayout}>
                 <div className={styles.mobileMenuTitle}>
@@ -197,7 +211,7 @@ export default function MyActivitiesEditPage() {
                         )}
                         {isDropdownOpen && (
                           <ul className={styles.selectBoxList}>
-                            {categories.map((option) => (
+                            {CATEGORY_LIST.map((option) => (
                               <li
                                 key={option}
                                 tabIndex={0} // 포커스 가능하도록 설정
@@ -483,19 +497,7 @@ export default function MyActivitiesEditPage() {
                   )}
                 </div>
                 <h2 className={styles.inputTitle}>소개 이미지</h2>
-                <div
-                  className={
-                    getValues('subImages') === undefined ||
-                    getValues('subImages').length === 0 ||
-                    getValues('subImages').length === 1
-                      ? styles.subImageBox[0]
-                      : getValues('subImages').length === 2 || getValues('subImages').length === 3
-                        ? styles.subImageBox[2]
-                        : getValues('subImages').length === 4
-                          ? `${styles.subImageBox[4]}`
-                          : styles.baseSubImageContainer
-                  }
-                >
+                <div className={getSubImageContainerClass()}>
                   <div className={styles.subImageUploadBox} onClick={handleSubFileClick}>
                     <label htmlFor='subfile-upload' />
                     <div>
@@ -505,7 +507,6 @@ export default function MyActivitiesEditPage() {
                       </div>
                     </div>
                     <input
-                      {...register('subImages')}
                       multiple
                       className={styles.fileUploadInput}
                       id='subfile-upload'
@@ -514,20 +515,38 @@ export default function MyActivitiesEditPage() {
                       onChange={(e) => {
                         if (e.target.files && e.target.files.length > 0) {
                           const newFiles = Array.from(e.target.files);
+                          const currentSubImages = getValues('subImages') || [];
+                          const remainingSlots = MAX_SUB_IMAGES - currentSubImages.length;
 
-                          Promise.all(newFiles.map((file) => encodeFileToBase64(file))).then(
+                          if (remainingSlots <= 0) {
+                            alert(`소개 이미지는 최대 ${MAX_SUB_IMAGES}개까지만 등록할 수 있습니다.`);
+                            e.target.value = '';
+                            return;
+                          }
+
+                          const filesToAdd = newFiles.slice(0, remainingSlots);
+
+                          if (newFiles.length > remainingSlots) {
+                            alert(
+                              `소개 이미지는 최대 ${MAX_SUB_IMAGES}개까지만 등록할 수 있습니다. ${remainingSlots}개만 추가됩니다.`,
+                            );
+                          }
+
+                          Promise.all(filesToAdd.map((file) => encodeFileToBase64(file))).then(
                             (newBase64Images: string[]) => {
                               const newImages: Array<{ src: string; file: File }> = [];
 
-                              for (let i = 0; i < newFiles.length; i++) {
-                                newImages.push({ src: newBase64Images[i], file: newFiles[i] });
+                              for (let i = 0; i < filesToAdd.length; i++) {
+                                newImages.push({ src: newBase64Images[i], file: filesToAdd[i] });
                               }
 
-                              setValue('subImages', [...getValues('subImages'), ...newImages], {
+                              setValue('subImages', [...currentSubImages, ...newImages], {
                                 shouldDirty: true,
                                 shouldTouch: true,
                                 shouldValidate: true,
                               });
+
+                              e.target.value = '';
                             },
                           );
                         }
@@ -562,7 +581,7 @@ export default function MyActivitiesEditPage() {
                   ))}
                 </div>
                 <p className={styles.descPhrase}>*이미지는 최대 4개까지 등록 가능합니다.</p>
-                {isMobile && (
+                {!isLargeScreen && (
                   <button type='submit' className={styles.submitButton}>
                     수정하기
                   </button>

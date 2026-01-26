@@ -17,11 +17,15 @@ const useResponsiveQuery = () => {
   const isMobile = useMediaQuery({
     query: '(max-width: 767px)',
   });
+  const isLargeScreen = useMediaQuery({
+    query: '(min-width: 1000px)',
+  });
 
   return {
     isPc: isMounted ? isPc : false,
     isTablet: isMounted ? isTablet : false,
     isMobile: isMounted ? isMobile : false,
+    isLargeScreen: isMounted ? isLargeScreen : false,
   };
 };
 

@@ -11,7 +11,7 @@ import ReservationLoading from './ReservationLoading';
 import * as styles from './page.css';
 
 export default function ReservationPage() {
-  const { isMobile } = useResponsiveQuery();
+  const { isMobile, isLargeScreen } = useResponsiveQuery();
   const [filter, setFilter] = useState<string | null>(null);
   const [isExist, setIsExist] = useState<boolean>(true);
   const { data, isLoading, fetchNextPage } = useMyReservations(filter);
@@ -67,7 +67,7 @@ export default function ReservationPage() {
   return (
     <div className={styles.content}>
       <div className={styles.contentHeader}>
-        {isMobile ? (
+        {!isLargeScreen ? (
           <div className={styles.mobileMenuTitle}>
             <CustomDrawer />
             <h2 className={styles.history}>예약 내역</h2>

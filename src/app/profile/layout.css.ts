@@ -9,10 +9,15 @@ export const layout = style({
   boxSizing: 'border-box',
 
   '@media': {
-    'screen and (min-width: 768px) and (max-width: 1199px)': {
+    'screen and (min-width: 1000px) and (max-width: 1199px)': {
       width: 'min(93.54%, 100%)',
       margin: '24px 24px 120px',
       gridTemplateColumns: '33.7% 1fr',
+    },
+    'screen and (min-width: 768px) and (max-width: 999px)': {
+      width: 'min(93.54%, 100%)',
+      margin: '24px 24px 120px',
+      gridTemplateColumns: '1fr',
     },
     'screen and (max-width: 767px)': {
       width: '100%',

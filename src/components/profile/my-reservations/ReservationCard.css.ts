@@ -18,7 +18,7 @@ export const card = style({
 
   '@media': {
     'screen and (min-width: 768px) and (max-width: 1199px)': {
-      width: '429px',
+      width: '100%',
       height: '156px',
       gap: '16px',
       borderRadius: '18px',

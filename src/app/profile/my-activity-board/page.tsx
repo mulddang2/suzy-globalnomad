@@ -52,7 +52,8 @@ export interface CalendarEvent {
 }
 
 export default function StatusPage() {
-  const { isMobile } = useResponsiveQuery();
+  const { isMobile, isLargeScreen } = useResponsiveQuery();
+
   // activityList -> 체험 선택 드롭다운
   // eventResponse -> eventList -> 달력에 그려질 이벤트
   const [activityList, setActivityList] = useState<ActivityList>({ cursorId: null, totalCount: 0, activities: [] });
@@ -138,7 +139,7 @@ export default function StatusPage() {
 
   return (
     <div className={styles.content}>
-      {isMobile ? (
+      {!isLargeScreen ? (
         <div className={styles.mobileMenuTitle}>
           <CustomDrawer />
           <h1 className={styles.header}>예약 현황</h1>

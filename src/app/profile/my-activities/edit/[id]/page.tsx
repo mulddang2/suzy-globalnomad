@@ -10,11 +10,12 @@ import Input from '@/components/Input';
 import CustomDrawer from '@/components/drawer/CustomDrawer';
 import Dialog from '@/components/modal/Dialog';
 import Modal from '@/components/modal/Modal';
-import useDetectClose from '@/hooks/use-detect-close';
-import { useMyActivitiesDetails } from '@/hooks/use-my-activities-details';
 import { useMyActivitiesEdit } from '@/hooks/use-my-activities-edit';
-import useSingleImageUpload from '@/hooks/use-single-image-upload';
-import { uploadImage } from '@/hooks/use-upload-image';
+import { useActivityEditForm } from '@/hooks/useActivityEditForm';
+import useDetectClose from '@/hooks/useDetectClose';
+import { useMyActivitiesDetails } from '@/hooks/useMyActivitiesDetails';
+import useSingleImageUpload from '@/hooks/useSingleImageUpload';
+import { uploadImage } from '@/hooks/useUploadImage';
 import { MyActivities } from '@/types/my-activities';
 import { MyActivitiesEditData } from '@/types/my-activities-edit-data';
 import { ReservationDateTime } from '@/types/reservation-date-time';
@@ -22,31 +23,25 @@ import { StyledEngineProvider } from '@mui/material';
 import { DatePicker, LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { createPortal } from 'react-dom';
 import { Controller, FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { useMediaQuery } from 'react-responsive';
+import useResponsiveQuery from '@/hooks/useMediaQuery';
 import * as styles from './page.css';
 
 export default function MyActivitiesEditPage() {
-  const [isMobile, setIsMobile] = useState(false);
-  const [isPCOrTablet, setIsPCOrTablet] = useState(true);
-  const mobileQuery = useMediaQuery({ query: '(max-width: 767px)' });
-  const PCOrTabletQuery = useMediaQuery({ query: '(min-width: 768px)' });
-
-  useEffect(() => {
-    setIsPCOrTablet(PCOrTabletQuery);
-    setIsMobile(mobileQuery);
-  }, [PCOrTabletQuery, mobileQuery]);
+  const { isPc, isTablet, isMobile } = useResponsiveQuery();
+  const isPCOrTablet = isPc || isTablet;
 
   const open = useDaumPostcodePopup();
-  const mutation = useMyActivitiesEdit();
+  // const mutation = useMyActivitiesEdit();
 
   const { id } = useParams();
-  const { data: currentData, status } = useMyActivitiesDetails(Number(id));
+  // const { data: currentData, status } = useMyActivitiesDetails(Number(id));
   const { imageSrc, setImageSrc, handleSingleImagePreview } = useSingleImageUpload();
 
   const [showModifyModal, setShowModifyModal] = useState(false);
@@ -66,7 +61,6 @@ export default function MyActivitiesEditPage() {
     }
 
     setValue('address', fullAddress);
-    setValue('extraAddress', '');
     trigger('address');
   };
 
@@ -90,41 +84,26 @@ export default function MyActivitiesEditPage() {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
     setValue,
     getValues,
-    clearErrors,
-    control,
     trigger,
-  } = useForm();
+    onSubmit,
+    isSuccess,
+    isDataLoaded,
+    clearErrors,
+  } = useActivityEditForm({ activityId: Number(id) });
 
   useEffect(() => {
-    if (status === 'success' && currentData) {
-      const myActivities = currentData.data as MyActivities;
-
-      setValue('title', myActivities.title);
-      setValue('category', myActivities.category);
-      setValue('description', myActivities.description);
-      setValue('price', myActivities.price);
-      setValue('address', myActivities.address);
-      setValue('bannerImage', myActivities.bannerImageUrl);
-      setImageSrc(myActivities.bannerImageUrl);
-      setValue(
-        'subfileImage',
-        myActivities.subImages.map((subImage) => ({ id: subImage.id, src: subImage.imageUrl })),
-      );
-
-      setValue(
-        'availableDateTimeList',
-        myActivities.schedules.map((schedule) => ({
-          id: schedule.id,
-          date: dayjs(schedule.date, 'YYYY-MM-DD'),
-          startTime: dayjs(schedule.startTime, 'HH:mm'),
-          endTime: dayjs(schedule.endTime, 'HH:mm'),
-        })),
-      );
+    if (isDataLoaded) {
+      const banner = getValues('bannerImage');
+      if (typeof banner === 'string') {
+        setImageSrc(banner);
+      }
     }
-  }, [currentData, setImageSrc, setValue, status]);
+  }, [isDataLoaded, getValues, setImageSrc]);
+
   const categories = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 
   const dropDownRef = useRef(null);
@@ -143,7 +122,7 @@ export default function MyActivitiesEditPage() {
 
   const handleSingleImageCancelClick = () => {
     setImageSrc(null);
-    setValue('bannerImage', null); // react-hook-form에 값 전달
+    setValue('bannerImage', '');
   };
 
   const handleSubFileClick = () => {
@@ -154,103 +133,12 @@ export default function MyActivitiesEditPage() {
     setShowModifyModal(!showModifyModal);
   };
 
-  const onSubmit: SubmitHandler<FieldValues> = async (newData) => {
-    const myActivities = currentData!.data as MyActivities;
-
-    const schedules: Array<{
-      date: string;
-      startTime: string;
-      endTime: string;
-    }> = [];
-    newData.availableDateTimeList.forEach(
-      (item: { date: dayjs.Dayjs; startTime: dayjs.Dayjs; endTime: dayjs.Dayjs }) => {
-        if (item.date && item.startTime && item.endTime) {
-          schedules.push({
-            date: item.date.format('YYYY-MM-DD'),
-            startTime: item.startTime.format('HH:mm'),
-            endTime: item.endTime.format('HH:mm'),
-          });
-        }
-      },
-    );
-
-    let bannerImageUrl: string;
-
-    if (newData.bannerImage instanceof File) {
-      const uploadedBannerImageUrl = await uploadImage(newData.bannerImage);
-      if (!uploadedBannerImageUrl) {
-        alert('배너 이미지 업로드에 실패했습니다.');
-        return;
-      }
-      bannerImageUrl = uploadedBannerImageUrl;
-    } else {
-      bannerImageUrl = newData.bannerImage;
+  useEffect(() => {
+    if (isSuccess) {
+      setShowModifyModal(true);
     }
+  }, [isSuccess]);
 
-    const subImageIdsToRemove: number[] = [];
-    const subImageUrlsToAdd: string[] = [];
-
-    for await (const image of newData.subfileImage) {
-      if (image.file !== undefined) {
-        const subImageUrl = await uploadImage(image.file);
-        if (!subImageUrl) {
-          alert('소개 이미지 업로드에 실패했습니다.');
-          return;
-        }
-        subImageUrlsToAdd.push(subImageUrl);
-      }
-    }
-
-    const curDataSubImageIds: number[] = newData.subfileImage.map(({ id }: { id: number }) => id);
-
-    for (const { id } of myActivities.subImages) {
-      if (!curDataSubImageIds.includes(id)) {
-        subImageIdsToRemove.push(id);
-      }
-    }
-
-    const scheduleIdsToRemove: number[] = [];
-    const curDataSchedulesIds = currentData?.data.schedules.map(({ id }: { id: number }) => id);
-    const newDataSchedulesIds = newData.availableDateTimeList.map(({ id }: { id: number }) => id);
-
-    curDataSchedulesIds.forEach((id: number) => {
-      if (!newDataSchedulesIds.includes(id)) {
-        scheduleIdsToRemove.push(id);
-      }
-    });
-
-    const schedulesToAdd = newData.availableDateTimeList
-      .filter(({ id }: { id: number }) => !id)
-      .map((schedule: { date: dayjs.Dayjs; startTime: dayjs.Dayjs; endTime: dayjs.Dayjs }) => ({
-        date: schedule.date.format('YYYY-MM-DD'),
-        startTime: schedule.startTime.format('HH:mm'),
-        endTime: schedule.endTime.format('HH:mm'),
-      }));
-
-    const myActivitiesEditData: MyActivitiesEditData = {
-      title: newData.title,
-      category: newData.category,
-      description: newData.description,
-      address: newData.address,
-      price: Number(newData.price),
-      bannerImageUrl: bannerImageUrl,
-
-      schedulesToAdd: schedulesToAdd, // newData.availableDateTimeList 에 id 없는 애들
-      scheduleIdsToRemove: scheduleIdsToRemove, // currentData.availableDateTimeList에는 있지만, data.availableDateTimeList에는 없는 경우
-
-      subImageIdsToRemove: subImageIdsToRemove,
-      subImageUrlsToAdd: subImageUrlsToAdd,
-    };
-
-    mutation.mutate(
-      { activityId: Number(id), data: myActivitiesEditData },
-      {
-        onSuccess: () => {
-          setShowModifyModal(true);
-        },
-      },
-    );
-  };
 
   return (
     <>
@@ -281,7 +169,7 @@ export default function MyActivitiesEditPage() {
                   <Input
                     placeholder='제목'
                     {...register('title', { required: '제목은 필수 입력 사항입니다.' })}
-                    error={Boolean(errors.title)} // errors 객체에서 title 필드의 오류 여부 확인
+                    error={Boolean(errors.title)}
                     errorMessage={errors.title?.message as string | undefined}
                   />
                 </div>
@@ -289,7 +177,6 @@ export default function MyActivitiesEditPage() {
                 <Controller
                   name='category'
                   control={control}
-                  defaultValue={null}
                   rules={{ required: true }}
                   render={({ field }) => (
                     <div>
@@ -311,9 +198,9 @@ export default function MyActivitiesEditPage() {
                         )}
                         {isDropdownOpen && (
                           <ul className={styles.selectBoxList}>
-                            {categories.map((option, index) => (
+                            {categories.map((option) => (
                               <li
-                                key={index}
+                                key={option}
                                 tabIndex={0} // 포커스 가능하도록 설정
                                 aria-selected={field.value === option}
                                 onClick={() => {
@@ -374,7 +261,6 @@ export default function MyActivitiesEditPage() {
                 <Controller
                   name='availableDateTimeList'
                   control={control}
-                  defaultValue={[{ date: null, startTime: null, endTime: null }]}
                   rules={{
                     validate: (value) => {
                       const errors: Array<string | null> = [];
@@ -384,7 +270,12 @@ export default function MyActivitiesEditPage() {
                         const item = value[i];
                         let error = null;
 
-                        // 기본 유효성 검사
+                        if (!item.date && !item.startTime && !item.endTime) {
+                          errors.push(null);
+                          continue;
+                        }
+
+                        // 날짜와 시간대 기본 유효성 검사
                         if (!item.date) {
                           error = `날짜를 입력해주세요.`;
                         } else if (!item.startTime) {
@@ -396,18 +287,21 @@ export default function MyActivitiesEditPage() {
                         }
 
                         // 시간대 중복 검사
-                        for (let j = 0; j < value.length; j++) {
-                          if (i !== j) {
-                            const otherItem = value[j];
+                        if (item.date && item.startTime && item.endTime) {
+                          for (let j = 0; j < value.length; j++) {
+                            if (i !== j) {
+                              const otherItem = value[j];
+                              if (!otherItem.date || !otherItem.startTime || !otherItem.endTime) continue;
 
-                            // 날짜와 시간대 비교
-                            if (
-                              item.date?.toString() === otherItem.date?.toString() &&
-                              item.startTime < otherItem.endTime &&
-                              item.endTime > otherItem.startTime
-                            ) {
-                              error = `겹치는 예약 가능 시간대가 존재합니다.`;
-                              break;
+                              // 날짜와 시간대 비교
+                              if (
+                                item.date?.toString() === otherItem.date?.toString() &&
+                                item.startTime < otherItem.endTime &&
+                                item.endTime > otherItem.startTime
+                              ) {
+                                error = `겹치는 예약 가능 시간대가 존재합니다.`;
+                                break;
+                              }
                             }
                           }
                         }
@@ -430,9 +324,10 @@ export default function MyActivitiesEditPage() {
                           <div className={styles.endTimePickerLabel}>종료 시간</div>
                         </div>
                         {field.value.map((availableDateTime: ReservationDateTime, index: number) => (
-                          <div className={styles.datePickerLabelContainer} key={index}>
+                          <div className={styles.datePickerLabelContainer} key={availableDateTime.frontEndId}>
                             {index === 1 && <div className={styles.horizon}></div>}
                             <DatePicker
+                              key={`${availableDateTime.frontEndId}-date`}
                               sx={{
                                 '& .MuiOutlinedInput-root': {
                                   '& fieldset': {
@@ -443,16 +338,19 @@ export default function MyActivitiesEditPage() {
                                   },
                                 },
                               }}
-                              readOnly={Boolean(availableDateTime.id)}
                               className={`${styles.datePickerContainer}`}
                               value={availableDateTime.date}
                               onChange={(v) => {
-                                field.value[index].date = v;
-                                field.onChange([...field.value]);
+                                const newValues = [...field.value];
+                                const updatedItem = { ...newValues[index], date: v };
+                                delete updatedItem.id;
+                                newValues[index] = updatedItem;
+                                field.onChange(newValues);
                               }}
                               slotProps={{ textField: { placeholder: 'YYYY/MM/DD' } }}
                             />
                             <TimePicker
+                              key={`${availableDateTime.frontEndId}-start`}
                               sx={{
                                 '& .MuiOutlinedInput-root': {
                                   '& fieldset': {
@@ -463,17 +361,20 @@ export default function MyActivitiesEditPage() {
                                   },
                                 },
                               }}
-                              readOnly={Boolean(availableDateTime.id)}
                               value={availableDateTime.startTime}
                               onChange={(v) => {
-                                field.value[index].startTime = v;
-                                field.onChange([...field.value]);
+                                const newValues = [...field.value];
+                                const updatedItem = { ...newValues[index], startTime: v };
+                                delete updatedItem.id;
+                                newValues[index] = updatedItem;
+                                field.onChange(newValues);
                               }}
                               className={styles.startTimePickerContainer}
                             />
 
                             <div className={styles.waveSign}>~</div>
                             <TimePicker
+                              key={`${availableDateTime.frontEndId}-end`}
                               sx={{
                                 '& .MuiOutlinedInput-root': {
                                   '& fieldset': {
@@ -485,19 +386,28 @@ export default function MyActivitiesEditPage() {
                                 },
                               }}
                               className={styles.endTimePickerContainer}
-                              readOnly={Boolean(availableDateTime.id)}
                               value={availableDateTime.endTime}
                               onChange={(v) => {
-                                field.value[index].endTime = v;
-                                field.onChange([...field.value]);
+                                const newValues = [...field.value];
+                                const updatedItem = { ...newValues[index], endTime: v };
+                                delete updatedItem.id;
+                                newValues[index] = updatedItem;
+                                field.onChange(newValues);
                               }}
                             />
-
                             {index === 0 ? (
                               <div
                                 className={styles.TimeButton}
                                 onClick={() => {
-                                  field.onChange([{ date: null, startTime: null, endTime: null }, ...field.value]);
+                                  field.onChange([
+                                    {
+                                      frontEndId: `${Date.now()}-${Math.random()}`,
+                                      date: null,
+                                      startTime: null,
+                                      endTime: null,
+                                    },
+                                    ...field.value,
+                                  ]);
                                 }}
                               >
                                 <AddTimeBtn />
@@ -576,13 +486,13 @@ export default function MyActivitiesEditPage() {
                 <h2 className={styles.inputTitle}>소개 이미지</h2>
                 <div
                   className={
-                    getValues('subfileImage') === undefined ||
-                    getValues('subfileImage').length === 0 ||
-                    getValues('subfileImage').length === 1
+                    getValues('subImages') === undefined ||
+                      getValues('subImages').length === 0 ||
+                      getValues('subImages').length === 1
                       ? styles.subImageBox[0]
-                      : getValues('subfileImage').length === 2 || getValues('subfileImage').length === 3
+                      : getValues('subImages').length === 2 || getValues('subImages').length === 3
                         ? styles.subImageBox[2]
-                        : getValues('subfileImage').length === 4
+                        : getValues('subImages').length === 4
                           ? `${styles.subImageBox[4]}`
                           : styles.baseSubImageContainer
                   }
@@ -596,7 +506,7 @@ export default function MyActivitiesEditPage() {
                       </div>
                     </div>
                     <input
-                      {...register('subfileImage')}
+                      {...register('subImages')}
                       multiple
                       className={styles.fileUploadInput}
                       id='subfile-upload'
@@ -614,7 +524,7 @@ export default function MyActivitiesEditPage() {
                                 newImages.push({ src: newBase64Images[i], file: newFiles[i] });
                               }
 
-                              setValue('subfileImage', [...getValues('subfileImage'), ...newImages], {
+                              setValue('subImages', [...getValues('subImages'), ...newImages], {
                                 shouldDirty: true,
                                 shouldTouch: true,
                                 shouldValidate: true,
@@ -625,7 +535,7 @@ export default function MyActivitiesEditPage() {
                       }}
                     />
                   </div>
-                  {getValues('subfileImage')?.map(({ src }: { src: string }, index: number) => (
+                  {getValues('subImages')?.map(({ src }: { src: string }, index: number) => (
                     <div key={index} className={styles.previewImageContainer}>
                       <div className={styles.previewImageBox}>
                         <Image
@@ -639,8 +549,8 @@ export default function MyActivitiesEditPage() {
                         className={styles.btnCanceled}
                         onClick={() => {
                           setValue(
-                            'subfileImage',
-                            getValues('subfileImage').filter((_: unknown, i: number) => i !== index),
+                            'subImages',
+                            getValues('subImages').filter((_: unknown, i: number) => i !== index),
                             {
                               shouldDirty: true,
                               shouldTouch: true,

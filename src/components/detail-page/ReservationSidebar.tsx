@@ -1,4 +1,6 @@
-import { useAvailableSchedule } from '@/hooks/use-available-schedule';
+import { useActivitiesReservations } from '@/hooks/useActivitiesReservations';
+import { useAvailableSchedule } from '@/hooks/useAvailableSchedule';
+import { AxiosError } from 'axios';
 import { ko } from 'date-fns/locale';
 import dayjs from 'dayjs';
 import { useState } from 'react';
@@ -30,6 +32,8 @@ export default function ReservationSidebar({ price, activityId }: ReservationSid
     month: viewDate.month, // 01
   });
 
+  const reservationMutation = useActivitiesReservations();
+
   const selectedDateStr = selectedDate ? dayjs(selectedDate).format('YYYY-MM-DD') : null;
   const availableTimes = data?.find((schedule) => schedule.date === selectedDateStr)?.times || [];
 
@@ -56,6 +60,34 @@ export default function ReservationSidebar({ price, activityId }: ReservationSid
     const schedule = data?.find((item) => item.date === dateStr);
 
     return !!schedule && !isPastDate(date);
+  };
+
+  const handleReservation = () => {
+    if (!selectedTimeId) return;
+
+    reservationMutation.mutate(
+      {
+        activityId,
+        scheduleId: selectedTimeId,
+        headCount: headcount,
+      },
+      {
+        onSuccess: () => {
+          alert('예약이 완료되었습니다.');
+          setIsSidebarVisible(false);
+          setSelectedDate(undefined);
+          setSelectedTimeId(null);
+          setHeadcount(1);
+        },
+        onError: (error) => {
+          const axiosError = error as AxiosError;
+          const errorMessage =
+            (axiosError.response?.data as { message: string })?.message ?? '예약에 실패했습니다. 다시 시도해주세요.';
+          console.error('Reservation failed:', error);
+          alert(errorMessage);
+        },
+      },
+    );
   };
 
   return (
@@ -141,10 +173,8 @@ export default function ReservationSidebar({ price, activityId }: ReservationSid
 
       <button
         className={styles.reserveButton}
-        disabled={!selectedDate || !selectedTimeId}
-        onClick={() => {
-          // TODO: 예약 요청 로직 추가
-        }}
+        disabled={!selectedDate || !selectedTimeId || reservationMutation.isPending}
+        onClick={handleReservation}
       >
         예약하기
       </button>

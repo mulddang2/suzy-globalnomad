@@ -1,6 +1,13 @@
+import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 const useResponsiveQuery = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const isPc = useMediaQuery({
     query: '(min-width: 1200px)',
   });
@@ -8,9 +15,14 @@ const useResponsiveQuery = () => {
     query: '(min-width: 768px) and (max-width: 1199px)',
   });
   const isMobile = useMediaQuery({
-    query: '(min-width: 320px) and (max-width: 767px)',
+    query: '(max-width: 767px)',
   });
-  return { isPc, isTablet, isMobile };
+
+  return {
+    isPc: isMounted ? isPc : false,
+    isTablet: isMounted ? isTablet : false,
+    isMobile: isMounted ? isMobile : false,
+  };
 };
 
 export default useResponsiveQuery;

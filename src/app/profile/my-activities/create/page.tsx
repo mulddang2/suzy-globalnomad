@@ -4,6 +4,7 @@ import CustomDrawer from '@/components/drawer/CustomDrawer';
 import Dialog from '@/components/modal/Dialog';
 import Modal from '@/components/modal/Modal';
 import MyActivitiesCreate from '@/components/profile/my-activities-create/MyActivitiesCreate';
+import useResponsiveQuery from '@/hooks/useMediaQuery';
 import { useMyActivitiesCreate } from '@/hooks/useMyActivitiesCreate';
 import { uploadImage } from '@/hooks/useUploadImage';
 import { MyActivitiesCreateData } from '@/types/my-activities-create-data';
@@ -17,11 +18,13 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { useMediaQuery } from 'react-responsive';
 import * as styles from './page.css';
 
 export default function MyActivitiesCreatePage() {
+  const { isPc, isTablet, isMobile } = useResponsiveQuery();
+  const isPCOrTablet = isPc || isTablet;
   const mutation = useMyActivitiesCreate();
+
   const router = useRouter();
   const queryClient = useQueryClient();
   const categories = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
@@ -95,16 +98,6 @@ export default function MyActivitiesCreatePage() {
       },
     });
   };
-
-  const [isMobile, setIsMobile] = useState(false);
-  const [isPCOrTablet, setIsPCOrTablet] = useState(true);
-  const mobileQuery = useMediaQuery({ query: '(max-width: 767px)' });
-  const PCOrTabletQuery = useMediaQuery({ query: '(min-width: 768px)' });
-
-  useEffect(() => {
-    setIsPCOrTablet(PCOrTabletQuery);
-    setIsMobile(mobileQuery);
-  }, [PCOrTabletQuery, mobileQuery]);
 
   return (
     <>

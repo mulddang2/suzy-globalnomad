@@ -15,8 +15,9 @@ export const layout = style({
       gridTemplateColumns: '33.7% 1fr',
     },
     'screen and (max-width: 767px)': {
-      width: 'min(89.3%, 100%)',
-      margin: '16px auto 120px',
+      width: '100%',
+      margin: '16px 0 120px',
+      padding: '0 16px',
       gridTemplateColumns: '1fr',
     },
   },

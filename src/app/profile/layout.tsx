@@ -5,22 +5,17 @@ import CalendarCheck from '@/assets/icons/calendar-check-outline.svg';
 import Cog from '@/assets/icons/cog-outline.svg';
 import TextBoxCheck from '@/assets/icons/text-box-check-outline.svg';
 import ProfileSideNavMenu from '@/components/profile/common/ProfileSideNavMenu';
+import useResponsiveQuery from '@/hooks/useMediaQuery';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
-import { useMediaQuery } from 'react-responsive';
+import React, { useState } from 'react';
 import * as styles from './layout.css';
 
 export default function ProfilePageLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [, setImageFile] = useState<File | null>(null);
 
-  const [isPCOrTablet, setIsPCOrTablet] = useState(true);
-
-  const PCOrTabletQuery = useMediaQuery({ query: '(min-width: 768px)' });
-
-  useEffect(() => {
-    setIsPCOrTablet(PCOrTabletQuery);
-  }, [PCOrTabletQuery]);
+  const { isPc, isTablet } = useResponsiveQuery();
+  const isPCOrTablet = isPc || isTablet;
 
   const profileSideMenuData = [
     {

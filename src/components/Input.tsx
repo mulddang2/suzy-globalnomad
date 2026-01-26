@@ -66,15 +66,9 @@ export default function Input(props: IconInputProps) {
   return (
     <>
       <div className={`${styles.inputContainer} ${styles.variantStyles[variant]} ${error ? styles.errorStyle : ''}`}>
-        {iconPosition === 'left' &&
-          <div className={styles.leftIconDiv}>{icon}</div>
-        }
+        {iconPosition === 'left' && <div className={styles.leftIconDiv}>{icon}</div>}
         <input className={styles.inputField} ref={ref} {...others} />
-        {
-          iconPosition === 'right' && (
-            <div className={styles.rightIconDiv}>{icon}</div>
-          )
-        }
+        {iconPosition === 'right' && <div className={styles.rightIconDiv}>{icon}</div>}
       </div>
       {error && errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
     </>

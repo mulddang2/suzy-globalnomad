@@ -129,9 +129,8 @@ export const subImageUploadBox = style({
   '@media': {
     'screen and (max-width: 767px)': {
       width: '100%',
-      height: '100%',
+      aspectRatio: '1 / 1',
       padding: '10px',
-      minHeight: '167px',
     },
   },
 });
@@ -146,7 +145,6 @@ export const baseSubImageContainer = style({
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
       gap: '8px',
-      minHeight: '167px',
     },
   },
 });
@@ -176,7 +174,6 @@ export const fileUploadLayout = style({
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
       gap: '8px',
-      minHeight: '167px',
     },
   },
 });
@@ -195,7 +192,7 @@ export const previewImageBox = style({
   '@media': {
     'screen and (max-width: 767px)': {
       width: '100%',
-      height: '100%',
+      aspectRatio: '1 / 1',
     },
   },
 });
@@ -220,7 +217,7 @@ export const fileUploadContainer = style({
   '@media': {
     'screen and (max-width: 767px)': {
       width: '100%',
-      height: '100%',
+      aspectRatio: '1 / 1',
       padding: '10px',
     },
   },

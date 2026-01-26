@@ -45,3 +45,9 @@ export const label = style({
   color: '#000000',
   marginBottom: '16px',
 });
+
+export const mobileMenuTitle = style({
+  display: 'flex',
+  gap: '10px',
+  alignItems: 'center',
+});

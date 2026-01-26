@@ -2,8 +2,10 @@
 
 import { fetchMyActivityList, fetchMyCalendarEvent } from '@/apis/my-activity-board';
 import DropDownB from '@/components/dropdown/DropDownB';
+import CustomDrawer from '@/components/drawer/CustomDrawer';
 import EmptyCard from '@/components/profile/my-activity-board/EmptyCard';
 import MyActivityCalendar from '@/components/profile/my-activity-board/MyActivityCalendar';
+import useResponsiveQuery from '@/hooks/useMediaQuery';
 import { useEffect, useMemo, useState } from 'react';
 import * as styles from './page.css';
 
@@ -50,6 +52,7 @@ export interface CalendarEvent {
 }
 
 export default function StatusPage() {
+  const { isMobile } = useResponsiveQuery();
   // activityList -> 체험 선택 드롭다운
   // eventResponse -> eventList -> 달력에 그려질 이벤트
   const [activityList, setActivityList] = useState<ActivityList>({ cursorId: null, totalCount: 0, activities: [] });
@@ -135,7 +138,14 @@ export default function StatusPage() {
 
   return (
     <div className={styles.content}>
-      <h1 className={styles.header}>예약 현황</h1>
+      {isMobile ? (
+        <div className={styles.mobileMenuTitle}>
+          <CustomDrawer />
+          <h1 className={styles.header}>예약 현황</h1>
+        </div>
+      ) : (
+        <h1 className={styles.header}>예약 현황</h1>
+      )}
       {!isExist && <EmptyCard />}
       {isExist && (
         <div className={styles.content}>

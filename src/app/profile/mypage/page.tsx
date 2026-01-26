@@ -1,13 +1,16 @@
 'use client';
 
 import { fetchUserInfo, updateUserInfo } from '@/apis/users';
+import CustomDrawer from '@/components/drawer/CustomDrawer';
 import Input from '@/components/Input';
 import { Button } from '@/components/button/Button';
+import useResponsiveQuery from '@/hooks/useMediaQuery';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import * as styles from './page.css';
 
 export default function ProfileEdit() {
+  const { isMobile } = useResponsiveQuery();
   const [formData, setFormData] = useState({
     nickname: '',
     email: '',
@@ -111,7 +114,14 @@ export default function ProfileEdit() {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.container}>
-        <h1 className={styles.title}>내 정보</h1>
+        {isMobile ? (
+          <div className={styles.mobileMenuTitle}>
+            <CustomDrawer />
+            <h1 className={styles.title}>내 정보</h1>
+          </div>
+        ) : (
+          <h1 className={styles.title}>내 정보</h1>
+        )}
         <Button
           label='수정하기'
           disabled={loading || !formData.nickname || !formData.email || !formData.password || !formData.confirmPassword}

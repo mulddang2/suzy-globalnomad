@@ -1,14 +1,17 @@
 'use client';
 
 import DropDownB from '@/components/dropdown/DropDownB';
+import CustomDrawer from '@/components/drawer/CustomDrawer';
 import EmptyCard from '@/components/profile/my-reservations/EmptyCard';
 import ReservationCard, { ReservationData } from '@/components/profile/my-reservations/ReservationCard';
+import useResponsiveQuery from '@/hooks/useMediaQuery';
 import { useMyReservations } from '@/hooks/useMyReservations';
 import { useEffect, useRef, useState } from 'react';
 import ReservationLoading from './ReservationLoading';
 import * as styles from './page.css';
 
 export default function ReservationPage() {
+  const { isMobile } = useResponsiveQuery();
   const [filter, setFilter] = useState<string | null>(null);
   const [isExist, setIsExist] = useState<boolean>(true);
   const { data, isLoading, fetchNextPage } = useMyReservations(filter);
@@ -64,7 +67,14 @@ export default function ReservationPage() {
   return (
     <div className={styles.content}>
       <div className={styles.contentHeader}>
-        <h2 className={styles.history}>예약 내역</h2>
+        {isMobile ? (
+          <div className={styles.mobileMenuTitle}>
+            <CustomDrawer />
+            <h2 className={styles.history}>예약 내역</h2>
+          </div>
+        ) : (
+          <h2 className={styles.history}>예약 내역</h2>
+        )}
         {(filter !== null || isExist) && (
           <div onClick={handleUnselect}>
             <DropDownB options={options} placeholder='필터' onSelect={handleSelect} />

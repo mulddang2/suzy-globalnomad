@@ -2,21 +2,14 @@
 
 import CustomDrawer from '@/components/drawer/CustomDrawer';
 import CardList from '@/components/profile/my-activities/CardList';
+import useResponsiveQuery from '@/hooks/useMediaQuery';
 import { StyledEngineProvider } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { useMediaQuery } from 'react-responsive';
 import * as styles from './page.css';
 
 export default function MyActivitiesPage() {
   const router = useRouter();
-
-  const [isMobile, setIsMobile] = useState(false);
-  const mobileQuery = useMediaQuery({ query: '(max-width: 767px)' });
-
-  useEffect(() => {
-    setIsMobile(mobileQuery);
-  }, [mobileQuery]);
+  const { isMobile } = useResponsiveQuery();
 
   const handleClick = () => {
     router.push('/profile/my-activities/create');

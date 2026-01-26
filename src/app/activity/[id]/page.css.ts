@@ -38,7 +38,6 @@ export const detailTitle = style([
     '@media': {
       'screen and (max-width: 767px)': {
         fontSize: '24px',
-
       },
     },
   },

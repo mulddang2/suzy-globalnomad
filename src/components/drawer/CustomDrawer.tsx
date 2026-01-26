@@ -40,6 +40,9 @@ export default function CustomDrawer() {
   const profileMenuList = [
     {
       title: '내 정보',
+      onClick: () => {
+        router.push('/profile/mypage');
+      },
       icon: <AccountCheck />,
     },
     {
@@ -58,7 +61,11 @@ export default function CustomDrawer() {
     },
     {
       title: '예약 현황',
+      onClick: () => {
+        router.push('/profile/my-activity-board');
+      },
       icon: <CalendarCheck />,
+
     },
   ];
   const DrawerList = (

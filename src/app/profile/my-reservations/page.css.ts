@@ -37,3 +37,9 @@ export const list = style({
 export const ref = style({
   height: '5px',
 });
+
+export const mobileMenuTitle = style({
+  display: 'flex',
+  gap: '10px',
+  alignItems: 'center',
+});

@@ -261,7 +261,6 @@ export const sidebar = style({
     'screen and (max-width: 1199px)': {
       width: '100%',
       marginTop: '24px',
-      display: 'none',
     },
     'screen and (max-width: 767px)': {
       display: 'block',
@@ -275,14 +274,16 @@ export const sidebarLayout = style({
   flexShrink: 0,
   '@media': {
     'screen and (max-width: 1199px)': {
-      width: '100%',
+      width: '100vw',
       position: 'fixed',
       bottom: 0,
       left: 0,
-      zIndex: 100,
+      zIndex: 9999,
       backgroundColor: 'white',
       borderTop: `1px solid ${global.color.gray[200]}`,
       padding: '0',
+      margin: '0',
+      minHeight: '80px',
     },
   },
 });

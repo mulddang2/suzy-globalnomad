@@ -45,7 +45,9 @@ export const toggleHandle = style({
   '@media': {
     'screen and (max-width: 1199px)': {
       display: 'block',
-      backgroundColor: global.color.gray[500],
+      backgroundColor: global.color.gray[600],
+      width: '50px',
+      height: '5px',
     },
   },
 });
@@ -189,8 +191,6 @@ export const selected = style({
 export const hasSchedule = style({
   fontWeight: fontWeights.bold,
   color: global.color.nomadBlack,
-  // fontWeight: fontWeights.bold,
-  // color: global.color.nomadBlack,
 });
 
 globalStyle(`.${hasSchedule} .rdp-day_button`, {
@@ -241,4 +241,8 @@ globalStyle(`${calendarContainer} .rdp-cell, ${calendarContainer} .rdp-head_cell
   width: 'var(--rdp-cell-size)',
   height: 'var(--rdp-cell-size)',
   padding: 0,
+});
+
+globalStyle(`${calendarContainer} .rdp-caption_label`, {
+  paddingLeft: '8px',
 });

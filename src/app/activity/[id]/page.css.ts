@@ -35,10 +35,10 @@ export const detailTitle = style([
     color: global.color.nomadBlack,
     marginTop: '10px',
     marginBottom: '16px',
-    whiteSpace: 'noWrap',
     '@media': {
       'screen and (max-width: 767px)': {
         fontSize: '24px',
+
       },
     },
   },

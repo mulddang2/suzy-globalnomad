@@ -10,6 +10,7 @@ import useMultipleImageUpload from '@/hooks/useMultipleImageUpload';
 import useSingleImageUpload from '@/hooks/useSingleImageUpload';
 import { ReservationDateTime } from '@/types/reservation-date-time';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
+import dayjs from 'dayjs';
 import Image from 'next/image';
 import React, { useRef, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -207,7 +208,14 @@ export default function MyActivitiesCreate({
       <Controller
         name='availableDateTimeList'
         control={control}
-        defaultValue={[{ date: null, startTime: null, endTime: null }]}
+        defaultValue={[
+          {
+            frontEndId: `${Date.now()}-${Math.random()}`,
+            date: null,
+            startTime: null,
+            endTime: null,
+          },
+        ]}
         rules={{
           validate: (value) => {
             const errors: Array<string | null> = [];
@@ -216,7 +224,11 @@ export default function MyActivitiesCreate({
             for (let i = 0; i < value.length; i++) {
               const item = value[i];
               let error = null;
-
+              // 빈 값(Placeholder)인 경우 유효성 검사 건너뛰기
+              if (!item.date && !item.startTime && !item.endTime) {
+                errors.push(null);
+                continue;
+              }
               // 기본 유효성 검사
               if (!item.date) {
                 error = `날짜를 입력해주세요.`;
@@ -226,6 +238,11 @@ export default function MyActivitiesCreate({
                 error = `종료 시간을 입력해주세요.`;
               } else if (item.startTime >= item.endTime) {
                 error = `종료 시간은 시작 시간 이후여야 합니다.`;
+              } else {
+                const startDateTime = item.date.hour(item.startTime.hour()).minute(item.startTime.minute());
+                if (startDateTime.isBefore(dayjs(), 'minute')) {
+                  error = '지난 날짜 및 시간은 등록이 불가능합니다';
+                }
               }
 
               // 시간대 중복 검사
@@ -263,7 +280,7 @@ export default function MyActivitiesCreate({
                 <div className={styles.endTimePickerLabel}>종료 시간</div>
               </div>
               {field.value.map((availableDateTime: ReservationDateTime, index: number) => (
-                <div className={styles.datePickerLabelContainer} key={index}>
+                <div className={styles.datePickerLabelContainer} key={availableDateTime.frontEndId}>
                   {index === 1 && <div className={styles.horizon}></div>}
                   <DatePicker
                     sx={{
@@ -279,8 +296,9 @@ export default function MyActivitiesCreate({
                     className={`${styles.datePickerContainer}`}
                     value={availableDateTime.date}
                     onChange={(v) => {
-                      field.value[index].date = v;
-                      field.onChange([...field.value]);
+                      const newValues = [...field.value];
+                      newValues[index] = { ...newValues[index], date: v };
+                      field.onChange(newValues);
                     }}
                     slotProps={{ textField: { placeholder: 'YYYY/MM/DD' } }}
                   />
@@ -298,8 +316,9 @@ export default function MyActivitiesCreate({
                     className={`${styles.startTimePickerContainer}`}
                     value={availableDateTime.startTime}
                     onChange={(v) => {
-                      field.value[index].startTime = v;
-                      field.onChange([...field.value]);
+                      const newValues = [...field.value];
+                      newValues[index] = { ...newValues[index], startTime: v };
+                      field.onChange(newValues);
                     }}
                   />
                   <div className={`${styles.waveSign}`}>~</div>
@@ -317,8 +336,9 @@ export default function MyActivitiesCreate({
                     className={`${styles.endTimePickerContainer}`}
                     value={availableDateTime.endTime}
                     onChange={(v) => {
-                      field.value[index].endTime = v;
-                      field.onChange([...field.value]);
+                      const newValues = [...field.value];
+                      newValues[index] = { ...newValues[index], endTime: v };
+                      field.onChange(newValues);
                     }}
                   />
 
@@ -326,7 +346,15 @@ export default function MyActivitiesCreate({
                     <div
                       className={styles.TimeButton}
                       onClick={() => {
-                        field.onChange([{ date: null, startTime: null, endTime: null }, ...field.value]);
+                        field.onChange([
+                          {
+                            frontEndId: `${Date.now()}-${Math.random()}`,
+                            date: null,
+                            startTime: null,
+                            endTime: null,
+                          },
+                          ...field.value,
+                        ]);
                       }}
                     >
                       <AddTimeBtn />

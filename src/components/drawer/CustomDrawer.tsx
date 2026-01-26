@@ -48,7 +48,7 @@ export default function CustomDrawer() {
     {
       title: '예약 내역',
       onClick: () => {
-        router.push('/profile/reservations/history');
+        router.push('/profile/my-reservations');
       },
       icon: <TextBoxCheck />,
     },
@@ -65,7 +65,6 @@ export default function CustomDrawer() {
         router.push('/profile/my-activity-board');
       },
       icon: <CalendarCheck />,
-
     },
   ];
   const DrawerList = (

@@ -13,6 +13,7 @@ import Modal from '@/components/modal/Modal';
 import { useMyActivitiesEdit } from '@/hooks/use-my-activities-edit';
 import { useActivityEditForm } from '@/hooks/useActivityEditForm';
 import useDetectClose from '@/hooks/useDetectClose';
+import useResponsiveQuery from '@/hooks/useMediaQuery';
 import { useMyActivitiesDetails } from '@/hooks/useMyActivitiesDetails';
 import useSingleImageUpload from '@/hooks/useSingleImageUpload';
 import { uploadImage } from '@/hooks/useUploadImage';
@@ -30,7 +31,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { createPortal } from 'react-dom';
 import { Controller, FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import useResponsiveQuery from '@/hooks/useMediaQuery';
 import * as styles from './page.css';
 
 export default function MyActivitiesEditPage() {
@@ -138,7 +138,6 @@ export default function MyActivitiesEditPage() {
       setShowModifyModal(true);
     }
   }, [isSuccess]);
-
 
   return (
     <>
@@ -487,8 +486,8 @@ export default function MyActivitiesEditPage() {
                 <div
                   className={
                     getValues('subImages') === undefined ||
-                      getValues('subImages').length === 0 ||
-                      getValues('subImages').length === 1
+                    getValues('subImages').length === 0 ||
+                    getValues('subImages').length === 1
                       ? styles.subImageBox[0]
                       : getValues('subImages').length === 2 || getValues('subImages').length === 3
                         ? styles.subImageBox[2]

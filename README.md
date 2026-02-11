@@ -9,7 +9,7 @@
 
 <br>
 
-# GlobalNomad Refactoring (진행 중)
+# GlobalNomad Refactoring 
 
 ## 소개
 

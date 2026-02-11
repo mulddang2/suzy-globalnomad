@@ -21,8 +21,6 @@
 
 ## 배포 주소
 
-**테스트 계정** ID: player@gmail.com / PW: player1234
-
 > 개인 리펙토링: **배포 URL**: https://globalnomard.netlify.app/ <br/>  
 > Legacy: **배포 URL**: https://codeit-globalnomad.vercel.app/main?page=1
 
